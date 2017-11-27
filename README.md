@@ -1,0 +1,3 @@
+- Install npm
+- At the root of project, run npm install
+- To start the app, run npm start# Projet2A
