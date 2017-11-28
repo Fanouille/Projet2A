@@ -3,20 +3,33 @@
  */
 
 angular.module('AngularGen')
-    .controller('IndexController', function ($scope,$state){
+.controller('IndexController', function ($scope,$state){
+
     	$scope.varGlobal = 0
+
     	$scope.changeVar = function(id){
-    		$scope.varGlobal = id
+    	   $scope.varGlobal = id
     	}
     
     $scope.openHome = function(){
-  		$state.go('home')
+  		  $state.go('home')
   	}
 
   	$scope.openTest = function(){
-  		$state.go('test')
+  		  $state.go('test')
   	}
 
+  	$scope.openGraph = function(){
+  		  $state.go('graph')
+  	}
+
+    $scope.openAdvanced = function(){
+        $state.go('advanced-search')
+    }
+
+    $scope.openFormulaire = function(){
+        $state.go('formulaire')
+    }
   	$scope.recherche='Recherche'
         
     $scope.$watch('recherche',function(){
@@ -27,12 +40,12 @@ angular.module('AngularGen')
     $scope.objetRecherche=''
 
   	$scope.search = function(){
-  		$scope.objetRecherche=$scope.recherche
-  		console.log($scope.objetRecherche)
-  		$state.go('search')
+  		  $scope.objetRecherche=$scope.recherche
+  		  console.log($scope.objetRecherche)
+  		  $state.go('search')
   	}
  	
-    });
+});
 
 
 

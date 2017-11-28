@@ -5,7 +5,7 @@
 angular.module('AngularGen')
     .controller('HomeController', function ($scope) {
 
-        $scope.test = "Bienvenue sur le générateur Angular"
+        $scope.test = "Bienvenue sur la page Home"
 
     });
 

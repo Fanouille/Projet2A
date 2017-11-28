@@ -30,5 +30,25 @@ var AngularGen = angular.module('AngularGen', ['ngMessages','ngMaterial', 'ngAni
 
                 })
 
+                .state('graph', {
+                    url: '/graph',
+                    templateUrl: 'graph/graph.html',
+                    controller: 'GraphController',
+
+                })
+
+                .state('advanced-search', {
+                    url: '/advanced-search',
+                    templateUrl: 'advanced-search/advanced-search.html',
+                    controller: 'Advanced-searchController',
+
+                })
+
+                .state('formulaire', {
+                    url: '/formulaire',
+                    templateUrl: 'formulaire/formulaire.html',
+                    controller: 'FormulaireController',
+
+                })
         }]);
 })(AngularGen);
