@@ -1,5 +1,5 @@
 #blue {
- background-color: #6bc7cc;
+ background-color: #03A9F4;
 }
 #brown {
   background-color : tan;
@@ -13,9 +13,13 @@
 }
 
 #pink{
-    background-color : pink;
+    background-color : #E91E63;
 }
 
 #white {
     background-color : white;
+}
+
+#right {
+  float : right;
 }

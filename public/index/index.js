@@ -17,13 +17,21 @@ angular.module('AngularGen')
   		$state.go('test')
   	}
 
-  	$scope.recherche=''
+  	$scope.recherche='Recherche'
         
     $scope.$watch('recherche',function(){
         console.log($scope.recherche)
     },true)//,true permet de regarder à l'interieur de l'objet
         //il écoute donc si il y a du changement dans l'objet
-  	
+
+    $scope.objetRecherche=''
+
+  	$scope.search = function(){
+  		$scope.objetRecherche=$scope.recherche
+  		console.log($scope.objetRecherche)
+  		$state.go('search')
+  	}
+ 	
     });
 
 

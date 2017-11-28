@@ -23,5 +23,12 @@ var AngularGen = angular.module('AngularGen', ['ngMessages','ngMaterial', 'ngAni
 
                 })
 
+                .state('search', {
+                    url: '/search',
+                    templateUrl: 'search/search.html',
+                    controller: 'SearchController',
+
+                })
+
         }]);
 })(AngularGen);
