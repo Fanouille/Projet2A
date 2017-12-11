@@ -5,7 +5,7 @@ angular.module('AngularGen')
     $scope.prenom="Prenom"
     $scope.mail=""
     $scope.promo=0
-    $scope.telephone=0
+    $scope.telephone=""
     $scope.adresse={}
     $scope.adresse.id1="Rue"
     $scope.adresse.id2="Ville"

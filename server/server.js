@@ -21,11 +21,7 @@ router.post('/postData',function(req,res){
 	res.json('Coucou bis')
 })
 
-//router.get("/getData",function(req,res){
-//	var test = 12;
-//    res.json(test)
-//	console.log("Hello World !")
-//});
+
 
 module.exports = router;
 
