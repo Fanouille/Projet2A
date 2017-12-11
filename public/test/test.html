@@ -1,25 +1,27 @@
-Bienvenue sur la page test
-<br><br><br>
-{{test2}}
+ <br>
+{{varGlobal}}
+ <br>
+ Nom: {{name}}
+ <br>
+ Prenom: {{surname}}
+ <br>
+ tel: {{tel}}
+ <br>
+ mail: {{mel}}
+ <br>
+ Adresse: {{ad.id1}}&nbsp&nbsp{{ad.id2}}
+ <br>
+ Entreprise: {{ent.id1}}&nbsp&nbsp{{ent.id2}}&nbsp&nbsp{{ent.id3}}
+ <br>
+ Langues: {{lang.id1}}&nbsp&nbsp{{lang.id2}}&nbsp&nbsp{{lang.id3}}
+ <br>
+ Compétences: {{comp.id1}}&nbsp&nbsp{{comp.id2}}&nbsp&nbsp{{comp.id3}}
 <br>
-{{tuto}}
-<div ng-show="isXS">
-Coucou !!
-</div>
-<input ng-model ='testbis'>
 
- <md-button ng-click ='testClick()'>
- 	Clique ici
- </md-button>
-
- <br> 
-
- <md-button ng-click ='add()'>
- 	Add
- </md-button>
-
-
-  <md-button ng-click ='changeVar(testbis)'>
- 	Change
- </md-button>
- {{varGlobla}}
+<md-button ng-click ='modify()'>
+ 	Modifier
+</md-button>
+&nbsp&nbsp
+<md-button ng-click ='openGraph()'>
+ 	Continuer
+</md-button>

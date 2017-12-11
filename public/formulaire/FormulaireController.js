@@ -1,10 +1,9 @@
 angular.module('AngularGen')
     .controller('FormulaireController', function ($scope) {
     
-    $scope.nom ="Nom"
+    $scope.nom="Nom"
     $scope.prenom="Prenom"
     $scope.mail=""
-    $scope.adresse={}
     $scope.promo=0
     $scope.telephone=0
     $scope.adresse={}
@@ -17,9 +16,8 @@ angular.module('AngularGen')
     $scope.langue={}
     $scope.competences={}
 
-    $scope.add = function(){
-       	//ajoute les champs à la bdd
-    }
+    //$scope.$watch('n',function(){
+      //      $scope.nom=$scope.n
+        //},true)
 
-
-    });
+});

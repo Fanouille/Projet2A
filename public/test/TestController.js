@@ -35,14 +35,9 @@ angular.module('AngularGen')
 
 
 
-       $scope.testClick = function(){
-       	//console.log('coucou')
-       	console.log($scope.testWatch)
-       }
+       $scope.modify= function(){
+        //TODO
+      }
 
-       $scope.add = function(){
-       	$scope.testWatch.id = $scope.testbis
-       	console.log($scope.testWatch)
-       }
 
     });
