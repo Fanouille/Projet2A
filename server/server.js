@@ -6,7 +6,7 @@ var bodyParser = require('body-parser');
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 var o = require('./services')
 var fs = require('fs')
-var b = require('./bdd')
+var bdd = require('./bdd')
 
 router.get('/', function (req, res, next) {
     res.sendFile(path.join(__dirname, '../', 'views', 'index.html'));
