@@ -7,20 +7,20 @@ angular.module('AngularGen')
     $scope.promo=0
     $scope.telephone=""
     $scope.adresse={}
-    $scope.adresse.id1="Rue"
-    $scope.adresse.id2="Ville"
+    $scope.adresse.rue="Rue"
+    $scope.adresse.ville="Ville"
     $scope.entreprise={}
-    $scope.entreprise.id1="nom"
-    $scope.entreprise.id2="rue"
-    $scope.entreprise.id3="ville"
+    $scope.entreprise.name="nom"
+    $scope.entreprise.ad_rue="rue"
+    $scope.entreprise.ad_ville="ville"
     $scope.langue={}
     $scope.competences={}
 
-
+/*
     $http({
         method:'ADD',
         url:'/addBdd',
-        params:{nom : "",prenom : "",mail : "",promo : 0,telephone : "",adresse : {},entreprise : {},langue : {},competences : {}}
+        params:{n : "",p : "",mail : "",promo : 0,telephone : "",adresse : {},entreprise : {},langue : {},competences : {}}
     }).then(function successCallBack(response){
         console.log(response)
 
@@ -29,9 +29,25 @@ angular.module('AngularGen')
 
     })
 
-    $scope.update = function(nom,prenom,mail,promo,telephone,adresse,entreprise,langue,competences){
-        var data = $.params({nom : $scope.nom,prenom : $scope.prenom,mail : $scope.mail,promo : $scope.promo,telephone : $scope.telephone,
-                        adresse : $scope.adresse,entreprise : $scope.entreprise,langue : $scope.langue,competences : $scope.competences})     
+*/
+
+    $scope.update = function(name,prenom,mail,promo,telephone,adresse,entreprise,langue,competences){
+        /*$http.params = {
+            nom : name
+            prenom : prenom
+        }*/
+
+        $http({
+            method:'POST',
+            url:'/addBdd',
+            params:{n : name ,p : prenom }//,mail : "",promo : 0,telephone : "",adresse : {},entreprise : {},langue : {},competences : {}}
+        }).then(function successCallBack(response){
+            console.log(response)
+
+        },function errorCallBack(error){
+            console.log(error)
+
+    })     
     }
 
     //$scope.$watch('n',function(){

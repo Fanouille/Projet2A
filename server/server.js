@@ -6,25 +6,38 @@ var bodyParser = require('body-parser');
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 var o = require('./services')
 var fs = require('fs')
-var b = require('./bdd')
+var bdd = require('./bdd')
 
 router.get('/', function (req, res, next) {
     res.sendFile(path.join(__dirname, '../', 'views', 'index.html'));
 });
 
-router.get('/addBdd',function(req,res){
-	console.log("hello");
-    var res = bdd.addtoBDD(n,p,m,pr,t,a,e,l,c);
+router.post('/addBdd',function(req,res){
+  console.log("on est dans server.js, methode appelée");
+  bdd.test();
 
-    switch(res){
+  res.json("sucess");
+});
+
+/*
+router.post('/addBdd',function(req,res){
+	console.log("methode addBDD appelée")
+  console.log(req.body)
+
+    var result_code = bdd.addtoBDD(req.body.nom,req.body.prenom,req.body.mail,req.body.promo,req.body.tel,req.body.adresse,req.body.entreprise,req.body.langue,req.body.ccompetence);
+    console.log(result_code);
+
+    switch(result_code){
       case 0:
       $scope.varGlobal="Une erreur est survenue, veillez réessayer.";
       $state.go('test') 
+      res.json({ success: "false" });
       break;
 
       case 1:
       $scope.varGlobal = "L'utilisateur (adresse email) existe déjà. ";
       $state.go('test') 
+      res.json({ success: "false" });
       break;
 
       case 2:
@@ -38,18 +51,18 @@ router.get('/addBdd',function(req,res){
       $scope.lang=req.params.l
       $scope.comp=req.params.c
       $scope.varGlobal = 'Vous avez bien été ajouté à la BDD, voici le résumé de vos informations :'
-      $state.go('test') 
+      $state.go('test')
+      res.json({ success: "true" }); 
       break;
 
       default : 
       $scope.varGlobal="Une erreur est survenue, veillez réessayer.";
-      $state.go('test') 
+      $state.go('test');
+      res.json({ success: "false" });
       break;
-
-	res.json(result)
 	}
 });
-
+*/
 /*
 router.post('/postData',function(req,res){
 	console.log(req.data)

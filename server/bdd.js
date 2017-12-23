@@ -1,7 +1,6 @@
 //var MongoClient = require("mongodb").MongoClient;
 var mongoose = require('mongoose');
 
-
 ///////////UTILISATEUR, DONNES PERSO
 var utilisateurSchema = mongoose.Schema({ //structure de a genre de classe
     nom: String,
@@ -26,8 +25,14 @@ var utilisateurSchema = mongoose.Schema({ //structure de a genre de classe
 });
 var db = mongoose.connection;
 
-function addtoBDD(n,p,m,pr,t,a,e,l,c) {
-    db.collection('utilisateurs').findOne({adresse_email : m},function(err,user){ //une adresse email est unique
+function test(){
+    console.log("on est dans bdd.js");
+}
+
+function addtoBDD(name,prenom,mail,promotion,telephone,adress,firm,language,competences) {
+    console.log("Request add user to BDD.");
+    var result = db.collection('utilisateurs').findOne({adresse_email : m}, function(err,user){ //une adresse email est unique
+        console.log("Ask")
         if (err){
             return 0;
         }
@@ -36,34 +41,40 @@ function addtoBDD(n,p,m,pr,t,a,e,l,c) {
         }
         else{
             var util = new Utilisateur({
-                nom : n,
-                prenom : p,
+                nom : name,
+                prenom : prenom,
                 adresse : {
-                    voie : a.id1,
-                    ville : a.id2,
+                    voie : adress.rue,
+                    ville : adress.ville,
                 },
-                promo : pr,
-                adresse_email : m,
-                tel : t,
+                promo : promotion,
+                adresse_email : mail,
+                tel : telephone,
                 entreprise : {
-                    nom : e.id1,
+                    nom : firm.name,
                     adresse : {
-                        voie : e.id2,
-                        ville : e.id3,
+                        voie : firm.ad_rue,
+                        ville : firm.ad_ville,
                     } 
                 },
                 //mdp : 'coucou',
-                langue: l,
-                competence : c,
+                langue: language,
+                competence : competences,
             });
             util.save(function(err, utilisateur) {
                 mongoose.disconnect();
             });
             return 2;
             
-        }   
+        }  
     });
+    console.log(result);
+    return result;
 }
 
 mongoose.connect('mongodb://localhost/projet2A');
 module.exports = mongoose;
+
+
+
+//module.exports addtoBdd 
