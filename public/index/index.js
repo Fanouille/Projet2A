@@ -22,10 +22,6 @@ angular.module('AngularGen')
       $scope.comp={}
 
     
-    $scope.openHome = function(){
-  		  $state.go('home')
-  	}
-
   	$scope.openTest = function(){
   		  $state.go('test')
   	}

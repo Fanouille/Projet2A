@@ -1,3 +1,5 @@
+//cette page permet d'afficher les données que l'utilisateur vient d'entrer dans la base de donnée
+
 angular.module('AngularGen')
     .controller('TestController', function ($scope,$http,$mdMedia,$state) {
 

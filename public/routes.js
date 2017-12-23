@@ -5,17 +5,9 @@ var AngularGen = angular.module('AngularGen', ['ngMessages','ngMaterial', 'ngAni
 (function(app) {
     app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
 
-            $urlRouterProvider.otherwise('/home');
+            $urlRouterProvider.otherwise('/graph');
 
-            $stateProvider
-                .state('home', {
-                    url: '/home',
-                    templateUrl: 'home/home.html',
-                    controller: 'HomeController',
-
-                })
-
-			
+            $stateProvider			
                 .state('test', {
                     url: '/test',
                     templateUrl: 'test/test.html',
