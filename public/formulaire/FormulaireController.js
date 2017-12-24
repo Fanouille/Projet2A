@@ -56,7 +56,7 @@ angular.module('AngularGen')
             method:'POST',
             url:'/addUserToBDD',
             //params:{n : name ,p : prenom }
-            data : [$scope.nom, $scope.prenom,$scope.adresse.rue, $scope.adresse.ville,, $scope.promo $scope.mail, $scope.telephone, $scope.entreprise.name, $scope.entreprise.ad_rue ,$scope.entreprise.ad_ville, $scope.langue, $scope.competences],
+            data : [$scope.nom, $scope.prenom,$scope.adresse.rue, $scope.adresse.ville, $scope.promo,$scope.mail, $scope.telephone, $scope.entreprise.name, $scope.entreprise.ad_rue ,$scope.entreprise.ad_ville, $scope.langue, $scope.competences],
         }).then(function successCallBack(response){
             console.log(response)
 
