@@ -25,7 +25,6 @@ angular.module('AngularGen')
         $scope.isXS = $mdMedia('xs')
         console.log($mdMedia('xs'))
 
-        //$state.go('home') // redirection vers home, affiche pas page test
 
         $scope.testWatch={} //''
         $scope.testbis = ''

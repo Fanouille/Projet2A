@@ -39,7 +39,6 @@ mongoose.testConnexion = function(data){
 //-------TEST AJOUT A BDD----------------
 
 mongoose.addUserToBDD = function(data){
-//function addtoBDD(name,prenom,mail,promotion,telephone,adress,firm,language,competences) {
     console.log("Request add user to BDD.");
     var result = db.collection('utilisateurs').findOne({adresse_email : data[5]}, function(err,user){ //une adresse email est unique
         console.log("Ask")
@@ -97,6 +96,3 @@ mongoose.addUserToBDD = function(data){
 mongoose.connect('mongodb://localhost/projet2A');
 module.exports = mongoose;
 
-
-
-//module.exports addtoBdd 

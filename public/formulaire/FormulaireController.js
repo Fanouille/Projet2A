@@ -16,20 +16,6 @@ angular.module('AngularGen')
     $scope.langue={}
     $scope.competences={}
 
-/*
-    $http({
-        method:'ADD',
-        url:'/addBdd',
-        params:{n : "",p : "",mail : "",promo : 0,telephone : "",adresse : {},entreprise : {},langue : {},competences : {}}
-    }).then(function successCallBack(response){
-        console.log(response)
-
-    },function errorCallBack(error){
-        console.log(error)
-
-    })
-
-*/
 
 //Fonction qui teste la connexion à la bdd
     $scope.connexion = function(){
