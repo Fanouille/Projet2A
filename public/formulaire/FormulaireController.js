@@ -31,16 +31,13 @@ angular.module('AngularGen')
 
 */
 
-    $scope.update = function(name,prenom,mail,promo,telephone,adresse,entreprise,langue,competences){
-        /*$http.params = {
-            nom : name
-            prenom : prenom
-        }*/
+    $scope.update = function(){
 
         $http({
             method:'POST',
-            url:'/addBdd',
-            params:{n : name ,p : prenom }//,mail : "",promo : 0,telephone : "",adresse : {},entreprise : {},langue : {},competences : {}}
+            url:'/addUserToBDD',
+            //params:{n : name ,p : prenom }
+            data : [$scope.nom, $scope.prenom, $scope.mail, $scope.promo, $scope.telephone, $scope.adresse, $scope.adresse.rue, $scope.adresse.ville, $scope.entreprise, $scope.entreprise.name, $scope.entreprise.ad_rue ,$scope.entreprise.ad_ville, $scope.langue, $scope.competences],
         }).then(function successCallBack(response){
             console.log(response)
 

@@ -25,11 +25,13 @@ var utilisateurSchema = mongoose.Schema({ //structure de a genre de classe
 });
 var db = mongoose.connection;
 
-function test(){
+//function test(){
+mongoose.testConnexion = function(){
     console.log("on est dans bdd.js");
 }
 
-function addtoBDD(name,prenom,mail,promotion,telephone,adress,firm,language,competences) {
+//function addtoBDD(name,prenom,mail,promotion,telephone,adress,firm,language,competences) {
+mongoose.addUsertoBDD = function(data){
     console.log("Request add user to BDD.");
     var result = db.collection('utilisateurs').findOne({adresse_email : m}, function(err,user){ //une adresse email est unique
         console.log("Ask")
@@ -41,25 +43,25 @@ function addtoBDD(name,prenom,mail,promotion,telephone,adress,firm,language,comp
         }
         else{
             var util = new Utilisateur({
-                nom : name,
-                prenom : prenom,
+                nom : data.name,
+                prenom : data.prenom,
                 adresse : {
-                    voie : adress.rue,
-                    ville : adress.ville,
+                    voie : data.adress.rue,
+                    ville : data.adress.ville,
                 },
-                promo : promotion,
-                adresse_email : mail,
-                tel : telephone,
+                promo : data.promotion,
+                adresse_email : data.mail,
+                tel : data.telephone,
                 entreprise : {
-                    nom : firm.name,
+                    nom : data.firm.name,
                     adresse : {
-                        voie : firm.ad_rue,
-                        ville : firm.ad_ville,
+                        voie : data.firm.ad_rue,
+                        ville : data.firm.ad_ville,
                     } 
                 },
                 //mdp : 'coucou',
-                langue: language,
-                competence : competences,
+                langue: data.language,
+                competence : data.competences,
             });
             util.save(function(err, utilisateur) {
                 mongoose.disconnect();

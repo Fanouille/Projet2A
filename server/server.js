@@ -12,11 +12,16 @@ router.get('/', function (req, res, next) {
     res.sendFile(path.join(__dirname, '../', 'views', 'index.html'));
 });
 
-router.post('/addBdd',function(req,res){
+router.post('/testConnexionToBDD',function(req,res){
   console.log("on est dans server.js, methode appelée");
-  bdd.test();
+  bdd.testConnexion();
+  res.json();
+});
 
-  res.json("sucess");
+router.post('/addUserToBDD',function(req,res){
+  console.log("on est dans server.js, methode appelée");
+  bdd.addUserToBDD(req.body);
+  res.json();
 });
 
 /*
