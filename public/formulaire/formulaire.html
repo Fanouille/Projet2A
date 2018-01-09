@@ -1,7 +1,9 @@
 Bienvenue sur la page Formulaire
 <br>
 
+<form method='post' action='/addBDD'>
 <input ng-model ='nom'>
+</form>
 <br>
 
 <input ng-model ='prenom'>
@@ -38,7 +40,11 @@ Competences
 <input ng-model ='competences.id3'>
 <br>
 
-<md-button ng-click ='update(nom,prenom,mail,promo,telephone,adresse,entreprise,langue,competences)'>
+<md-button ng-click ='update()'>
  	Valider
+</md-button>
+&nbsp&nbsp
+<md-button ng-click ='connexion()'>
+ 	Tester Connexion
 </md-button>
 

@@ -17,7 +17,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(favicon(path.join(__dirname, 'public', 'favicon.png')));
 //app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: false })); 
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -47,6 +47,23 @@ app.use(function(err, req, res, next) {
     // render the error page
     res.status(err.status || 500);
     // res.render('error');
+});
+
+
+
+
+
+//ajout : 
+
+app.post("/addBDD",(req,res) => {
+	var myData = new User(req.body);
+		myData.save().then(item => {
+			res.send("item saved to database");
+		})
+		.catch(err => {
+			res.status(400).send("unable to save to database");
+		});
+
 });
 
 

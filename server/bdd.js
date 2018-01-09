@@ -1,7 +1,6 @@
 //var MongoClient = require("mongodb").MongoClient;
 var mongoose = require('mongoose');
 
-
 ///////////UTILISATEUR, DONNES PERSO
 var utilisateurSchema = mongoose.Schema({ //structure de a genre de classe
     nom: String,
@@ -26,44 +25,74 @@ var utilisateurSchema = mongoose.Schema({ //structure de a genre de classe
 });
 var db = mongoose.connection;
 
-function addtoBDD(n,p,m,pr,t,a,e,l,c) {
-    db.collection('utilisateurs').findOne({adresse_email : m},function(err,user){ //une adresse email est unique
+//------TEST CONNEXION A BDD-------------
+mongoose.donnee = []
+mongoose.testConnexion = function(data){
+//function test(){
+    console.log("on est dans bdd.js, la connexion fonctionne");
+    mongoose.donnee = data;
+    console.log(data);
+}
+//---------------------------------------
+
+
+//-------TEST AJOUT A BDD----------------
+
+mongoose.addUserToBDD = function(data){
+    console.log("Request add user to BDD.");
+    var result = db.collection('utilisateurs').findOne({adresse_email : data[5]}, function(err,user){ //une adresse email est unique
+        console.log("Ask")
         if (err){
+            console.log("Error happened")
             return 0;
         }
         else if (user){
+            console.log("Already in BDD")
             return 1;
         }
         else{
+            var Utilisateur = mongoose.model('utilisateurs', utilisateurSchema);
             var util = new Utilisateur({
-                nom : n,
-                prenom : p,
+
+                nom : data[0],
+
+                prenom : data[1],
+
                 adresse : {
-                    voie : a.id1,
-                    ville : a.id2,
+                    voie : data[2],
+                    ville : data[3],
                 },
-                promo : pr,
-                adresse_email : m,
-                tel : t,
+
+                promo : data[4],
+
+                adresse_email : data[5],
+
+                tel : data[6],
+
                 entreprise : {
-                    nom : e.id1,
+                    nom : data[7],
                     adresse : {
-                        voie : e.id2,
-                        ville : e.id3,
+                        voie : data[8],
+                        ville : data[9],
                     } 
                 },
                 //mdp : 'coucou',
-                langue: l,
-                competence : c,
+                langue: data[10],
+                competence : data[11],
             });
             util.save(function(err, utilisateur) {
                 mongoose.disconnect();
             });
+            console.log("User added to BDD")
             return 2;
             
-        }   
+        }  
     });
+    console.log(result);
+    return result;
 }
+//-------------------------------------------
 
 mongoose.connect('mongodb://localhost/projet2A');
 module.exports = mongoose;
+

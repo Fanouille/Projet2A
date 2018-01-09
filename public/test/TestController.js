@@ -1,3 +1,5 @@
+//cette page permet d'afficher les données que l'utilisateur vient d'entrer dans la base de donnée
+
 angular.module('AngularGen')
     .controller('TestController', function ($scope,$http,$mdMedia,$state) {
 
@@ -23,7 +25,6 @@ angular.module('AngularGen')
         $scope.isXS = $mdMedia('xs')
         console.log($mdMedia('xs'))
 
-        //$state.go('home') // redirection vers home, affiche pas page test
 
         $scope.testWatch={} //''
         $scope.testbis = ''

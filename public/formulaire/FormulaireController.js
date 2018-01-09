@@ -7,35 +7,50 @@ angular.module('AngularGen')
     $scope.promo=0
     $scope.telephone=""
     $scope.adresse={}
-    $scope.adresse.id1="Rue"
-    $scope.adresse.id2="Ville"
+    $scope.adresse.rue="Rue"
+    $scope.adresse.ville="Ville"
     $scope.entreprise={}
-    $scope.entreprise.id1="nom"
-    $scope.entreprise.id2="rue"
-    $scope.entreprise.id3="ville"
+    $scope.entreprise.name="nom"
+    $scope.entreprise.ad_rue="rue"
+    $scope.entreprise.ad_ville="ville"
     $scope.langue={}
     $scope.competences={}
 
 
-    $http({
-        method:'ADD',
-        url:'/addBdd',
-        params:{nom : "",prenom : "",mail : "",promo : 0,telephone : "",adresse : {},entreprise : {},langue : {},competences : {}}
-    }).then(function successCallBack(response){
-        console.log(response)
+//Fonction qui teste la connexion à la bdd
+    $scope.connexion = function(){
 
-    },function errorCallBack(error){
-        console.log(error)
+        $http({
+            method:'POST',
+            url:'/testConnexionToBDD',
+            data : ['Contenu de data'],
+        }).then(function successCallBack(response){
+            console.log(response)
 
-    })
+        },function errorCallBack(error){
+            console.log(error)
 
-    $scope.update = function(nom,prenom,mail,promo,telephone,adresse,entreprise,langue,competences){
-        var data = $.params({nom : $scope.nom,prenom : $scope.prenom,mail : $scope.mail,promo : $scope.promo,telephone : $scope.telephone,
-                        adresse : $scope.adresse,entreprise : $scope.entreprise,langue : $scope.langue,competences : $scope.competences})     
+    })     
     }
+//-----------------------------------------
 
-    //$scope.$watch('n',function(){
-      //      $scope.nom=$scope.n
-        //},true)
+
+//Fonction qui ajoute les données utilisateur à la bdd
+    $scope.update = function(){
+
+        $http({
+            method:'POST',
+            url:'/addUserToBDD',
+            //params:{n : name ,p : prenom }
+            data : [$scope.nom, $scope.prenom,$scope.adresse.rue, $scope.adresse.ville, $scope.promo,$scope.mail, $scope.telephone, $scope.entreprise.name, $scope.entreprise.ad_rue ,$scope.entreprise.ad_ville, $scope.langue, $scope.competences],
+        }).then(function successCallBack(response){
+            console.log(response)
+
+        },function errorCallBack(error){
+            console.log(error)
+
+    })     
+    }
+//------------------------------------------------------
 
 });
