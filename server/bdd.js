@@ -5,7 +5,7 @@ var mongoose = require('mongoose');
 var utilisateurSchema = mongoose.Schema({ //structure de a genre de classe
     nom: String,
     prenom : String,
-    promo : Number, //année complete 2016
+    promo : String, //année complete 2016
     adresse_email : String,
     adresse: {
         voie: String,
@@ -47,10 +47,12 @@ mongoose.addUserToBDD = function(data){
             return 0;
         }
         else if (user){
+            console.log(user)
             console.log("Already in BDD")
             return 1;
         }
         else{
+            console.log(user)
             var Utilisateur = mongoose.model('utilisateurs', utilisateurSchema);
             var util = new Utilisateur({
 

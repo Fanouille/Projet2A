@@ -1,18 +1,18 @@
 angular.module('AngularGen')
     .controller('FormulaireController', function ($scope,$http) {
     
-    $scope.nom="Nom"
-    $scope.prenom="Prenom"
+    $scope.nom=""
+    $scope.prenom=""
     $scope.mail=""
-    $scope.promo=0
+    $scope.promo=""
     $scope.telephone=""
     $scope.adresse={}
-    $scope.adresse.rue="Rue"
-    $scope.adresse.ville="Ville"
+    $scope.adresse.rue=""
+    $scope.adresse.ville=""
     $scope.entreprise={}
-    $scope.entreprise.name="nom"
-    $scope.entreprise.ad_rue="rue"
-    $scope.entreprise.ad_ville="ville"
+    $scope.entreprise.name=""
+    $scope.entreprise.ad_rue=""
+    $scope.entreprise.ad_ville=""
     $scope.langue={}
     $scope.competences={}
 

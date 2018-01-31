@@ -1,50 +1,95 @@
-Bienvenue sur la page Formulaire
-<br>
-
-<form method='post' action='/addBDD'>
-<input ng-model ='nom'>
-</form>
-<br>
-
-<input ng-model ='prenom'>
-<br>
-
-Telephone
-<input ng-model ='telephone'>
-<br>
-
-Adresse
-<input ng-model ='adresse.id1'>
-<input ng-model ='adresse.id2'>
-<br>
-
-Promo
-<input ng-model ='promo'>
-<br>
-
-Entreprise
-<input ng-model ='entreprise.id1'>
-<input ng-model ='entreprise.id2'>
-<input ng-model ='entreprise.id3'>
-<br>
-
- Langues
-<input ng-model ='langue.id1'>
-<input ng-model ='langue.id2'>
-<input ng-model ='langue.id3'>
-<br>
-
-Competences
-<input ng-model ='competences.id1'>
-<input ng-model ='competences.id2'>
-<input ng-model ='competences.id3'>
-<br>
-
-<md-button ng-click ='update()'>
- 	Valider
-</md-button>
-&nbsp&nbsp
-<md-button ng-click ='connexion()'>
- 	Tester Connexion
-</md-button>
-
+<md-content style="padding: 15px">
+    <!--Utilisez un peu plus l'espace sur la page, vous en avez !-->
+    Bienvenue sur la page de formulaire !
+    <form layout="column" layout-align="space-around start">
+        <md-input-container flex="10">
+            <label>Nom</label>
+            <input type="text" name="nom" ng-model="nom">
+        </md-input-container>
+        <md-input-container flex="10">
+            <label>Prenom</label>
+            <input type="text" name="prenom" ng-model="prenom">
+        </md-input-container>
+        <!--Pour s'assurer que l'on aie bien un numero de téléphone, regarder du côté de ng-pattern-->
+        <md-input-container flex="10">
+            <label>Telephone</label>
+            <input type="text" name="telephone" ng-model="telephone">
+        </md-input-container>
+        <md-input-container flex="10">
+            <label>Adresse E-mail</label>
+            <input type="text" name="mail" ng-model="mail">
+        </md-input-container>
+        <!--Pays ?-->
+        <div flex="10" layout="row" layout-align="start center">
+            <md-input-container flex="20">
+                <label>Adresse</label>
+                <input type="text" name="adresse.adresse" ng-model="adresse.adresse">
+            </md-input-container>
+            <md-input-container flex="20">
+                <label>Ville</label>
+                <input type="text" name="adresse.ville" ng-model="adresse.ville">
+            </md-input-container>
+        </div>
+        <md-input-container flex="10">
+            <label>Promo (N**)</label>
+            <input type="text" name="promo" ng-model="promo">
+        </md-input-container>
+        <div flex="10" layout="row" layout-align="start center">
+            <md-input-container flex="20">
+                <label>Nom de l'entreprise</label>
+                <input type="text" name="entreprise.nom" ng-model="entreprise.nom">
+            </md-input-container>
+            <md-input-container flex="20">
+                <label>Adresse de l'entreprise</label>
+                <input type="text" name="entreprise.adresse" ng-model="entreprise.adresse">
+            </md-input-container>
+            <md-input-container flex="20">
+                <label>Ville de l'entreprise</label>
+                <input type="text" name="entreprise.ville" ng-model="entreprise.ville">
+            </md-input-container>
+        </div>
+        <!--Jeter un oeil du côté des md-chips : Permet de faire une liste potentiellement infini d'items-->
+        <div flex="10" layout="row" layout-align="start center">
+            <md-input-container flex="20">
+                <label>Langue</label>
+                <input type="text" name="langue.first" ng-model="langue.first">
+            </md-input-container>
+            <md-input-container flex="20">
+                <label>Langue</label>
+                <input type="text" name="langue.second" ng-model="langue.second">
+            </md-input-container>
+            <md-input-container flex="20">
+                <label>Langue</label>
+                <input type="text" name="langue.third" ng-model="langue.third">
+            </md-input-container>
+        </div>
+        <!--Jeter un oeil du côté des md-chips : Permet de faire une liste potentiellement infini d'items-->
+        <div flex="10" layout="row" layout-align="start center">
+            <md-input-container flex="20">
+                <label>Compétences</label>
+                <input type="text" name="competences.first" ng-model="competences.first">
+            </md-input-container>
+            <md-input-container flex="20">
+                <label>Compétences</label>
+                <input type="text" name="competences.second" ng-model="competences.second">
+            </md-input-container>
+            <md-input-container flex="20">
+                <label>Compétences</label>
+                <input type="text" name="competences.third" ng-model="competences.third">
+            </md-input-container>
+        </div>
+        <div flex="10" layout="row" layout-align="start center">
+            <!--Un bouton qui permet de reset le formulaire est toujours le bienvenue-->
+            <div flex="50">
+                <md-button ng-click="">
+                    Clear
+                </md-button>
+            </div>
+            <div flex="50">
+                <md-button ng-click ='update()'>
+                Valider
+                </md-button>
+            </div>
+        </div>
+    </form>
+</md-content>
