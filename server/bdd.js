@@ -25,6 +25,7 @@ var utilisateurSchema = mongoose.Schema({ //structure de a genre de classe
 });
 var db = mongoose.connection;
 
+
 //------TEST CONNEXION A BDD-------------
 mongoose.donnee = []
 mongoose.testConnexion = function(data){
@@ -41,13 +42,12 @@ mongoose.testConnexion = function(data){
 mongoose.addUserToBDD = function(data){
     console.log("Request add user to BDD.");
     var result = db.collection('utilisateurs').findOne({adresse_email : data[5]}, function(err,user){ //une adresse email est unique
-        console.log("Ask")
         if (err){
-            console.log("Error happened")
+            console.log("Error happened");
             return 0;
         }
-        else if (user){
-            console.log("Already in BDD")
+        else if (user){//ne rentre pas dans cette partie de la boucle quand une adresse mail est trouvée
+            console.log("Already in BDD");
             return 1;
         }
         else{
@@ -83,7 +83,7 @@ mongoose.addUserToBDD = function(data){
             util.save(function(err, utilisateur) {
                 mongoose.disconnect();
             });
-            console.log("User added to BDD")
+            console.log("User added to BDD");
             return 2;
             
         }  
@@ -95,4 +95,3 @@ mongoose.addUserToBDD = function(data){
 
 mongoose.connect('mongodb://localhost/projet2A');
 module.exports = mongoose;
-

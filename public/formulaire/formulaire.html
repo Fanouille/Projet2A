@@ -1,31 +1,43 @@
-Bienvenue sur la page Formulaire
+Veuillez remplir ce formulaire
+<br>
 <br>
 
-<form method='post' action='/addBDD'>
+<!--nom-->
 <input ng-model ='nom'>
-</form>
+<br>
 <br>
 
+<!--prenom-->
 <input ng-model ='prenom'>
 <br>
+<br>
 
-Telephone
+<!--telephone-->
 <input ng-model ='telephone'>
+<br>
+<br>
+
+<!--e-mail-->
+<input ng-model ='mail'>
+<br>
 <br>
 
 Adresse
-<input ng-model ='adresse.id1'>
-<input ng-model ='adresse.id2'>
+<input ng-model ='adresse.rue'>
+<input ng-model ='adresse.ville'>
+<br>
 <br>
 
 Promo
 <input ng-model ='promo'>
 <br>
+<br>
 
 Entreprise
-<input ng-model ='entreprise.id1'>
-<input ng-model ='entreprise.id2'>
-<input ng-model ='entreprise.id3'>
+<input ng-model ='entreprise.name'>
+<input ng-model ='entreprise.ad_rue'>
+<input ng-model ='entreprise.ad_ville'>
+<br>
 <br>
 
  Langues
@@ -33,13 +45,16 @@ Entreprise
 <input ng-model ='langue.id2'>
 <input ng-model ='langue.id3'>
 <br>
+<br>
 
 Competences
 <input ng-model ='competences.id1'>
 <input ng-model ='competences.id2'>
 <input ng-model ='competences.id3'>
 <br>
+<br>
 
+<form method='post' action='/addBDD'></form>
 <md-button ng-click ='update()'>
  	Valider
 </md-button>

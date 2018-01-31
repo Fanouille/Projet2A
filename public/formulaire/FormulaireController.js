@@ -3,16 +3,16 @@ angular.module('AngularGen')
     
     $scope.nom="Nom"
     $scope.prenom="Prenom"
-    $scope.mail=""
+    $scope.mail="E-Mail"
     $scope.promo=0
-    $scope.telephone=""
+    $scope.telephone="Telephone"
     $scope.adresse={}
     $scope.adresse.rue="Rue"
     $scope.adresse.ville="Ville"
     $scope.entreprise={}
-    $scope.entreprise.name="nom"
-    $scope.entreprise.ad_rue="rue"
-    $scope.entreprise.ad_ville="ville"
+    $scope.entreprise.name="Nom"
+    $scope.entreprise.ad_rue="Rue"
+    $scope.entreprise.ad_ville="Ville"
     $scope.langue={}
     $scope.competences={}
 
@@ -54,3 +54,4 @@ angular.module('AngularGen')
 //------------------------------------------------------
 
 });
+
