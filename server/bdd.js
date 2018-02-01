@@ -25,16 +25,6 @@ var utilisateurSchema = mongoose.Schema({ //structure de a genre de classe
 });
 var db = mongoose.connection;
 
-//------TEST CONNEXION A BDD-------------
-mongoose.donnee = []
-mongoose.testConnexion = function(data){
-//function test(){
-    console.log("on est dans bdd.js, la connexion fonctionne");
-    mongoose.donnee = data;
-    console.log(data);
-}
-//---------------------------------------
-
 
 //-------TEST AJOUT A BDD----------------
 
