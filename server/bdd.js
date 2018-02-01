@@ -46,12 +46,8 @@ mongoose.addUserToBDD = function(data){
             console.log("Error happened")
             return 0;
         }
-        else if (user){
-            console.log(user)
-            console.log("Already in BDD")
-            return 1;
-        }
-        else{
+        
+        else if (user==null){
             console.log(user)
             var Utilisateur = mongoose.model('utilisateurs', utilisateurSchema);
             var util = new Utilisateur({
@@ -88,7 +84,13 @@ mongoose.addUserToBDD = function(data){
             console.log("User added to BDD")
             return 2;
             
-        }  
+        }
+        
+        else{
+            console.log(user);
+            console.log("Already in BDD");
+            return 1; 
+        } 
     });
     console.log(result);
     return result;
