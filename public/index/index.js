@@ -5,7 +5,7 @@
 angular.module('AngularGen')
 .controller('IndexController', function ($scope,$state){
 
-    	$scope.varGlobal = ''
+    	/*$scope.varGlobal = ''
       $scope.name ="Nom"
       $scope.surname="Prenom"
       $scope.mel=""
@@ -19,7 +19,7 @@ angular.module('AngularGen')
       $scope.ent.id2="rue"
       $scope.ent.id3="ville"
       $scope.lang={}
-      $scope.comp={}
+      $scope.comp={}*/
 
     
   	$scope.openTest = function(){

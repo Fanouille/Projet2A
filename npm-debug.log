@@ -12,6 +12,7 @@
 9 verbose lifecycle Angular-Generator@0.0.0~start: PATH: C:\Users\quent\AppData\Roaming\npm\node_modules\npm\bin\node-gyp-bin;D:\2A\Projet2A\node_modules\.bin;C:\Users\quent\AppData\Roaming\npm;C:\Program Files\nodejs\;C:\Program Files (x86)\Common Files\Intel\Shared Libraries\redist\intel64\compiler;C:\Perl64\site\bin;C:\Perl64\bin;C:\ProgramData\Oracle\Java\javapath;C:\Program Files (x86)\Intel\iCLS Client\;C:\Program Files\Intel\iCLS Client\;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\Intel\WiFi\bin\;C:\Program Files\Common Files\Intel\WirelessCommon\;C:\Program Files\nodejs\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\GtkSharp\2.12\bin;C:\Program Files\Git\cmd;C:\Program Files (x86)\Subversion\bin;C:\Users\quent\Anaconda3;C:\Users\quent\Anaconda3\Scripts;C:\Users\quent\Anaconda3\Library\bin;C:\Users\quent\AppData\Roaming\npm;%USERPROFILE%\AppData\Local\Microsoft\WindowsApps;
 10 verbose lifecycle Angular-Generator@0.0.0~start: CWD: D:\2A\Projet2A
 11 silly lifecycle Angular-Generator@0.0.0~start: Args: [ '/d /s /c', 'node ./bin/www' ]
+<<<<<<< HEAD
 12 silly lifecycle Angular-Generator@0.0.0~start: Returned: code: 3221225786  signal: null
 13 info lifecycle Angular-Generator@0.0.0~start: Failed to exec start script
 14 verbose stack Error: Angular-Generator@0.0.0 start: `node ./bin/www`
@@ -45,3 +46,26 @@
 23 error     npm owner ls Angular-Generator
 23 error There is likely additional logging output above.
 24 verbose exit [ 1, true ]
+=======
+12 verbose stack Error: kill ENOSYS
+12 verbose stack     at exports._errnoException (util.js:1026:11)
+12 verbose stack     at process.kill (internal/process.js:172:13)
+12 verbose stack     at process.listener (C:\Users\quent\AppData\Roaming\npm\node_modules\npm\node_modules\npmlog\node_modules\gauge\node_modules\signal-exit\index.js:86:15)
+12 verbose stack     at emitNone (events.js:91:20)
+12 verbose stack     at process.emit (events.js:185:7)
+12 verbose stack     at processEmit (C:\Users\quent\AppData\Roaming\npm\node_modules\npm\node_modules\npmlog\node_modules\gauge\node_modules\signal-exit\index.js:146:32)
+12 verbose stack     at processEmit (C:\Users\quent\AppData\Roaming\npm\node_modules\npm\node_modules\npm-registry-client\node_modules\npmlog\node_modules\gauge\node_modules\signal-exit\index.js:146:32)
+12 verbose stack     at Signal.wrap.onsignal (internal/process.js:199:44)
+13 verbose cwd D:\2A\Projet2A
+14 error Windows_NT 10.0.16299
+15 error argv "C:\\Program Files\\nodejs\\node.exe" "C:\\Users\\quent\\AppData\\Roaming\\npm\\node_modules\\npm\\bin\\npm-cli.js" "start"
+16 error node v6.9.1
+17 error npm  v3.10.9
+18 error code ENOSYS
+19 error errno ENOSYS
+20 error syscall kill
+21 error kill ENOSYS
+22 error If you need help, you may report this error at:
+22 error     <https://github.com/npm/npm/issues>
+23 verbose exit [ 1, true ]
+>>>>>>> master

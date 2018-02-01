@@ -5,7 +5,7 @@ var mongoose = require('mongoose');
 var utilisateurSchema = mongoose.Schema({ //structure de a genre de classe
     nom: String,
     prenom : String,
-    promo : Number, //année complete 2016
+    promo : String, //année complete 2016
     adresse_email : String,
     adresse: {
         voie: String,
@@ -26,16 +26,6 @@ var utilisateurSchema = mongoose.Schema({ //structure de a genre de classe
 var db = mongoose.connection;
 
 
-//------TEST CONNEXION A BDD-------------
-mongoose.donnee = []
-mongoose.testConnexion = function(data){
-//function test(){
-    console.log("on est dans bdd.js, la connexion fonctionne");
-    mongoose.donnee = data;
-    console.log(data);
-}
-//---------------------------------------
-
 
 //-------TEST AJOUT A BDD----------------
 
@@ -46,11 +36,9 @@ mongoose.addUserToBDD = function(data){
             console.log("Error happened");
             return 0;
         }
-        else if (user){//ne rentre pas dans cette partie de la boucle quand une adresse mail est trouvée
-            console.log("Already in BDD");
-            return 1;
-        }
-        else{
+        
+        else if (user==null){
+            console.log(user)
             var Utilisateur = mongoose.model('utilisateurs', utilisateurSchema);
             var util = new Utilisateur({
 
@@ -86,7 +74,13 @@ mongoose.addUserToBDD = function(data){
             console.log("User added to BDD");
             return 2;
             
-        }  
+        }
+        
+        else{
+            console.log(user);
+            console.log("Already in BDD");
+            return 1; 
+        } 
     });
     console.log(result);
     return result;

@@ -1,38 +1,20 @@
 angular.module('AngularGen')
     .controller('FormulaireController', function ($scope,$http) {
-    
-    $scope.nom="Nom"
-    $scope.prenom="Prenom"
-    $scope.mail="E-Mail"
-    $scope.promo=0
-    $scope.telephone="Telephone"
+
+    $scope.nom=""
+    $scope.prenom=""
+    $scope.mail=""
+    $scope.promo=""
+    $scope.telephone=""
     $scope.adresse={}
-    $scope.adresse.rue="Rue"
-    $scope.adresse.ville="Ville"
+    $scope.adresse.rue=""
+    $scope.adresse.ville=""
     $scope.entreprise={}
-    $scope.entreprise.name="Nom"
-    $scope.entreprise.ad_rue="Rue"
-    $scope.entreprise.ad_ville="Ville"
+    $scope.entreprise.name=""
+    $scope.entreprise.ad_rue=""
+    $scope.entreprise.ad_ville=""
     $scope.langue={}
     $scope.competences={}
-
-
-//Fonction qui teste la connexion à la bdd
-    $scope.connexion = function(){
-
-        $http({
-            method:'POST',
-            url:'/testConnexionToBDD',
-            data : ['Contenu de data'],
-        }).then(function successCallBack(response){
-            console.log(response)
-
-        },function errorCallBack(error){
-            console.log(error)
-
-    })     
-    }
-//-----------------------------------------
 
 
 //Fonction qui ajoute les données utilisateur à la bdd
@@ -53,5 +35,24 @@ angular.module('AngularGen')
     }
 //------------------------------------------------------
 
+
+//Fonction qui reset le formulaire
+    $scope.clear = function(){
+        $scope.nom=""
+        $scope.prenom=""
+        $scope.mail=""
+        $scope.promo=""
+        $scope.telephone=""
+        $scope.adresse={}
+        $scope.adresse.rue=""
+        $scope.adresse.ville=""
+        $scope.entreprise={}
+        $scope.entreprise.name=""
+        $scope.entreprise.ad_rue=""
+        $scope.entreprise.ad_ville=""
+        $scope.langue={}
+        $scope.competences={}
+    }
+//---------------------------------------------------
 });
 
