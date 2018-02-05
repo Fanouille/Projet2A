@@ -34,7 +34,7 @@
         <div layout="row">
             <div flex="70"></div>
             <div flex="30">
-                <div layout="row">
+                <!--div layout="row">
                     <div flex="40"></div>
                     <div flex="40"> 
                         <input ng-model="recherche" side = "right"><br>
@@ -45,6 +45,17 @@
                             <i class="material-icons">search</i>
                         </md-button>
                     </div>
+                </div-->
+                <div flex="100" layout="row" layout-align="start center">
+                    <md-input-container flex="20">
+                        <label>Recherche</label>
+                        <input type="text" name="Recherche" ng-model="recherche">
+                    </md-input-container>
+                    <md-input-container flex="20">
+                        <md-button ng-click="search()">
+                            <i class="material-icons">search</i>
+                        </md-button>
+                    </md-input-container>
                 </div>
             </div>
         </div>

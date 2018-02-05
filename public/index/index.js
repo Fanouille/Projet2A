@@ -3,7 +3,7 @@
  */
 
 angular.module('AngularGen')
-.controller('IndexController', function ($scope,$state){
+.controller('IndexController', function ($scope,$state,$http){
 
     	/*$scope.varGlobal = ''
       $scope.name ="Nom"
@@ -37,7 +37,7 @@ angular.module('AngularGen')
     $scope.openFormulaire = function(){
         $state.go('formulaire')
     }
-  	$scope.recherche='Recherche'
+  	$scope.recherche=""
         
     $scope.$watch('recherche',function(){
         console.log($scope.recherche)
@@ -47,9 +47,16 @@ angular.module('AngularGen')
     $scope.objetRecherche=''
 
   	$scope.search = function(){
-  		  $scope.objetRecherche=$scope.recherche
-  		  console.log($scope.objetRecherche)
-  		  $state.go('search')
+        $http({
+          method:'POST',
+          url:'/researchBDD',
+          data : [$scope.recherche],
+        }).then(function successCallBack(response){
+        console.log(response)
+
+        },function errorCallBack(error){
+        console.log(error)
+        })     
   	}
  	
 });

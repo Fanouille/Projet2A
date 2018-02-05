@@ -13,25 +13,24 @@ router.get('/', function (req, res, next) {
     res.sendFile(path.join(__dirname, '../', 'views', 'index.html'));
 });
 
-//--------TEST CONNEXION A BDD-----------------------
-router.post('/testConnexionToBDD',function(req,res){
-  console.log("on est dans server.js, methode appelée");
-  console.log(req.body);
-  bdd.testConnexion(req.body);
-  res.json();
-});
-//---------------------------------------------------
 
 
 //-----------TEST AJOUT A BDD------------------------
 router.post('/addUserToBDD',function(req,res){
-  console.log("on est dans server.js, methode appelée");
-  console.log(req.body);
+  //console.log("on est dans server.js, methode appelée");
+  //console.log(req.body);
   bdd.addUserToBDD(req.body);
+  
   res.json();
 });
 //----------------------------------------------------
 
+router.post('/researchBDD',function(req,res){
+  console.log("on est dans server.js, recherche demandée");
+  console.log(req.body);
+  bdd.searchInBDD(req.body);
+  res.json();
+});
 
 module.exports = router;
 

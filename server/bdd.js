@@ -30,7 +30,7 @@ var db = mongoose.connection;
 //-------TEST AJOUT A BDD----------------
 
 mongoose.addUserToBDD = function(data){
-    console.log("Request add user to BDD.");
+    //console.log("Request add user to BDD.");
     var result = db.collection('utilisateurs').findOne({adresse_email : data[5]}, function(err,user){ //une adresse email est unique
         if (err){
             console.log("Error happened");
@@ -38,7 +38,7 @@ mongoose.addUserToBDD = function(data){
         }
         
         else if (user==null){
-            console.log(user)
+            //console.log(user)
             var Utilisateur = mongoose.model('utilisateurs', utilisateurSchema);
             var util = new Utilisateur({
 
@@ -82,10 +82,23 @@ mongoose.addUserToBDD = function(data){
             return 1; 
         } 
     });
-    console.log(result);
-    return result;
+    //console.log(result);
+    //return result;
 }
 //-------------------------------------------
+db.collection("utilisateurs").createIndex({"$**":"text"});
+
+mongoose.searchInBDD = function(research){
+    console.log("on est dans bdd, recherche en cours");
+    var cursor = db.collection("utilisateurs").find({ $text: {$search: research[0]}}).toArray(function(err, items) {
+        if (err){
+            return 0;
+        }
+        console.log(items);
+        
+    });
+    return 1    
+}
 
 mongoose.connect('mongodb://localhost/projet2A');
 module.exports = mongoose;
