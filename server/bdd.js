@@ -86,7 +86,8 @@ mongoose.addUserToBDD = function(data){
     //return result;
 }
 //-------------------------------------------
-db.collection("utilisateurs").createIndex({"$**":"text"});
+db.collection('utilisateurs').dropIndexes();
+db.collection('utilisateurs').createIndex({'$**':'text'});
 
 mongoose.searchInBDD = function(research){
     console.log("on est dans bdd, recherche en cours");
