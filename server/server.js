@@ -26,9 +26,10 @@ router.post('/addUserToBDD',function(req,res){
 //----------------------------------------------------
 
 router.post('/researchBDD',function(req,res){
-  console.log("on est dans server.js, recherche demandée");
-  console.log(req.body);
+  //console.log("on est dans server.js, recherche demandée");
+  //console.log(req.body);
   bdd.searchInBDD(req.body);
+  
   res.json();
 });
 

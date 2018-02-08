@@ -90,15 +90,14 @@ db.collection('utilisateurs').dropIndexes();
 db.collection('utilisateurs').createIndex({'$**':'text'});
 
 mongoose.searchInBDD = function(research){
-    console.log("on est dans bdd, recherche en cours");
+    //console.log("on est dans bdd, recherche en cours");
     var cursor = db.collection("utilisateurs").find({ $text: {$search: research[0]}}).toArray(function(err, items) {
         if (err){
-            return 0;
+            return handleError(err);
         }
         console.log(items);
-        
-    });
-    return 1    
+        return 0;
+    });   
 }
 
 mongoose.connect('mongodb://localhost/projet2A');
