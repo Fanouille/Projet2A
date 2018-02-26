@@ -3,7 +3,7 @@
  */
 
 angular.module('AngularGen')
-.controller('IndexController', function ($scope,$state,$http){
+.controller('IndexController', function ($scope,$state,$http,$state){
 
     	/*$scope.varGlobal = ''
       $scope.name ="Nom"
@@ -45,17 +45,18 @@ angular.module('AngularGen')
         //il écoute donc si il y a du changement dans l'objet
 
     $scope.objetRecherche=''
+    $scope.liste=[]
 
   	$scope.search = function(){
-        $http({
-          method:'POST',
-          url:'/researchBDD',
-          data : [$scope.recherche],
-        }).then(function successCallBack(response){
-        console.log(response)
+        $http.get(
+          '/researchBDD/'+$scope.recherche
+          ).then(function successCallBack(response){
+            //console.log(response)
+            $scope.liste = response;
+            $state.go('advanced-search');
 
         },function errorCallBack(error){
-        console.log(error)
+            console.log(error);
         })     
   	}
  	

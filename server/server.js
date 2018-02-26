@@ -4,14 +4,14 @@ var router = express.Router();
 var path = require('path');
 var bodyParser = require('body-parser');
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
-var o = require('./services')
-var fs = require('fs')
+var o = require('./services');
+var fs = require('fs');
 
-var bdd = require('./bdd')
+var bdd = require('./bdd');
 
 router.get('/', function (req, res, next) {
     res.sendFile(path.join(__dirname, '../', 'views', 'index.html'));
-});
+})
 
 
 
@@ -22,16 +22,18 @@ router.post('/addUserToBDD',function(req,res){
   bdd.addUserToBDD(req.body);
   
   res.json();
-});
+})
 //----------------------------------------------------
 
-router.post('/researchBDD',function(req,res){
-  //console.log("on est dans server.js, recherche demandée");
-  //console.log(req.body);
-  bdd.searchInBDD(req.body);
+router.get('/researchBDD/:id',function(req,res){
+  console.log(req.params.id);
+  var promise = bdd.searchInBDD(req.params.id);
+  promise.then(function(result){
+    //console.log(result);
+    res.json(result);
+  });
   
-  res.json();
-});
+})
 
 module.exports = router;
 

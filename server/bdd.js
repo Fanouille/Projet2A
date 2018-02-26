@@ -91,13 +91,25 @@ db.collection('utilisateurs').createIndex({'$**':'text'});
 
 mongoose.searchInBDD = function(research){
     //console.log("on est dans bdd, recherche en cours");
-    var cursor = db.collection("utilisateurs").find({ $text: {$search: research[0]}}).toArray(function(err, items) {
+    /*
+    var res = [];
+    db.collection("utilisateurs").find({ $text: {$search: research}}).toArray(function(err, items) {
         if (err){
-            return handleError(err);
+            console.log('error happened');
         }
-        console.log(items);
-        return 0;
-    });   
+        //console.log(items);
+        res = items;
+    }); 
+    console.log(res);
+    return res;*/
+    return new Promise(function(resolve,reject){
+        db.collection('utilisateurs').find({$text : {$search: research}}).toArray(function(err,items){
+            if (err) {
+                return reject(err);
+            }
+            return resolve(items);
+        })
+    })
 }
 
 mongoose.connect('mongodb://localhost/projet2A');
