@@ -4,6 +4,7 @@ angular.module('AngularGen')
     $scope.nom=""
     $scope.prenom=""
     $scope.mail=""
+    $scope.password=""
     $scope.promo=""
     $scope.telephone=""
     $scope.adresse={}
@@ -25,7 +26,7 @@ angular.module('AngularGen')
             method:'POST',
             url:'/addUserToBDD',
             //params:{n : name ,p : prenom }
-            data : [$scope.nom, $scope.prenom,$scope.adresse.rue, $scope.adresse.ville, $scope.promo,$scope.mail, $scope.telephone, $scope.entreprise.name, $scope.entreprise.ad_rue ,$scope.entreprise.ad_ville, $scope.langue, $scope.competences],
+            data : [$scope.nom, $scope.prenom,$scope.adresse.rue, $scope.adresse.ville, $scope.promo,$scope.mail, $scope.telephone, $scope.entreprise.name, $scope.entreprise.ad_rue ,$scope.entreprise.ad_ville, $scope.langue, $scope.competences,$scope.password],
         }).then(function successCallBack(response){
             $scope.statutAjout = "user added to BDD";
 

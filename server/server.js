@@ -40,5 +40,12 @@ router.get('/researchBDD/:id',function(req,res){
 })
 //----------------------------------------------------
 
+router.get('/connexion/:id1/:id2',function(req,res){
+  var promise = bdd.assertConnexion(req.params.id1,req.params.id2);
+  promise.then(function(result){
+    res.json(result);
+  });
+})
+
 module.exports = router;
 

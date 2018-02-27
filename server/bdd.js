@@ -2,12 +2,12 @@
 var mongoose = require('mongoose');
 mongoose.Promise = global.Promise; //règle problème d'un depreciation warning sur les promesses
 
-/*
+
 //------------------------------GESTION DES MOTS DE PASSE--------------------------------------------------------------
-bcrypt = require(bcrypt);
+bcrypt = require('bcrypt');
 SALT_WORK_FACTOR = 10;
 //---------------------------------------------------------------------------------------------------------------------
-*/
+
 
 
 //-------------------UTILISATEUR, DONNES PERSO-------------------------------------------------------------------------
@@ -15,8 +15,8 @@ var utilisateurSchema = mongoose.Schema({ //structure de a genre de classe
     nom: String,
     prenom : String,
     promo : String, //année complete 2016
-    adresse_email : String //{type: String, required: true, index: {unique: true}}, POUR LA GESTION DU MDP
-    //password: {type: String, required: true},
+    adresse_email : {type: String, required: true, index: {unique: true}}, //POUR LA GESTION DU MDP
+    password: {type: String, required: true},
     adresse: {
         voie: String,
         ville: String,
@@ -37,9 +37,11 @@ var utilisateurSchema = mongoose.Schema({ //structure de a genre de classe
 
 var db = mongoose.connection;
 
-/*
+
 //------------------------------HASHAGE DU MOT DE PASSE AVANT ENREGISTREMENT-----------------------------------------
-utilisateurSchema.pre(‘save’, { var user = this;
+utilisateurSchema.pre('save', function(next) {
+    var user = this;
+
 // only hash the password if it has been modified (or is new)
 if (!user.isModified('password')) return next();
 
@@ -47,7 +49,7 @@ if (!user.isModified('password')) return next();
 bcrypt.genSalt(SALT_WORK_FACTOR, function(err, salt) {
     if (err) return next(err);
 
-    // hash the password along with our new salt
+    // hash the password using our new salt
     bcrypt.hash(user.password, salt, function(err, hash) {
         if (err) return next(err);
 
@@ -55,16 +57,22 @@ bcrypt.genSalt(SALT_WORK_FACTOR, function(err, salt) {
         user.password = hash;
         next();
     });
+});
+
+
+});
+
 //-------------------------------------------------------------------------------------------------------------------
 
 //---------------------------METHODE DE COMPARAISON DE MOT DE PASSE--------------------------------------------------
-utilisateurSchema.methods.comparePassword = function(candidatePassword, cb) {
-    bcrypt.compare(candidatePassword, this.password, function(err, isMatch) {
+mongoose.comparePassword = function(user, candidatePassword, cb) {
+    bcrypt.compare(candidatePassword, user.password, function(err, isMatch) {
         if (err) return cb(err);
         cb(null, isMatch);
     });
+};
 //-------------------------------------------------------------------------------------------------------------------
-*/
+
 
 //---------------------------------------AJOUT BDD AVEC PROMESSE-----------------------------------------------------
 mongoose.promiseAddUserToBDD = function(data){
@@ -91,6 +99,8 @@ mongoose.promiseAddUserToBDD = function(data){
 
                     adresse_email : data[5],
 
+                    password: data[12],
+
                     tel : data[6],
 
                     entreprise : {
@@ -105,6 +115,9 @@ mongoose.promiseAddUserToBDD = function(data){
                     competence : data[11],
                 });
                 util.save(function(err, utilisateur) {
+                    if (err){
+                        throw err;
+                    }
                     mongoose.disconnect();
                 });
                 return resolve(user);
@@ -116,7 +129,7 @@ mongoose.promiseAddUserToBDD = function(data){
             } 
         });
     })
-}
+};
 //-------------------------------------------------------------------------------------------------------------------
 
 
@@ -134,7 +147,30 @@ mongoose.searchInBDD = function(research){
             return resolve(items); //on rempli la promesse avec les items trouvés dans la BDD
         })
     })
-}
+};
+//-------------------------------------------------------------------------------------------------------------------
+
+
+//---------------------------TESTE LA CONNEXION D'UN UTILISATEUR-----------------------------------------------------
+mongoose.assertConnexion= function(mail,mdp){
+    return new Promise(function(resolve,reject){
+        db.collection('utilisateurs').findOne({adresse_email : mail}, function(err,user){
+            if (err){
+                return reject(err);
+            }
+
+            else if (user==null){
+                return reject(err);
+            }
+            mongoose.comparePassword(user,mdp,function(err,isMatch){
+                if (err){
+                    return reject(err);
+                }
+                return resolve(isMatch);
+            })
+        })
+    })
+};
 //-------------------------------------------------------------------------------------------------------------------
 
 

@@ -37,6 +37,11 @@ angular.module('AngularGen')
     $scope.openFormulaire = function(){
         $state.go('formulaire')
     }
+
+    $scope.openConnexion = function(){
+        $state.go('connexion')
+    }
+
   	$scope.recherche=""
         
     $scope.$watch('recherche',function(){

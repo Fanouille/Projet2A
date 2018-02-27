@@ -42,5 +42,12 @@ var AngularGen = angular.module('AngularGen', ['ngMessages','ngMaterial', 'ngAni
                     controller: 'FormulaireController',
 
                 })
+
+                .state('connexion', {
+                    url: '/connexion',
+                    templateUrl: 'connexion/connexion.html',
+                    controller: 'ConnexionController',
+
+                })
         }]);
 })(AngularGen);
