@@ -15,7 +15,7 @@ router.get('/', function (req, res, next) {
 
 
 
-//-----------TEST AJOUT A BDD------------------------
+//--------------- AJOUT A BDD--------------------------
 router.post('/addUserToBDD',function(req,res){
   //console.log("on est dans server.js, methode appelée");
   //console.log(req.body);
@@ -23,10 +23,12 @@ router.post('/addUserToBDD',function(req,res){
   
   res.json();
 })
-//----------------------------------------------------
+//-----------------------------------------------------
 
+
+//-----------RECHERCHE PAR MOT CLE---------------------
 router.get('/researchBDD/:id',function(req,res){
-  console.log(req.params.id);
+  //console.log(req.params.id);
   var promise = bdd.searchInBDD(req.params.id);
   promise.then(function(result){
     //console.log(result);
@@ -34,6 +36,7 @@ router.get('/researchBDD/:id',function(req,res){
   });
   
 })
+//----------------------------------------------------
 
 module.exports = router;
 

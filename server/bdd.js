@@ -1,7 +1,7 @@
 //var MongoClient = require("mongodb").MongoClient;
 var mongoose = require('mongoose');
 
-///////////UTILISATEUR, DONNES PERSO
+//-------------------UTILISATEUR, DONNES PERSO-------------------------------------------------------------------------
 var utilisateurSchema = mongoose.Schema({ //structure de a genre de classe
     nom: String,
     prenom : String,
@@ -23,12 +23,13 @@ var utilisateurSchema = mongoose.Schema({ //structure de a genre de classe
     langue: Array,
     competence : Array, //liste des compétences
 });
+//-------------------------------------------------------------------------------------------------------------------
+
 var db = mongoose.connection;
 
 
 
-//-------TEST AJOUT A BDD----------------
-
+//---------------------------------------TEST AJOUT A BDD------------------------------------------------------------
 mongoose.addUserToBDD = function(data){
     //console.log("Request add user to BDD.");
     var result = db.collection('utilisateurs').findOne({adresse_email : data[5]}, function(err,user){ //une adresse email est unique
@@ -82,35 +83,27 @@ mongoose.addUserToBDD = function(data){
             return 1; 
         } 
     });
-    //console.log(result);
-    //return result;
 }
-//-------------------------------------------
-db.collection('utilisateurs').dropIndexes();
+//-------------------------------------------------------------------------------------------------------------------
+
+
+//-------------------RECHERCHE PAR MOT CLE---------------------------------------------------------------------------
+db.collection('utilisateurs').dropIndexes(); //on indexe les données 
 db.collection('utilisateurs').createIndex({'$**':'text'});
 
 mongoose.searchInBDD = function(research){
     //console.log("on est dans bdd, recherche en cours");
-    /*
-    var res = [];
-    db.collection("utilisateurs").find({ $text: {$search: research}}).toArray(function(err, items) {
-        if (err){
-            console.log('error happened');
-        }
-        //console.log(items);
-        res = items;
-    }); 
-    console.log(res);
-    return res;*/
-    return new Promise(function(resolve,reject){
+    return new Promise(function(resolve,reject){ //promesse
         db.collection('utilisateurs').find({$text : {$search: research}}).toArray(function(err,items){
             if (err) {
                 return reject(err);
             }
-            return resolve(items);
+            return resolve(items); //on rempli la promesse avec les items trouvés dans la BDD
         })
     })
 }
+//-------------------------------------------------------------------------------------------------------------------
+
 
 mongoose.connect('mongodb://localhost/projet2A');
 module.exports = mongoose;
