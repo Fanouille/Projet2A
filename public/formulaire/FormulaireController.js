@@ -17,7 +17,8 @@ angular.module('AngularGen')
     $scope.competences={}
 
     $scope.statutAjout = "pas encore ajouté"
-//Fonction qui ajoute les données utilisateur à la bdd
+
+//-----------------Fonction qui ajoute les données utilisateur à la bdd------------------------
     $scope.update = function(){
 
         $http({
@@ -32,12 +33,12 @@ angular.module('AngularGen')
             console.log(error);
             $scope.statutAjout = "error happenned";
 
-    })     
+        })     
     }
-//------------------------------------------------------
+//---------------------------------------------------------------------------------------------
 
 
-//Fonction qui reset le formulaire
+//----------------------Fonction qui reset le formulaire---------------------------------------
     $scope.clear = function(){
         $scope.nom=""
         $scope.prenom=""
@@ -54,6 +55,6 @@ angular.module('AngularGen')
         $scope.langue={}
         $scope.competences={}
     }
-//---------------------------------------------------
-});
+//---------------------------------------------------------------------------------------------
 
+});

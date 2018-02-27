@@ -74,14 +74,14 @@ mongoose.promiseAddUserToBDD = function(data){
             }
             
             else{
-                return resolve("email already used"); 
+                return reject("user Already in BDD"); 
             } 
         });
     })
 }
 //-------------------------------------------------------------------------------------------------------------------
 
-
+/*
 //---------------------------------------TEST AJOUT A BDD------------------------------------------------------------
 mongoose.addUserToBDD = function(data){
     //console.log("Request add user to BDD.");
@@ -138,7 +138,7 @@ mongoose.addUserToBDD = function(data){
     });
 }
 //-------------------------------------------------------------------------------------------------------------------
-
+*/
 
 //-------------------RECHERCHE PAR MOT CLE---------------------------------------------------------------------------
 db.collection('utilisateurs').dropIndexes(); //on indexe les données 
