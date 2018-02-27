@@ -1,13 +1,22 @@
 //var MongoClient = require("mongodb").MongoClient;
 var mongoose = require('mongoose');
-mongoose.Promise = global.Promise
+mongoose.Promise = global.Promise; //règle problème d'un depreciation warning sur les promesses
+
+/*
+//------------------------------GESTION DES MOTS DE PASSE--------------------------------------------------------------
+bcrypt = require(bcrypt);
+SALT_WORK_FACTOR = 10;
+//---------------------------------------------------------------------------------------------------------------------
+*/
+
 
 //-------------------UTILISATEUR, DONNES PERSO-------------------------------------------------------------------------
 var utilisateurSchema = mongoose.Schema({ //structure de a genre de classe
     nom: String,
     prenom : String,
     promo : String, //année complete 2016
-    adresse_email : String,
+    adresse_email : String //{type: String, required: true, index: {unique: true}}, POUR LA GESTION DU MDP
+    //password: {type: String, required: true},
     adresse: {
         voie: String,
         ville: String,
@@ -27,6 +36,35 @@ var utilisateurSchema = mongoose.Schema({ //structure de a genre de classe
 //-------------------------------------------------------------------------------------------------------------------
 
 var db = mongoose.connection;
+
+/*
+//------------------------------HASHAGE DU MOT DE PASSE AVANT ENREGISTREMENT-----------------------------------------
+utilisateurSchema.pre(‘save’, { var user = this;
+// only hash the password if it has been modified (or is new)
+if (!user.isModified('password')) return next();
+
+// generate a salt
+bcrypt.genSalt(SALT_WORK_FACTOR, function(err, salt) {
+    if (err) return next(err);
+
+    // hash the password along with our new salt
+    bcrypt.hash(user.password, salt, function(err, hash) {
+        if (err) return next(err);
+
+        // override the cleartext password with the hashed one
+        user.password = hash;
+        next();
+    });
+//-------------------------------------------------------------------------------------------------------------------
+
+//---------------------------METHODE DE COMPARAISON DE MOT DE PASSE--------------------------------------------------
+utilisateurSchema.methods.comparePassword = function(candidatePassword, cb) {
+    bcrypt.compare(candidatePassword, this.password, function(err, isMatch) {
+        if (err) return cb(err);
+        cb(null, isMatch);
+    });
+//-------------------------------------------------------------------------------------------------------------------
+*/
 
 //---------------------------------------AJOUT BDD AVEC PROMESSE-----------------------------------------------------
 mongoose.promiseAddUserToBDD = function(data){
@@ -74,71 +112,13 @@ mongoose.promiseAddUserToBDD = function(data){
             }
             
             else{
-                return reject("user Already in BDD"); 
+                return reject("user Already in BDD"); //TO DO : gérer le cas où l'email existe déjà
             } 
         });
     })
 }
 //-------------------------------------------------------------------------------------------------------------------
 
-/*
-//---------------------------------------TEST AJOUT A BDD------------------------------------------------------------
-mongoose.addUserToBDD = function(data){
-    //console.log("Request add user to BDD.");
-    var result = db.collection('utilisateurs').findOne({adresse_email : data[5]}, function(err,user){ //une adresse email est unique
-        if (err){
-            console.log("Error happened");
-            return 0;
-        }
-        
-        else if (user==null){
-            //console.log(user)
-            var Utilisateur = mongoose.model('utilisateurs', utilisateurSchema);
-            var util = new Utilisateur({
-
-                nom : data[0],
-
-                prenom : data[1],
-
-                adresse : {
-                    voie : data[2],
-                    ville : data[3],
-                },
-
-                promo : data[4],
-
-                adresse_email : data[5],
-
-                tel : data[6],
-
-                entreprise : {
-                    nom : data[7],
-                    adresse : {
-                        voie : data[8],
-                        ville : data[9],
-                    } 
-                },
-                //mdp : 'coucou',
-                langue: data[10],
-                competence : data[11],
-            });
-            util.save(function(err, utilisateur) {
-                mongoose.disconnect();
-            });
-            console.log("User added to BDD");
-            return 2;
-            
-        }
-        
-        else{
-            console.log(user);
-            console.log("Already in BDD");
-            return 1; 
-        } 
-    });
-}
-//-------------------------------------------------------------------------------------------------------------------
-*/
 
 //-------------------RECHERCHE PAR MOT CLE---------------------------------------------------------------------------
 db.collection('utilisateurs').dropIndexes(); //on indexe les données 
@@ -158,5 +138,5 @@ mongoose.searchInBDD = function(research){
 //-------------------------------------------------------------------------------------------------------------------
 
 
-mongoose.connect('mongodb://localhost/projet2A',{useMongoClient : true});
+mongoose.connect('mongodb://localhost/projet2A',{useMongoClient : true}); //useMongoClient regle le problème du Warning
 module.exports = mongoose;
