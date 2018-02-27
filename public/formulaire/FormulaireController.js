@@ -16,7 +16,7 @@ angular.module('AngularGen')
     $scope.langue={}
     $scope.competences={}
 
-
+    $scope.statutAjout = "pas encore ajouté"
 //Fonction qui ajoute les données utilisateur à la bdd
     $scope.update = function(){
 
@@ -26,10 +26,11 @@ angular.module('AngularGen')
             //params:{n : name ,p : prenom }
             data : [$scope.nom, $scope.prenom,$scope.adresse.rue, $scope.adresse.ville, $scope.promo,$scope.mail, $scope.telephone, $scope.entreprise.name, $scope.entreprise.ad_rue ,$scope.entreprise.ad_ville, $scope.langue, $scope.competences],
         }).then(function successCallBack(response){
-            console.log(response)
+            $scope.statutAjout = "user added to BDD";
 
         },function errorCallBack(error){
-            console.log(error)
+            console.log(error);
+            $scope.statutAjout = "error happenned";
 
     })     
     }

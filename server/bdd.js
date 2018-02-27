@@ -1,5 +1,6 @@
 //var MongoClient = require("mongodb").MongoClient;
 var mongoose = require('mongoose');
+mongoose.Promise = global.Promise
 
 //-------------------UTILISATEUR, DONNES PERSO-------------------------------------------------------------------------
 var utilisateurSchema = mongoose.Schema({ //structure de a genre de classe
@@ -27,6 +28,58 @@ var utilisateurSchema = mongoose.Schema({ //structure de a genre de classe
 
 var db = mongoose.connection;
 
+//---------------------------------------AJOUT BDD AVEC PROMESSE-----------------------------------------------------
+mongoose.promiseAddUserToBDD = function(data){
+    return new Promise(function(resolve,reject){
+        db.collection('utilisateurs').findOne({adresse_email : data[5]}, function(err,user){ //une adresse email est unique
+            if (err){
+                return reject(err);
+            }
+            
+            else if (user==null){
+                var Utilisateur = mongoose.model('utilisateurs', utilisateurSchema);
+                var util = new Utilisateur({
+
+                    nom : data[0],
+
+                    prenom : data[1],
+
+                    adresse : {
+                        voie : data[2],
+                        ville : data[3],
+                    },
+
+                    promo : data[4],
+
+                    adresse_email : data[5],
+
+                    tel : data[6],
+
+                    entreprise : {
+                        nom : data[7],
+                        adresse : {
+                            voie : data[8],
+                            ville : data[9],
+                        } 
+                    },
+                    //mdp : 'coucou',
+                    langue: data[10],
+                    competence : data[11],
+                });
+                util.save(function(err, utilisateur) {
+                    mongoose.disconnect();
+                });
+                return resolve(user);
+                
+            }
+            
+            else{
+                return resolve("email already used"); 
+            } 
+        });
+    })
+}
+//-------------------------------------------------------------------------------------------------------------------
 
 
 //---------------------------------------TEST AJOUT A BDD------------------------------------------------------------
@@ -105,5 +158,5 @@ mongoose.searchInBDD = function(research){
 //-------------------------------------------------------------------------------------------------------------------
 
 
-mongoose.connect('mongodb://localhost/projet2A');
+mongoose.connect('mongodb://localhost/projet2A',{useMongoClient : true});
 module.exports = mongoose;

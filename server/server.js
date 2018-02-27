@@ -19,9 +19,11 @@ router.get('/', function (req, res, next) {
 router.post('/addUserToBDD',function(req,res){
   //console.log("on est dans server.js, methode appelée");
   //console.log(req.body);
-  bdd.addUserToBDD(req.body);
-  
-  res.json();
+  //bdd.addUserToBDD(req.body);
+  var promise = bdd.promiseAddUserToBDD(req.body);
+  promise.then(function(result){
+    res.json(result);
+  });
 })
 //-----------------------------------------------------
 
