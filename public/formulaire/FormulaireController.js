@@ -18,9 +18,13 @@ angular.module('AngularGen')
     $scope.competences={}
 
     $scope.statutAjout = "pas encore ajouté"
-
+    $scope.info = {}
+    $scope.id = [];
+    $scope.info.nom = "";
+    $scope.info.prenom = "";
+    $scope.info.promo = "";
 //-----------------Fonction qui ajoute les données utilisateur à la bdd------------------------
-    $scope.update = function(){
+    $scope. add = function(){
 
         $http({
             method:'POST',
@@ -29,12 +33,28 @@ angular.module('AngularGen')
             data : [$scope.nom, $scope.prenom,$scope.adresse.rue, $scope.adresse.ville, $scope.promo,$scope.mail, $scope.telephone, $scope.entreprise.name, $scope.entreprise.ad_rue ,$scope.entreprise.ad_ville, $scope.langue, $scope.competences,$scope.password],
         }).then(function successCallBack(response){
             $scope.statutAjout = "user added to BDD";
+            $scope.id = [$scope.nom, $scope.prenom,$scope.adresse.rue, $scope.adresse.ville, $scope.promo,$scope.mail, $scope.telephone, $scope.entreprise.name, $scope.entreprise.ad_rue ,$scope.entreprise.ad_ville, $scope.langue, $scope.competences];
 
         },function errorCallBack(error){
             console.log(error);
             $scope.statutAjout = "error happenned";
 
         })     
+    }
+//---------------------------------------------------------------------------------------------
+
+
+//---------------TODO--MODIFIER DONNEE UTILISATEUR---------------------------------------------
+    $scope.update = function(){
+        $http({
+            method: 'POST',
+            url: '/updateUserInBDD',
+            data: [$scope.id,$scope.info],
+        }).then(function successCallBack(response){
+            console.log(response);
+        },function errorCallBack(error){
+            console.log(error);
+        })
     }
 //---------------------------------------------------------------------------------------------
 

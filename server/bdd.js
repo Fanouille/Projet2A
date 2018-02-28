@@ -74,7 +74,7 @@ mongoose.comparePassword = function(user, candidatePassword, cb) {
 //-------------------------------------------------------------------------------------------------------------------
 
 
-//---------------------------------------AJOUT BDD AVEC PROMESSE-----------------------------------------------------
+//---------------------------------------AJOUT BDD-------------------------------------------------------------------
 mongoose.promiseAddUserToBDD = function(data){
     return new Promise(function(resolve,reject){
         db.collection('utilisateurs').findOne({adresse_email : data[5]}, function(err,user){ //une adresse email est unique
@@ -110,7 +110,6 @@ mongoose.promiseAddUserToBDD = function(data){
                             ville : data[9],
                         } 
                     },
-                    //mdp : 'coucou',
                     langue: data[10],
                     competence : data[11],
                 });
@@ -128,6 +127,15 @@ mongoose.promiseAddUserToBDD = function(data){
                 return reject("user Already in BDD"); //TO DO : gérer le cas où l'email existe déjà
             } 
         });
+    })
+};
+//-------------------------------------------------------------------------------------------------------------------
+
+
+//----------------------------------------MODIFICATION UTILISATEUR---------------------------------------------------
+mongoose.updateUser = function(id,data){
+    return new Promise(function(resolve,reject){
+        db.collection('utilisateurs').update({id: id},data);
     })
 };
 //-------------------------------------------------------------------------------------------------------------------

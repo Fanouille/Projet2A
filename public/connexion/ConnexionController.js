@@ -9,7 +9,7 @@ angular.module('AngularGen')
          $http.get(
           '/connexion/'+$scope.email+'/'+$scope.password
           ).then(function successCallBack(response){
-            //console.log(response)
+            console.log(response)
             $scope.connexionStatus = "you are connected";
 
         },function errorCallBack(error){
