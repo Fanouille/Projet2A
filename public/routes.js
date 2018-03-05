@@ -49,5 +49,13 @@ var AngularGen = angular.module('AngularGen', ['ngMessages','ngMaterial', 'ngAni
                     controller: 'ConnexionController',
 
                 })
+
+                .state('formulaireSummary', {
+                    url: '/formulaireSummary',
+                    templateUrl: 'formulaireSummary/formulaireSummary.html',
+                    controller: 'FormulaireSummaryController',
+
+                })
+
         }]);
 })(AngularGen);

@@ -29,7 +29,6 @@ var utilisateurSchema = mongoose.Schema({ //structure de a genre de classe
             ville : String,
         } 
     },
-    //mdp : String,
     langue: Array,
     competence : Array, //liste des compétences
 });
@@ -63,6 +62,7 @@ bcrypt.genSalt(SALT_WORK_FACTOR, function(err, salt) {
 });
 
 //-------------------------------------------------------------------------------------------------------------------
+
 
 //---------------------------METHODE DE COMPARAISON DE MOT DE PASSE--------------------------------------------------
 mongoose.comparePassword = function(user, candidatePassword, cb) {

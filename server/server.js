@@ -28,6 +28,15 @@ router.post('/addUserToBDD',function(req,res){
 //-----------------------------------------------------
 
 
+//--------------- MISE A JOUR UTILISATEUR--------------
+router.post('/updateUserInBDD',function(req,res){
+  var promise = bdd.updateUser(req.body[0],req.body[1]);
+  promise.then(function(result){
+    res.json(result);
+  });
+})
+//-----------------------------------------------------
+
 //-----------RECHERCHE PAR MOT CLE---------------------
 router.get('/researchBDD/:id',function(req,res){
   //console.log(req.params.id);

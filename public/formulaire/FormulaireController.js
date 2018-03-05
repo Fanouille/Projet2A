@@ -1,5 +1,5 @@
 angular.module('AngularGen')
-    .controller('FormulaireController', function ($scope,$http) {
+    .controller('FormulaireController', function ($scope,$http,$state) {
 
     $scope.nom=""
     $scope.prenom=""
@@ -16,13 +16,10 @@ angular.module('AngularGen')
     $scope.entreprise.ad_ville=""
     $scope.langue={}
     $scope.competences={}
-
+    $scope.id = []
     $scope.statutAjout = "pas encore ajouté"
     $scope.info = {}
-    $scope.id = [];
-    $scope.info.nom = "";
-    $scope.info.prenom = "";
-    $scope.info.promo = "";
+
 //-----------------Fonction qui ajoute les données utilisateur à la bdd------------------------
     $scope. add = function(){
 
@@ -34,7 +31,7 @@ angular.module('AngularGen')
         }).then(function successCallBack(response){
             $scope.statutAjout = "user added to BDD";
             $scope.id = [$scope.nom, $scope.prenom,$scope.adresse.rue, $scope.adresse.ville, $scope.promo,$scope.mail, $scope.telephone, $scope.entreprise.name, $scope.entreprise.ad_rue ,$scope.entreprise.ad_ville, $scope.langue, $scope.competences];
-
+            $state.go('formulaireSummary');
         },function errorCallBack(error){
             console.log(error);
             $scope.statutAjout = "error happenned";

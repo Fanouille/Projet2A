@@ -3,7 +3,7 @@
  */
 
 angular.module('AngularGen')
-.controller('IndexController', function ($scope,$state,$http,$state){
+.controller('IndexController', function ($scope,$state,$http,){
 
     	/*$scope.varGlobal = ''
       $scope.name ="Nom"
@@ -20,7 +20,6 @@ angular.module('AngularGen')
       $scope.ent.id3="ville"
       $scope.lang={}
       $scope.comp={}*/
-
     
   	$scope.openTest = function(){
   		  $state.go('test')
