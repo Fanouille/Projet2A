@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('AngularGen')
-.controller('IndexController', function ($scope,$state,$http,){
+.controller('IndexController', function ($scope,$state,$http,$mdPanel){
 
 
     	/*$scope.varGlobal = ''
@@ -41,11 +41,12 @@ angular.module('AngularGen')
     }
 
   	$scope.recherche=""
-        
+    /*   
     $scope.$watch('recherche',function(){
         console.log($scope.recherche)
     },true)//,true permet de regarder à l'interieur de l'objet
         //il écoute donc si il y a du changement dans l'objet
+    */
 
     $scope.objetRecherche=''
     $scope.liste=[]
@@ -64,7 +65,7 @@ angular.module('AngularGen')
   	}
 
 
-    function PanelGroupsCtrl($mdPanel) {
+    function PanelGroupsCtrl() {
       this.settings = {
         name: 'settings',
         items: [
@@ -99,11 +100,11 @@ angular.module('AngularGen')
         maxOpen: 3
       });
 
-      this.showToolbarMenu = function($event, menu) {
+      this.showToolbarMenu = function(event, menu) {
         var template = this.menuTemplate;
 
         var position = $mdPanel.newPanelPosition()
-            .relativeTo($event.srcElement)
+            .relativeTo(event.srcElement)
             .addPanelPosition(
               $mdPanel.xPosition.ALIGN_START,
               $mdPanel.yPosition.BELOW
@@ -120,21 +121,21 @@ angular.module('AngularGen')
           locals: {
             items: menu.items
           },
-          openFrom: $event,
+          openFrom: event,
           focusOnOpen: false,
           zIndex: 100,
           propagateContainerEvents: true,
-          groupName: ['toolbar', 'menus']
+          groupName: ['toolbar', 'menus'],
         };
 
         $mdPanel.open(config);
       };
 
-      this.showContentMenu = function($event, menu) {
+      this.showContentMenu = function(event, menu) {
         var template = this.menuTemplate;
 
         var position = $mdPanel.newPanelPosition()
-            .relativeTo($event.srcElement)
+            .relativeTo(event.srcElement)
             .addPanelPosition(
               $mdPanel.xPosition.ALIGN_START,
               $mdPanel.yPosition.BELOW
@@ -151,11 +152,11 @@ angular.module('AngularGen')
           locals: {
             items: menu.items
           },
-          openFrom: $event,
+          openFrom: event,
           focusOnOpen: false,
           zIndex: 100,
           propagateContainerEvents: true,
-          groupName: 'menus'
+          groupName: 'menus',
         };
 
         $mdPanel.open(config);
