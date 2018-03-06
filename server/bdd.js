@@ -74,7 +74,7 @@ mongoose.comparePassword = function(user, candidatePassword, cb) {
 //-------------------------------------------------------------------------------------------------------------------
 
 
-//---------------------------------------AJOUT BDD-------------------------------------------------------------------
+//---------------------------------------AJOUT UTILISATEUR BDD-------------------------------------------------------------------
 mongoose.promiseAddUserToBDD = function(data){
     return new Promise(function(resolve,reject){
         db.collection('utilisateurs').findOne({adresse_email : data[5]}, function(err,user){ //une adresse email est unique
@@ -177,6 +177,108 @@ mongoose.assertConnexion= function(mail,mdp){
                 return resolve(isMatch);
             })
         })
+    })
+};
+//-------------------------------------------------------------------------------------------------------------------
+
+//-------------------COMPETENCES-------------------------------------------------------------------------------------
+var competenceSchema = mongoose.Schema({ 
+    nom_comp: String,
+    commentaire : String,
+    url_utile : String, 
+    parent : mongoose.model('competence',competenceSchema),
+});
+//-------------------------------------------------------------------------------------------------------------------
+
+var Competences = mongoose.model('competence',competenceSchema);
+var racine = new Competences({
+    nom_comp : "racine"
+});
+
+//-----
+
+var robotique = new Competences({
+    nom_comp : "robotique",
+    commentaire : "",
+    url_utile : "", 
+});
+
+var ros = new Competences({
+    nom_comp : "ROS",
+    commentaire : "",
+    url_utile : "",
+    parent : robotique,
+});
+
+var arduino = new Competences({
+    nom_comp : "Arduino",
+    commentaire : "",
+    url_utile : "",
+    parent : robotique,
+});
+
+//-------
+
+var jeu_video = new Competences({
+    nom_comp : "Jeux Vidéos",
+    commentaire : "",
+    url_utile : "", 
+});
+
+var moteur_de_jeu = new Competences({
+    nom_comp : "Moteur de jeu",
+    commentaire : "",
+    url_utile : "",
+    parent : jeu_video
+});
+
+var unity = new Competences({
+    nom_comp : "Unity",
+    commentaire : "",
+    url_utile : "",
+    parent : moteur_de_jeu,
+}); 
+
+
+
+
+
+//---------------------------------------AJOUT COMPETENCE BDD-------------------------------------------------------------------
+mongoose.promiseAddCompetencesToBDD = function(data){
+    return new Promise(function(resolve,reject){
+        db.collection('competences').findOne({nom_comp : data[0]}, function(err,comp){ //une competences est unique
+            if (err){
+                return reject(err);
+            }
+            
+            else if (comp==null){
+                var Competences = mongoose.model('competences', competenceSchema);
+                var comp = new Competences({
+
+                    nom_comp : data[0],
+
+                    commentaire : data[1],
+
+
+                    url_utile : data[4],
+
+                    parent : data[5],
+
+                });
+                util.save(function(err, competence) {
+                    if (err){
+                        throw err;
+                    }
+                    mongoose.disconnect();
+                });
+                return resolve(comp);
+                
+            }
+            
+            else{
+                return reject("Skill Already in BDD"); //TO DO : gérer le cas où l'email existe déjà
+            } 
+        });
     })
 };
 //-------------------------------------------------------------------------------------------------------------------
