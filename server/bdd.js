@@ -181,26 +181,42 @@ mongoose.assertConnexion= function(mail,mdp){
 };
 //-------------------------------------------------------------------------------------------------------------------
 
+
 //-------------------COMPETENCES-------------------------------------------------------------------------------------
-var competenceSchema = mongoose.Schema({ 
+var db = mongoose.connection;
+
+var competenceSchema = mongoose.Schema({
     nom_comp: String,
     commentaire : String,
     url_utile : String, 
-    parent : mongoose.model('competence',competenceSchema),
+})
+competenceSchema.add({ 
+    parent : [competenceSchema],
 });
 //-------------------------------------------------------------------------------------------------------------------
 
-var Competences = mongoose.model('competence',competenceSchema);
+var Competences = mongoose.model('competences',competenceSchema);
 var racine = new Competences({
     nom_comp : "racine"
 });
 
+racine.save(function(err) {
+    if (err){
+        throw err;
+    }
+});
 //-----
 
 var robotique = new Competences({
     nom_comp : "robotique",
     commentaire : "",
     url_utile : "", 
+});
+robotique.save(function(err) {
+    if (err){
+        throw err;
+    }
+    mongoose.connection.close();
 });
 
 var ros = new Competences({
@@ -209,6 +225,7 @@ var ros = new Competences({
     url_utile : "",
     parent : robotique,
 });
+ros.save('competence');
 
 var arduino = new Competences({
     nom_comp : "Arduino",
@@ -216,6 +233,7 @@ var arduino = new Competences({
     url_utile : "",
     parent : robotique,
 });
+arduino.save('competence');
 
 //-------
 
@@ -224,6 +242,7 @@ var jeu_video = new Competences({
     commentaire : "",
     url_utile : "", 
 });
+jeu_video.save();
 
 var moteur_de_jeu = new Competences({
     nom_comp : "Moteur de jeu",
@@ -231,6 +250,7 @@ var moteur_de_jeu = new Competences({
     url_utile : "",
     parent : jeu_video
 });
+moteur_de_jeu.save();
 
 var unity = new Competences({
     nom_comp : "Unity",
@@ -238,11 +258,10 @@ var unity = new Competences({
     url_utile : "",
     parent : moteur_de_jeu,
 }); 
+unity.save();
 
 
-
-
-
+/*
 //---------------------------------------AJOUT COMPETENCE BDD-------------------------------------------------------------------
 mongoose.promiseAddCompetencesToBDD = function(data){
     return new Promise(function(resolve,reject){
@@ -265,7 +284,7 @@ mongoose.promiseAddCompetencesToBDD = function(data){
                     parent : data[5],
 
                 });
-                util.save(function(err, competence) {
+                comp.save(function(err, competence) {
                     if (err){
                         throw err;
                     }
@@ -282,7 +301,7 @@ mongoose.promiseAddCompetencesToBDD = function(data){
     })
 };
 //-------------------------------------------------------------------------------------------------------------------
-
+*/
 
 mongoose.connect('mongodb://localhost/projet2A',{useMongoClient : true}); //useMongoClient regle le problème du Warning
 module.exports = mongoose;
