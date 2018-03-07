@@ -35,7 +35,7 @@ var utilisateurSchema = mongoose.Schema({ //structure de a genre de classe
 //-------------------------------------------------------------------------------------------------------------------
 
 var db = mongoose.connection;
-
+db.collection("competences").remove({});
 
 //------------------------------HASHAGE DU MOT DE PASSE AVANT ENREGISTREMENT-----------------------------------------
 utilisateurSchema.pre('save', function(next) {
@@ -183,7 +183,7 @@ mongoose.assertConnexion= function(mail,mdp){
 
 
 //-------------------COMPETENCES-------------------------------------------------------------------------------------
-var db = mongoose.connection;
+//var db = mongoose.connection;
 
 var competenceSchema = mongoose.Schema({
     nom_comp: String,
@@ -194,6 +194,7 @@ competenceSchema.add({
     parent : [competenceSchema],
 });
 //-------------------------------------------------------------------------------------------------------------------
+
 
 var Competences = mongoose.model('competences',competenceSchema);
 var racine = new Competences({
