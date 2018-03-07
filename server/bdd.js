@@ -35,7 +35,7 @@ var utilisateurSchema = mongoose.Schema({ //structure de a genre de classe
 //-------------------------------------------------------------------------------------------------------------------
 
 var db = mongoose.connection;
-
+db.collection("competences").remove({});
 
 //------------------------------HASHAGE DU MOT DE PASSE AVANT ENREGISTREMENT-----------------------------------------
 utilisateurSchema.pre('save', function(next) {
@@ -74,7 +74,7 @@ mongoose.comparePassword = function(user, candidatePassword, cb) {
 //-------------------------------------------------------------------------------------------------------------------
 
 
-//---------------------------------------AJOUT BDD-------------------------------------------------------------------
+//---------------------------------------AJOUT UTILISATEUR BDD-------------------------------------------------------------------
 mongoose.promiseAddUserToBDD = function(data){
     return new Promise(function(resolve,reject){
         db.collection('utilisateurs').findOne({adresse_email : data[5]}, function(err,user){ //une adresse email est unique
@@ -181,6 +181,128 @@ mongoose.assertConnexion= function(mail,mdp){
 };
 //-------------------------------------------------------------------------------------------------------------------
 
+
+//-------------------COMPETENCES-------------------------------------------------------------------------------------
+//var db = mongoose.connection;
+
+var competenceSchema = mongoose.Schema({
+    nom_comp: String,
+    commentaire : String,
+    url_utile : String, 
+})
+competenceSchema.add({ 
+    parent : [competenceSchema],
+});
+//-------------------------------------------------------------------------------------------------------------------
+
+
+var Competences = mongoose.model('competences',competenceSchema);
+var racine = new Competences({
+    nom_comp : "racine"
+});
+
+racine.save(function(err) {
+    if (err){
+        throw err;
+    }
+});
+//-----
+
+var robotique = new Competences({
+    nom_comp : "robotique",
+    commentaire : "",
+    url_utile : "", 
+});
+robotique.save(function(err) {
+    if (err){
+        throw err;
+    }
+    mongoose.connection.close();
+});
+
+var ros = new Competences({
+    nom_comp : "ROS",
+    commentaire : "",
+    url_utile : "",
+    parent : robotique,
+});
+ros.save('competence');
+
+var arduino = new Competences({
+    nom_comp : "Arduino",
+    commentaire : "",
+    url_utile : "",
+    parent : robotique,
+});
+arduino.save('competence');
+
+//-------
+
+var jeu_video = new Competences({
+    nom_comp : "Jeux Vidéos",
+    commentaire : "",
+    url_utile : "", 
+});
+jeu_video.save();
+
+var moteur_de_jeu = new Competences({
+    nom_comp : "Moteur de jeu",
+    commentaire : "",
+    url_utile : "",
+    parent : jeu_video
+});
+moteur_de_jeu.save();
+
+var unity = new Competences({
+    nom_comp : "Unity",
+    commentaire : "",
+    url_utile : "",
+    parent : moteur_de_jeu,
+}); 
+unity.save();
+
+
+/*
+//---------------------------------------AJOUT COMPETENCE BDD-------------------------------------------------------------------
+mongoose.promiseAddCompetencesToBDD = function(data){
+    return new Promise(function(resolve,reject){
+        db.collection('competences').findOne({nom_comp : data[0]}, function(err,comp){ //une competences est unique
+            if (err){
+                return reject(err);
+            }
+            
+            else if (comp==null){
+                var Competences = mongoose.model('competences', competenceSchema);
+                var comp = new Competences({
+
+                    nom_comp : data[0],
+
+                    commentaire : data[1],
+
+
+                    url_utile : data[4],
+
+                    parent : data[5],
+
+                });
+                comp.save(function(err, competence) {
+                    if (err){
+                        throw err;
+                    }
+                    mongoose.disconnect();
+                });
+                return resolve(comp);
+                
+            }
+            
+            else{
+                return reject("Skill Already in BDD"); //TO DO : gérer le cas où l'email existe déjà
+            } 
+        });
+    })
+};
+//-------------------------------------------------------------------------------------------------------------------
+*/
 
 mongoose.connect('mongodb://localhost/projet2A',{useMongoClient : true}); //useMongoClient regle le problème du Warning
 module.exports = mongoose;
