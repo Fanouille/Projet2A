@@ -73,7 +73,7 @@ body {
   position: absolute;
   display: block;
   font-size: 0.7em;
-  color: #fff;
+  color: black;
   top: 14px;
   right: 10px;
   -moz-transform: rotate(-90deg);
@@ -114,6 +114,7 @@ body {
 .dropdown .dropdown-menu li {
   padding: 0;
 }
+
 .dropdown .dropdown-menu li a {
   display: block;
   color: #6f6f6f;
@@ -124,9 +125,12 @@ body {
   text-shadow: 0 -1px 0 rgba(255, 255, 255, 0.3);
   padding: 10px 10px;
 }
+
 .dropdown .dropdown-menu li a:hover {
   background: #f6f6f6;
 }
+
+
 .dropdown .show, .dropdown .hide {
   -moz-transform-origin: 50% 0%;
   -ms-transform-origin: 50% 0%;
