@@ -56,5 +56,14 @@ router.get('/connexion/:id1/:id2',function(req,res){
   });
 })
 
+
+router.get('/getCompSonInBDD/:id',function(req,res){
+  console.log(req.params.id);
+  var promise = bdd.getSon(req.params.id);
+  promise.then(function(result){
+    console.log(result);
+    res.json(result);
+  });
+})
 module.exports = router;
 

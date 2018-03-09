@@ -34,6 +34,19 @@ var utilisateurSchema = mongoose.Schema({ //structure de a genre de classe
 });
 //-------------------------------------------------------------------------------------------------------------------
 
+//-------------------COMPETENCES-------------------------------------------------------------------------------------
+
+var competenceSchema = mongoose.Schema({
+    nom_comp: String,
+    is_leaf: Boolean,
+    commentaire : String,
+    url_utile : String, 
+});
+competenceSchema.add({ 
+    parent : competenceSchema,
+});
+//-------------------------------------------------------------------------------------------------------------------
+
 var db = mongoose.connection;
 db.collection("competences").remove({});
 
@@ -182,76 +195,85 @@ mongoose.assertConnexion= function(mail,mdp){
 //-------------------------------------------------------------------------------------------------------------------
 
 
-//-------------------COMPETENCES-------------------------------------------------------------------------------------
-//var db = mongoose.connection;
 
-var competenceSchema = mongoose.Schema({
-    nom_comp: String,
-    commentaire : String,
-    url_utile : String, 
-})
-competenceSchema.add({ 
-    parent : [competenceSchema],
-});
-//-------------------------------------------------------------------------------------------------------------------
 
 
 var Competences = mongoose.model('competences',competenceSchema);
+
 var racine = new Competences({
     nom_comp : "racine"
 });
-
 racine.save(function(err) {
     if (err){
         throw err;
     }
 });
-//-----
 
 var robotique = new Competences({
-    nom_comp : "robotique",
+    nom_comp : "Robotique",
+    is_leaf : false,
     commentaire : "",
     url_utile : "", 
+    parent: racine,
 });
 robotique.save(function(err) {
     if (err){
         throw err;
     }
-    mongoose.connection.close();
 });
 
 var ros = new Competences({
     nom_comp : "ROS",
+    is_leaf: true,
     commentaire : "",
     url_utile : "",
     parent : robotique,
 });
-ros.save('competence');
+ros.save(function(err) {
+    if (err){
+        throw err;
+    }
+});
 
 var arduino = new Competences({
     nom_comp : "Arduino",
+    is_leaf: true,
     commentaire : "",
     url_utile : "",
     parent : robotique,
 });
-arduino.save('competence');
+arduino.save(function(err) {
+    if (err){
+        throw err;
+    }
+});
 
-//-------
 
 var jeu_video = new Competences({
     nom_comp : "Jeux Vidéos",
+    is_leaf: false,
     commentaire : "",
     url_utile : "", 
+    parent: racine,
 });
-jeu_video.save();
+jeu_video.save(function(err) {
+    if (err){
+        throw err;
+    }
+});
 
 var moteur_de_jeu = new Competences({
     nom_comp : "Moteur de jeu",
+    is_leaf: true,
     commentaire : "",
     url_utile : "",
-    parent : jeu_video
+    parent : jeu_video,
 });
-moteur_de_jeu.save();
+moteur_de_jeu.save(function(err) {
+    if (err){
+        throw err;
+    }
+});
 
 var unity = new Competences({
     nom_comp : "Unity",
@@ -259,9 +281,24 @@ var unity = new Competences({
     url_utile : "",
     parent : moteur_de_jeu,
 }); 
-unity.save();
+unity.save(function(err) {
+    if (err){
+        throw err;
+    }
+});
 
-
+mongoose.getSon = function(father){
+    return new Promise(function(resolve,reject){
+        db.collection('competences').find({"parent.nom_comp": father}).toArray(function(err,items){
+            if (err) {
+                return reject(err);
+            }
+            else{
+                return resolve(items);
+            }
+        })
+    })
+};
 /*
 //---------------------------------------AJOUT COMPETENCE BDD-------------------------------------------------------------------
 mongoose.promiseAddCompetencesToBDD = function(data){
