@@ -57,5 +57,7 @@ var AngularGen = angular.module('AngularGen', ['ngMessages','ngMaterial', 'ngAni
 
                 })
 
+
         }]);
+    
 })(AngularGen);

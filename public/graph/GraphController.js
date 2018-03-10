@@ -1,13 +1,13 @@
 angular.module('AngularGen')
-    .controller('GraphController', function ($scope,$http,$state) {
+	.controller('GraphController', function ($scope,$http,$state) {
 
 	//----------------------------GESTION DU MENU DEROULANT----------------------------------------
 	var dropdown = document.querySelectorAll('.dropdown');
 	var dropdownArray = Array.prototype.slice.call(dropdown,0);
 	dropdownArray.forEach(function(el){
-		var button = el.querySelector('a[data-toggle="dropdown"]');
-		var	menu = el.querySelector('.dropdown-menu');
-		var	arrow = button.querySelector('i.icon-arrow');
+		var button = el.querySelector('a[data-toggle="dropdown"]'),
+			menu = el.querySelector('.dropdown-menu'),
+			arrow = button.querySelector('i.icon-arrow');
 
 		button.onclick = function(event) {
 			if(!menu.hasClass('show')) {
@@ -29,7 +29,7 @@ angular.module('AngularGen')
 
 	Element.prototype.hasClass = function(className) {
 	return this.className && new RegExp("(^|\\s)" + className + "(\\s|$)").test(this.className);
-	};
+	}
 	//---------------------------------------------------------------------------------------------
 
 
@@ -47,5 +47,18 @@ angular.module('AngularGen')
   	}
 	//---------------------------------------------------------------------------------------------
 
+	$scope.leaf = function(Feuille){
+		return ('<li><a href="#">'+Feuille+'</a></li>');
+	}
+
+	$scope.fatherBegin = function(Pere){
+		return ('<li class="dropdown"><a href="#" data-toggle="dropdown">'+Pere +'<i class="icon-arrow"></i></a><ul class="dropdown-menu">');
+	}
+
+	$scope.fatherEnd = function(){
+		return ('</ul></li>');
+	}
+
+	$scope.test = $scope.fatherBegin("Test")+$scope.leaf("Feuille")+$scope.fatherEnd();
 
     });
