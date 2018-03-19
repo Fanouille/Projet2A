@@ -75,4 +75,21 @@ angular.module('AngularGen')
     }
 //---------------------------------------------------------------------------------------------
 
+
+
+//--------------------Ajouter un champ de compétence-------------------------------------------
+    $scope.addInput = function(){
+        var input = addInput.innerHTML
+        addInput.innerHTML = input + '<md-input-container flex="20"> <label>Compétences</label> <input type="text" name="competences" ng-model="competences.third"> </md-input-container>'
+    }
+
+
+/*---------------------------------------------------------------------------------------------
+
+    $scope.addd = function(){
+        var input = addInput.innerHTML
+        addInput.innerHTML = input + '<label>Mot-clef : </label><input type="text" name="fpsaisiedescripteurA" /><br/>\n';
+    }
+*/
+
 });
