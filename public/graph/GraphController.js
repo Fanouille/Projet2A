@@ -1,5 +1,5 @@
 angular.module('AngularGen')
-	.controller('GraphController', function ($scope,$http,$q,$state,$mdSidenav) {
+	.controller('GraphController', function ($scope,$http,$state,$mdSidenav,$rootScope) {
 	
 	
 
@@ -33,6 +33,7 @@ angular.module('AngularGen')
 		children : $scope.sons,
 	};
 
+
 	//console.log($scope.treeData);
 	//--------------------------------ARBRE DES COMPETENCES MENU--------------------------------------
     /*$scope.treeData = {
@@ -64,10 +65,28 @@ angular.module('AngularGen')
         children: []
       }]
     };*/
+    $rootScope.selectedLeaf = ''
+    $scope.leafDetail = function(leaf){
+        $http.get(
+          '/getLeafInBDD/'+ leaf
+          ).then(function successCallBack(response){
+            //console.log(response)
+            $rootScope.Infos = response.data;
+            $state.go('comp-detail');
+
+        },function errorCallBack(error){
+            console.log(error);
+        })     
+    }
 
     $scope.$on('nodeSelected', function(event, node, context) {
       if (context.selectedNode) {
         context.selectedNode.class = '';
+        if (node.state === "leaf"){
+          $rootScope.selectedLeaf = node.label;
+          $scope.leafDetail($rootScope.selectedLeaf);
+          
+        }
       }
 
       node.class = 'selectedNode';

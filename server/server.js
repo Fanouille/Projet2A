@@ -77,6 +77,13 @@ router.get('/getCompSonInBDD/:id',function(req,res){
   });
 })
 
+router.get('/getLeafInBDD/:id',function(req,res){
+  var promise = bdd.getLeaf(req.params.id);
+  promise.then(function(result){
+    res.json(result);
+  })
+})
+
 
 
 //var t = test();

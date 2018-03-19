@@ -271,6 +271,18 @@ mongoose.getSon = function(father){
     })
 };
 
+mongoose.getLeaf = function(leaf){
+    return new Promise(function(resolve,reject){
+        db.collection('competences').findOne({nom_comp : leaf}, function(err,feuille){
+            if (err){
+                return reject(err);
+            }
+            else{
+                return resolve(feuille);
+            }
+        })
+    })
+};
 /*
 //console.log(db.collection('competences').findOne({}));
 mongoose.getSons = function(father){

@@ -68,6 +68,7 @@ angular.module('AngularGen')
           var data = response.data;
           if (data.length === 0){
             comp.state = 'leaf';
+            return 0;
           }
           else {
             comp.state = 'expanded';
@@ -78,15 +79,16 @@ angular.module('AngularGen')
           };
           $scope.sons.push(comp);
           
-          return data;
       },function errorCallBack(error){
             console.log(error);
         });
-      
+
     };
 
 
-  $scope.getSons('Racine');
+  $scope.test = $scope.getSons('Racine');
+
+  $scope.res = [];
     
 
 });

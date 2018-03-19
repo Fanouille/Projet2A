@@ -57,6 +57,13 @@ var AngularGen = angular.module('AngularGen', ['ngMessages','ngMaterial', 'ngAni
 
                 })
 
+                .state('comp-detail', {
+                    url: '/graph/comp-detail',
+                    templateUrl: 'graph/comp-detail/comp-detail.html',
+                    controller: 'Comp-detailController',
+
+                })
+
 
         }]);
     
