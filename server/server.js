@@ -57,13 +57,29 @@ router.get('/connexion/:id1/:id2',function(req,res){
 })
 
 
+
 router.get('/getCompSonInBDD/:id',function(req,res){
-  console.log(req.params.id);
+  //console.log(req.params.id);
   var promise = bdd.getSon(req.params.id);
   promise.then(function(result){
-    console.log(result);
-    res.json(result);
+    var response = [];
+    for (var i=0; i<result.length; i++){
+      if (result[i].is_leaf){
+         var comp = {label: result[i].nom_comp, state: 'leaf', children: []};
+      }
+      else{
+        var comp = {label: result[i].nom_comp, state: 'expanded', children: []};
+      }
+     
+      response.push(comp);
+    };
+    res.json(response);
   });
 })
+
+
+
+//var t = test();
+
 module.exports = router;
 
