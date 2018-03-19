@@ -50,6 +50,7 @@ competenceSchema.add({
 var db = mongoose.connection;
 db.collection("competences").remove({});
 
+
 //------------------------------HASHAGE DU MOT DE PASSE AVANT ENREGISTREMENT-----------------------------------------
 utilisateurSchema.pre('save', function(next) {
     var user = this;
@@ -73,7 +74,6 @@ bcrypt.genSalt(SALT_WORK_FACTOR, function(err, salt) {
 
 
 });
-
 //-------------------------------------------------------------------------------------------------------------------
 
 
@@ -197,17 +197,12 @@ mongoose.assertConnexion= function(mail,mdp){
 
 
 
-
 var Competences = mongoose.model('competences',competenceSchema);
 
 var racine = new Competences({
-    nom_comp : "racine"
+    nom_comp : "Racine"
 });
-racine.save(function(err) {
-    if (err){
-        throw err;
-    }
-});
+racine.save();
 
 var robotique = new Competences({
     nom_comp : "Robotique",
@@ -216,11 +211,7 @@ var robotique = new Competences({
     url_utile : "", 
     parent: racine,
 });
-robotique.save(function(err) {
-    if (err){
-        throw err;
-    }
-});
+robotique.save();
 
 var ros = new Competences({
     nom_comp : "ROS",
@@ -229,11 +220,7 @@ var ros = new Competences({
     url_utile : "",
     parent : robotique,
 });
-ros.save(function(err) {
-    if (err){
-        throw err;
-    }
-});
+ros.save();
 
 var arduino = new Competences({
     nom_comp : "Arduino",
@@ -242,12 +229,7 @@ var arduino = new Competences({
     url_utile : "",
     parent : robotique,
 });
-arduino.save(function(err) {
-    if (err){
-        throw err;
-    }
-});
-
+arduino.save();
 
 var jeu_video = new Competences({
     nom_comp : "Jeux Vidéos",
@@ -256,36 +238,25 @@ var jeu_video = new Competences({
     url_utile : "", 
     parent: racine,
 });
-jeu_video.save(function(err) {
-    if (err){
-        throw err;
-    }
-});
+jeu_video.save();
 
 var moteur_de_jeu = new Competences({
     nom_comp : "Moteur de jeu",
-    is_leaf: true,
+    is_leaf: false,
     commentaire : "",
     url_utile : "",
     parent : jeu_video,
 });
-moteur_de_jeu.save(function(err) {
-    if (err){
-        throw err;
-    }
-});
+moteur_de_jeu.save();
 
 var unity = new Competences({
     nom_comp : "Unity",
+    is_leaf: true,
     commentaire : "",
     url_utile : "",
     parent : moteur_de_jeu,
 }); 
-unity.save(function(err) {
-    if (err){
-        throw err;
-    }
-});
+unity.save();
 
 mongoose.getSon = function(father){
     return new Promise(function(resolve,reject){
@@ -299,6 +270,60 @@ mongoose.getSon = function(father){
         })
     })
 };
+
+/*
+//console.log(db.collection('competences').findOne({}));
+mongoose.getSons = function(father){
+    db.collection('competences').find({"parent.nom_comp": father}).toArray(function(err,items){
+        if (err){
+            throw (err);
+        }
+        else{
+            //console.log(items);
+            var res = [];
+            for (var i=0; i< items.length; i++){
+                var comp = {name: items[i].nom_comp,leaf: items[i].is_leaf};
+                res.push(comp);
+            }
+            return res;
+        }
+    })
+};
+
+//var test = mongoose.getSons("Racine");
+//console.log(test);
+
+var res = [];
+mongoose.fillTreeData = function(fils){
+        if (fils.leaf){
+            var son = {};
+            son.label = fils.name;
+            son.state = 'leaf';
+            son.children = [];
+            res.push(son);
+            return 0;
+        }
+        else{
+            var son = {};
+            son.label = fils.name;
+            son.state = 'expanded';
+            var childs = [];
+            var dependance = mongoose.getSon(fils.name);
+            console.log(dependance);
+            for(var i=0; i<dependance.length; i++){
+                childs.push(mongoose.fillTreeData(dependance[i].name));
+            };
+            son.children = childs;
+            res.push(son);
+        };
+};
+
+mongoose.treeData = function(racine){
+    return new Promise(function(resolve,reject){
+        var res = mongoose.fillTreeData(racine);
+        return resolve(res);
+    })
+};*/
 /*
 //---------------------------------------AJOUT COMPETENCE BDD-------------------------------------------------------------------
 mongoose.promiseAddCompetencesToBDD = function(data){

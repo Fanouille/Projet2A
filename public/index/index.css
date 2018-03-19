@@ -24,9 +24,94 @@
   float : right;
 }
 
-/*-------------MENU DEROULANT-----------------------------------*/
+
+/*----------------------------------------------------------------------*/
+  @media only screen and (max-width: 736px) {
+    .mobile {
+      display: block;
+    }
+    .desktop {
+      display: none;
+    }
+    .tablet {
+      display: none;
+    }
+  }
+  
+  @media only screen and (min-width: 736px) and (max-width: 1200px) {
+    .tablet {
+      display: block;
+    }
+    .desktop {
+      display: none;
+    }
+    .mobile {
+      display: none;
+    }
+  }
+  
+  @media only screen and (min-width: 1200px) {
+    .desktop {
+      display: block;
+    }
+    .tablet {
+      display: none;
+    }
+    .mobile {
+      display: none;
+    }
+  }
+
+div.tree {
+  /* prevent user selection */
+  -moz-user-select: -moz-none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  text-decoration: none;
+  display: inline;
+}
+div.tree ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border: none;
+  overflow: hidden;
+}
+div.tree li {
+  position: relative;
+  padding: 0 0 0 20px;
+  line-height: 20px;
+}
+div.tree li .expanded {
+  padding: 1px 10px;
+  background: url("http://icons.iconarchive.com/icons/iconfactory/sketchcons/16/manilla-icon.png") no-repeat;
+}
+div.tree li .collapsed {
+  padding: 1px 10px;
+  background: url("http://icons.iconarchive.com/icons/delacro/folder/16/Folder-Blank-icon.png") no-repeat;
+}
+div.tree li .leaf {
+  padding: 1px 10px;
+  background: url("http://icons.iconarchive.com/icons/poundffffff/blox-folder/16/Links-Folder-icon.png") no-repeat;
+}
+div.tree li i, div.tree li span {
+  cursor: pointer;
+}
+.selectedNode {
+  color: white;
+background: navy;
+}
+/*---------------
+
+
+/*-------------MENU DEROULANT-----------------------------------
+code inutile mais a garder pour le moment
+
 @import url("https://fonts.googleapis.com/css?family=Lato:300,400,700,900");
 @import url(https://fonts.googleapis.com/css?family=Pacifico);
+
 body {
   font-family: "Lato", Helvetica, Arial;
   font-size: 16px;
@@ -73,7 +158,7 @@ body {
   position: absolute;
   display: block;
   font-size: 0.7em;
-  color: #fff;
+  color: black;
   top: 14px;
   right: 10px;
   -moz-transform: rotate(-90deg);
@@ -114,6 +199,7 @@ body {
 .dropdown .dropdown-menu li {
   padding: 0;
 }
+
 .dropdown .dropdown-menu li a {
   display: block;
   color: #6f6f6f;
@@ -124,9 +210,12 @@ body {
   text-shadow: 0 -1px 0 rgba(255, 255, 255, 0.3);
   padding: 10px 10px;
 }
+
 .dropdown .dropdown-menu li a:hover {
   background: #f6f6f6;
 }
+
+
 .dropdown .show, .dropdown .hide {
   -moz-transform-origin: 50% 0%;
   -ms-transform-origin: 50% 0%;
@@ -374,6 +463,6 @@ body {
   }
 }
 
-/*--------------------------------------------------------------*/
+--------------------------------------------------------------*/
 
 

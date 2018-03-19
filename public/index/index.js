@@ -58,5 +58,35 @@ angular.module('AngularGen')
         })     
   	}
 
+    $scope.sons = [];
+
+    $scope.getSons = function(parent){
+      $http.get(
+        '/getCompSonInBDD/'+parent
+        ).then(function successCallBack(response){
+          var comp = {label: parent, state : '', children : []};
+          var data = response.data;
+          if (data.length === 0){
+            comp.state = 'leaf';
+          }
+          else {
+            comp.state = 'expanded';
+            for(var i=0;i<data.length; i++){
+              comp.children.push(data[i]);
+              $scope.getSons(data[i].label);
+            };
+          };
+          $scope.sons.push(comp);
+          
+          return data;
+      },function errorCallBack(error){
+            console.log(error);
+        });
+      
+    };
+
+
+  $scope.getSons('Racine');
+    
 
 });
