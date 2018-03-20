@@ -261,6 +261,20 @@ var unity = new Competences({
 unity.save();
 
 
+
+
+mongoose.loadFromBDD = function(){
+    return new Promise(function(resolve,reject){ 
+        db.collection('competences').find({}).toArray(function(err,items){
+            if (err) {
+                return reject(err);
+            }
+            return resolve(items); 
+        })
+    })
+};
+
+
 /*
 //---------------------------------------AJOUT COMPETENCE BDD-------------------------------------------------------------------
 mongoose.promiseAddCompetencesToBDD = function(data){

@@ -1,6 +1,7 @@
 
 
 var AngularGen = angular.module('AngularGen', ['ngMessages','ngMaterial', 'ngAnimate', 'ngAria','ui.router', 'ngScrollbars']);
+//,'material.svgAssetsCache'     POUR EDGE
 
 (function(app) {
     app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
@@ -54,6 +55,13 @@ var AngularGen = angular.module('AngularGen', ['ngMessages','ngMaterial', 'ngAni
                     url: '/formulaireSummary',
                     templateUrl: 'formulaireSummary/formulaireSummary.html',
                     controller: 'FormulaireSummaryController',
+
+                })
+
+                .state('test_md', {
+                    url: '/test_md',
+                    templateUrl: 'test_md/test_md.html',
+                    controller: 'Test_mdController',
 
                 })
 

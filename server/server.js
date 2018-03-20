@@ -56,5 +56,16 @@ router.get('/connexion/:id1/:id2',function(req,res){
   });
 })
 
+//----------------------------------------------------
+router.get('/load',function(req,res){
+  var promise = bdd.loadFromBDD();
+  promise.then(function(result){
+    console.log(result);
+    res.json(result);
+  });
+  
+})
+
+
 module.exports = router;
 

@@ -93,3 +93,4 @@ angular.module('AngularGen')
 */
 
 });
+
