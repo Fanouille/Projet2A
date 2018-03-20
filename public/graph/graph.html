@@ -1,17 +1,56 @@
+<div ng-controller="GraphController" class="header" ng-app="AngularGen">
+  <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left">
+    <md-toolbar layout="row">
+      <div class="md-toolbar-tools">
+        <h2>
+      <span>Menu</span>
+    </h2>
+        <span flex></span>
+        <md-button class="md-icon-button" aria-label="Close Side Panel" ng-click="closeSideNavPanel()">
+          <md-tooltip>Close Side Panel</md-tooltip>
+          <md-icon class="md-default-theme" class="material-icons">&#xE5CD;</md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-content layout-padding="">
+     Arborescence
+    <oci.treeview tree="treeData"  on-select-node="getMoreData">
+      <span>{{tree.label}}</span>
+    </oci.treeview>         
+    </md-content>
+  </md-sidenav>
+
+  <md-toolbar class="desktop">
+    <div class="md-toolbar-tools">
+      <md-button class="md-icon-button" aria-label="Side Panel" ng-click="openSideNavPanel()">
+        <md-tooltip>Arborescence</md-tooltip>
+        <md-icon class="md-default-theme" class="material-icons">&#xE5D2;</md-icon>
+      </md-button>
+      <md-button class="md-icon-button" aria-label="Icon">
+        <md-tooltip>User</md-tooltip>
+        <md-icon class="md-default-theme" md-svg-icon="fb.svg"></md-icon>
+      </md-button>
+      <h2>
+      <span>Graphe des Compétences</span>
+    </h2>
+    </div>
+  </md-toolbar>
+</div>
+
 <!--div class="container">
   <h1 class="title">Graphe des Compétences</h1>
-  	<ul> DROPDOWN MENU
+    <ul> DROPDOWN MENU
     <li class="dropdown">
       <a href="#" data-toggle="dropdown">Jeux Vidéo <i class="icon-arrow"></i></a>
-      	<ul class="dropdown-menu">
-        	<li class="dropdown">
-	        	<a href="#" data-toggle="dropdown">Moteur de jeu<i class="icon-arrow"></i></a>
-        		<ul class="dropdown-menu">
-        			<li><a href="#">Unity</a></li>
-        			<li><a href="#">Unreal Engine</a></li>
-      			</ul>
-        	</li>
-    	</ul>
+        <ul class="dropdown-menu">
+          <li class="dropdown">
+            <a href="#" data-toggle="dropdown">Moteur de jeu<i class="icon-arrow"></i></a>
+            <ul class="dropdown-menu">
+              <li><a href="#">Unity</a></li>
+              <li><a href="#">Unreal Engine</a></li>
+            </ul>
+          </li>
+      </ul>
     </li>
     <li class="dropdown">
       <a href="#" data-toggle="dropdown">Robotique <i class="icon-arrow"></i></a>
@@ -22,97 +61,5 @@
     </li>
     </ul>
 </div-->
-    <div ng-controller="GraphController" class="header" ng-app="AngularGen">
-      <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left">
-        <md-toolbar layout="row">
-          <div class="md-toolbar-tools">
-            <h2>
-          <span>Menu</span>
-        </h2>
-            <span flex></span>
-            <md-button class="md-icon-button" aria-label="Close Side Panel" ng-click="closeSideNavPanel()">
-              <md-tooltip>Close Side Panel</md-tooltip>
-              <md-icon class="md-default-theme" class="material-icons">&#xE5CD;</md-icon>
-            </md-button>
-          </div>
-        </md-toolbar>
-        <md-content layout-padding="">
-         Arborescence
-<!--oci.treeview tree="treeData">
-            <span ng-class="tree.class">{{ tree.label }}</span>
-        </oci.treeview--> 
-        <oci.treeview tree="treeData"  on-select-node="getMoreData">
-          <span>{{tree.label}}</span>
-        </oci.treeview>         
-        </md-content>
-      </md-sidenav>
-
-      <md-toolbar class="desktop">
-        <div class="md-toolbar-tools">
-          <md-button class="md-icon-button" aria-label="Side Panel" ng-click="openSideNavPanel()">
-            <md-tooltip>Arborescence</md-tooltip>
-            <md-icon class="md-default-theme" class="material-icons">&#xE5D2;</md-icon>
-          </md-button>
-          <md-button class="md-icon-button" aria-label="Icon">
-            <md-tooltip>User</md-tooltip>
-            <md-icon class="md-default-theme" md-svg-icon="fb.svg"></md-icon>
-          </md-button>
-          <h2>
-          <span>Graphe des Compétences</span>
-        </h2>
-          <!--md-input-container md-no-float class="md-accent" flex="50" style="padding-bottom:0px;margin-left:25px">
-            <md-icon style="color:wheat" class="material-icons">&#xE8B6;</md-icon>
-            <input ng-model="searchInput" placeholder="Search here" style="color:wheat;padding-left:25px;margin-left:5px">
-          </md-input-container-->
-        </div>
-      </md-toolbar>
-      <md-toolbar class="tablet">
-        <div class="md-toolbar-tools">
-          <md-button class="md-icon-button" aria-label="Side Panel" ng-click="openSideNavPanel()">
-            <md-tooltip>Open Side Panel</md-tooltip>
-            <md-icon class="md-default-theme" class="material-icons">&#xE5D2;</md-icon>
-          </md-button>
-          <h2>
-          <span>Graphe des Compétences</span>
-        </h2>
-          <!--md-input-container md-no-float class="md-accent" flex="50" style="padding-bottom:0px;margin-left:25px">
-            <md-icon style="color:wheat" class="material-icons">&#xE8B6;</md-icon>
-            <input ng-model="searchInput" placeholder="Search here" style="color:wheat;padding-left:25px;margin-left:5px">
-          </md-input-container-->
-        </div>
-      </md-toolbar>
-      
-      <md-toolbar class="mobile">
-        <div class="md-toolbar-tools" data-ng-show="showMobileMainHeader">
-          <md-button class="md-icon-button" aria-label="Side Panel" ng-click="openSideNavPanel()">
-            <md-tooltip>Open Side Panel</md-tooltip>
-            <md-icon class="md-default-theme" class="material-icons">&#xE5D2;</md-icon>
-          </md-button>
-          <md-button class="md-icon-button" aria-label="Icon">
-            <md-tooltip>Icon</md-tooltip>
-            <md-icon class="md-default-theme" md-svg-icon="fb.svg"></md-icon>
-          </md-button>
-          <h2>
-          <span>Graphe des Compétences</span>
-        </h2>
-          <span flex></span>
-          <md-button class="md-icon-button" aria-label="Search" data-ng-click="showMobileMainHeader = false">
-            <md-tooltip>Search</md-tooltip>
-            <md-icon class="material-icons">&#xE8B6;</md-icon>
-          </md-button>
-        </div>
-        <div class="md-toolbar-tools" data-ng-hide="showMobileMainHeader">
-          <md-button class="md-icon-button" aria-label="Back" data-ng-click="showMobileMainHeader = true">
-            <md-tooltip>Back</md-tooltip>
-            <md-icon class="material-icons">&#xE5C4;</md-icon>
-          </md-button>
-          <md-input-container md-no-float class="md-accent" style="padding-bottom:0px;">
-            <input ng-model="searchInput" placeholder="Search here" style="color:wheat;">
-          </md-input-container>
-        </div>
-      </md-toolbar>
-    </div>
-
-
 
 

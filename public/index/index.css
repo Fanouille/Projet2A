@@ -86,15 +86,15 @@ div.tree li {
 }
 div.tree li .expanded {
   padding: 1px 10px;
-  background: url("http://icons.iconarchive.com/icons/iconfactory/sketchcons/16/manilla-icon.png") no-repeat;
+  background: url("http://icons.iconarchive.com/icons/icons8/ios7/16/Arrows-Down-4-icon.png") no-repeat;
 }
 div.tree li .collapsed {
   padding: 1px 10px;
-  background: url("http://icons.iconarchive.com/icons/delacro/folder/16/Folder-Blank-icon.png") no-repeat;
+  background: url("http://icons.iconarchive.com/icons/icons8/ios7/16/Arrows-Forward-icon.png") no-repeat;
 }
 div.tree li .leaf {
   padding: 1px 10px;
-  background: url("http://icons.iconarchive.com/icons/poundffffff/blox-folder/16/Links-Folder-icon.png") no-repeat;
+  background: url("http://icons.iconarchive.com/icons/icons8/windows-8/16/Gaming-Diamonds-icon.png") no-repeat;
 }
 div.tree li i, div.tree li span {
   cursor: pointer;
