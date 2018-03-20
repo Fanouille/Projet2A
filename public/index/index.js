@@ -40,6 +40,10 @@ angular.module('AngularGen')
         $state.go('connexion')
     }
 
+    $scope.openTestMd = function(){
+        $state.go('test_md')
+    }
+
   	$scope.recherche=""
         
     $scope.$watch('recherche',function(){

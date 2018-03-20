@@ -87,41 +87,6 @@
                 Add
             </md-button>
         </div>
-
-
-<!-- ............................................................................. --> 
-        <!-- div flex = "10" class="chipsdemoContactChips" ng-controller="ContactChipDemoCtrl as ctrl" ng-app="MyApp" ng-cloak="" layout="column">
-
-          <md-content class="md-padding autocomplete" layout="column">
-            <md-contact-chips placeholder="To" ng-model="ctrl.contacts" filter-selected="ctrl.filterSelected" md-highlight-flags="i" md-require-match="true" md-contact-email="email" md-contact-image="image" md-contact-name="name" md-contacts="ctrl.querySearch($query)">
-            </md-contact-chips>
-
-            <md-list class="fixedRows">
-              <md-subheader class="md-no-sticky">Contacts</md-subheader>
-              <md-list-item class="md-2-line contact-item" ng-repeat="(index, contact) in ctrl.allContacts" ng-if="ctrl.contacts.indexOf(contact) < 0">
-                <img class="md-avatar" alt="{{contact.name}}" ng-src="{{contact.image}}">
-                <div class="md-list-item-text compact">
-                  <h3>{{contact.name}}</h3>
-                  <p>{{contact.email}}</p>
-                </div>
-              </md-list-item>
-              <md-list-item class="md-2-line contact-item selected" ng-repeat="(index, contact) in ctrl.contacts">
-                <img class="md-avatar" alt="{{contact.name}}" ng-src="{{contact.image}}">
-                <div class="md-list-item-text compact">
-                  <h3>{{contact.name}}</h3>
-                  <p>{{contact.email}}</p>
-                </div>
-              </md-list-item>
-            </md-list>
-
-            <br>
-            <h2 class="md-title">Searching asynchronously.</h2>
-            <md-contact-chips placeholder="To" ng-model="ctrl.asyncContacts" filter-selected="ctrl.filterSelected" md-highlight-flags="i" md-require-match="true" md-contact-email="email" md-contact-image="image" md-contact-name="name" md-contacts="ctrl.delayedQuerySearch($query)">
-            </md-contact-chips>
-          </md-content>
-        </div -->
-<!-- ............................................................................. --> 
-
         <div flex="10" layout="row" layout-align="start center">
             <div flex="50">
                 <md-button ng-click="clear()">
