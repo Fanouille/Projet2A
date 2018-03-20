@@ -48,7 +48,7 @@ angular.module('AngularGen')
     $scope.closeSideNavPanel = function() {
       $mdSidenav('left').close();
     };
-
+    
     $scope.getMoreData = function (node) {
       return $http.get('/getCompSonInBDD/' + node.label).then(function successCallBack(response) {
           var data = response.data;

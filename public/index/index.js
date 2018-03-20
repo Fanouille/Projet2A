@@ -57,37 +57,6 @@ angular.module('AngularGen')
             console.log(error);
         })     
   	}
-
-    /*$scope.sons = [];
-    
-    $scope.getSons = function(parent){
-      $http.get(
-        '/getCompSonInBDD/'+parent
-        ).then(function successCallBack(response){
-          var comp = {label: parent, state : '', children : []};
-          var data = response.data;
-          if (data.length === 0){
-            comp.state = 'leaf';
-            return 0;
-          }
-          else {
-            comp.state = 'expanded';
-            for(var i=0;i<data.length; i++){
-              comp.children.push(data[i]);
-            };
-          };
-          $scope.sons.push(comp);
-          
-      },function errorCallBack(error){
-            console.log(error);
-        });
-
-    };*/
-
-
-  //$scope.test = $scope.getSons('Racine');
-
-  //$scope.res = [];
     
 
 });
