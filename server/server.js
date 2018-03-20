@@ -68,7 +68,7 @@ router.get('/getCompSonInBDD/:id',function(req,res){
          var comp = {label: result[i].nom_comp, state: 'leaf', children: []};
       }
       else{
-        var comp = {label: result[i].nom_comp, state: 'expanded', children: []};
+        var comp = {label: result[i].nom_comp, state: 'collapsed', children: []};
       }
      
       response.push(comp);

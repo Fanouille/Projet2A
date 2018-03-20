@@ -27,7 +27,7 @@
         <md-toolbar layout="row">
           <div class="md-toolbar-tools">
             <h2>
-          <span>Side Panel</span>
+          <span>Menu</span>
         </h2>
             <span flex></span>
             <md-button class="md-icon-button" aria-label="Close Side Panel" ng-click="closeSideNavPanel()">
@@ -37,17 +37,20 @@
           </div>
         </md-toolbar>
         <md-content layout-padding="">
-          Side navigation Panel
-<oci.treeview tree="treeData">
-            <!--HTML to be transcluded--><span ng-class="tree.class">{{ tree.label }}</span>
-        </oci.treeview>          
+         Arborescence
+<!--oci.treeview tree="treeData">
+            <span ng-class="tree.class">{{ tree.label }}</span>
+        </oci.treeview--> 
+        <oci.treeview tree="treeData"  on-select-node="getMoreData">
+          <span>{{tree.label}}</span>
+        </oci.treeview>         
         </md-content>
       </md-sidenav>
 
       <md-toolbar class="desktop">
         <div class="md-toolbar-tools">
           <md-button class="md-icon-button" aria-label="Side Panel" ng-click="openSideNavPanel()">
-            <md-tooltip>Side Panel</md-tooltip>
+            <md-tooltip>Arborescence</md-tooltip>
             <md-icon class="md-default-theme" class="material-icons">&#xE5D2;</md-icon>
           </md-button>
           <md-button class="md-icon-button" aria-label="Icon">

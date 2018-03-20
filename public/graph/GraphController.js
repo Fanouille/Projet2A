@@ -1,70 +1,18 @@
 angular.module('AngularGen')
 	.controller('GraphController', function ($scope,$http,$state,$mdSidenav,$rootScope) {
 	
-	
-
-	//------------------------LECTURE DE LA BDD----------------------------------------------------
-	/*function delay(t) {
-	  return new Promise(function(resolve) {
-	    setTimeout(function() {
-	      resolve();
-	    }, t);
-	  });
-	}*/
-
-    /*$scope.getSons = function(parent){
-    	var res = [];
-   		$http.get(
-	      '/getCompSonInBDD/'+parent
-	      ).then(function successCallBack(response){
-	      	res=response.data;
-	    },function errorCallBack(error){
-            console.log(error);
-        });
-	    return  res;
-	    
-	}*/
-	
 
 
-	$scope.treeData = {
-		label : '',
-		state : 'expanded',
-		children : $scope.sons,
-	};
+  	$scope.treeData = {
+  		label : '',
+  		state : 'expanded',
+  		children : [{
+        label: 'Racine',
+        state: 'collapsed',
+        children: [],
+      }],
+    };
 
-
-	//console.log($scope.treeData);
-	//--------------------------------ARBRE DES COMPETENCES MENU--------------------------------------
-    /*$scope.treeData = {
-      label: 'Parent',
-      state: 'expanded',
-      children: [{
-        label: 'Child1',
-        state: 'expanded',
-        children: [{
-          label: 'Grandchild1',
-          state: 'leaf',
-          children: []
-        }, {
-          label: 'Grandchild2',
-          state: 'leaf',
-          children: []
-        }, {
-          label: 'Grandchild3',
-          state: 'expanded',
-          children: [{
-            label: 'Greatgrandchild1',
-            state: 'leaf',
-            children: []
-          }]
-        }]
-      }, {
-        label: 'Child2',
-        state: 'leaf',
-        children: []
-      }]
-    };*/
     $rootScope.selectedLeaf = ''
     $scope.leafDetail = function(leaf){
         $http.get(
@@ -99,6 +47,13 @@ angular.module('AngularGen')
     };
     $scope.closeSideNavPanel = function() {
       $mdSidenav('left').close();
+    };
+
+    $scope.getMoreData = function (node) {
+      return $http.get('/getCompSonInBDD/' + node.label).then(function successCallBack(response) {
+          var data = response.data;
+          node.children = data;
+      });
     };
    //-------------------------------------------------------------------------------------------------
 

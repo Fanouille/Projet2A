@@ -58,8 +58,8 @@ angular.module('AngularGen')
         })     
   	}
 
-    $scope.sons = [];
-
+    /*$scope.sons = [];
+    
     $scope.getSons = function(parent){
       $http.get(
         '/getCompSonInBDD/'+parent
@@ -74,7 +74,6 @@ angular.module('AngularGen')
             comp.state = 'expanded';
             for(var i=0;i<data.length; i++){
               comp.children.push(data[i]);
-              $scope.getSons(data[i].label);
             };
           };
           $scope.sons.push(comp);
@@ -83,12 +82,12 @@ angular.module('AngularGen')
             console.log(error);
         });
 
-    };
+    };*/
 
 
-  $scope.test = $scope.getSons('Racine');
+  //$scope.test = $scope.getSons('Racine');
 
-  $scope.res = [];
+  //$scope.res = [];
     
 
 });
