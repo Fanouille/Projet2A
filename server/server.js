@@ -60,8 +60,12 @@ router.get('/connexion/:id1/:id2',function(req,res){
 router.get('/load',function(req,res){
   var promise = bdd.loadFromBDD();
   promise.then(function(result){
-    console.log(result);
-    res.json(result);
+    var response = [];
+    for (var i=0; i<result.length; i++){
+      response.push(result[i].nom_comp);
+    }
+    //console.log(response);
+    res.json(response);
   });
   
 })

@@ -10,7 +10,7 @@ angular
     .module('AngularGen')
     .controller('Test_mdController', Test_mdController);
 
-function Test_mdController ($q, $timeout, $http) {
+function Test_mdController ($q, $timeout, $http,$scope) {
   var self = this;
   var pendingSearch, cancelSearch = angular.noop;
   var lastSearch;
@@ -72,30 +72,14 @@ function Test_mdController ($q, $timeout, $http) {
 
   }
 
-  var liste;
-
-  function remplirListe(){
-    return $http.get(
-        '/load'
-        ).then(function successCallBack(response){
-          //console.log(response)
-          liste = response;
-
-      },function errorCallBack(error){
-          console.log(error);
-      });
-  }
 
 
   function loadCompetences() {
-    remplirListe();
-
-    console.log(liste);
     
+    //console.log($scope.liste);
+    var liste = $scope.liste;
 
-
-
-    var contacts = [
+    /*var contacts = [
       'Marina Augustine',
       'Oddr Sarno',
       'Nick Giannopoulos',
@@ -105,17 +89,17 @@ function Test_mdController ($q, $timeout, $http) {
       'Tsvetko Metzger',
       'Hector Simek',
       'Some-guy withalongalastaname'
-    ];
+    ];*/
 
-    return contacts.map(function (c, index) {
+    return liste.map(function (c, index) {
       var cParts = c.split(' ');
-      var email = cParts[0][0].toLowerCase() + '.' + cParts[1].toLowerCase() + '@example.com';
-      var hash = CryptoJS.MD5(email);
+      //var email = cParts[0][0].toLowerCase() + '.' + cParts[1].toLowerCase() + '@example.com';
+      //var hash = CryptoJS.MD5(email);
 
       var contact = {
         name: c,
-        email: email,
-        image: '//www.gravatar.com/avatar/' + hash + '?s=50&d=retro'
+        //email: email,
+        //image: '//www.gravatar.com/avatar/' + hash + '?s=50&d=retro'
       };
       contact._lowername = contact.name.toLowerCase();
       return contact;

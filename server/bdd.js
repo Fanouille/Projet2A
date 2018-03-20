@@ -35,6 +35,7 @@ var utilisateurSchema = mongoose.Schema({ //structure de a genre de classe
 //-------------------------------------------------------------------------------------------------------------------
 
 var db = mongoose.connection;
+db.collection('competences').remove({});
 
 
 //------------------------------HASHAGE DU MOT DE PASSE AVANT ENREGISTREMENT-----------------------------------------
@@ -183,7 +184,6 @@ mongoose.assertConnexion= function(mail,mdp){
 
 
 //-------------------COMPETENCES-------------------------------------------------------------------------------------
-var db = mongoose.connection;
 
 var competenceSchema = mongoose.Schema({
     nom_comp: String,
@@ -197,27 +197,19 @@ competenceSchema.add({
 
 var Competences = mongoose.model('competences',competenceSchema);
 var racine = new Competences({
-    nom_comp : "racine"
+    nom_comp : "Racine"
 });
 
-racine.save(function(err) {
-    if (err){
-        throw err;
-    }
-});
+racine.save();
 //-----
 
 var robotique = new Competences({
-    nom_comp : "robotique",
+    nom_comp : "Robotique",
     commentaire : "",
     url_utile : "", 
+    parent : racine,
 });
-robotique.save(function(err) {
-    if (err){
-        throw err;
-    }
-    mongoose.connection.close();
-});
+robotique.save();
 
 var ros = new Competences({
     nom_comp : "ROS",
@@ -225,7 +217,7 @@ var ros = new Competences({
     url_utile : "",
     parent : robotique,
 });
-ros.save('competence');
+ros.save();
 
 var arduino = new Competences({
     nom_comp : "Arduino",
@@ -233,7 +225,7 @@ var arduino = new Competences({
     url_utile : "",
     parent : robotique,
 });
-arduino.save('competence');
+arduino.save();
 
 //-------
 
@@ -241,6 +233,7 @@ var jeu_video = new Competences({
     nom_comp : "Jeux Vidéos",
     commentaire : "",
     url_utile : "", 
+    parent : racine
 });
 jeu_video.save();
 
