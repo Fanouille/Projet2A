@@ -48,11 +48,9 @@ competenceSchema.add({
 //-------------------------------------------------------------------------------------------------------------------
 
 var db = mongoose.connection;
-<<<<<<< HEAD
+
 db.collection("competences").remove({});
-=======
-db.collection('competences').remove({});
->>>>>>> fanny
+
 
 
 //------------------------------HASHAGE DU MOT DE PASSE AVANT ENREGISTREMENT-----------------------------------------
