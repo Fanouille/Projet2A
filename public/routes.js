@@ -1,6 +1,8 @@
 
 
+
 var AngularGen = angular.module('AngularGen', ['ngMessages','ngMaterial', 'ngAnimate', 'ngAria','ui.router', 'ngScrollbars','oci.treeview']);
+
 
 (function(app) {
     app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
@@ -57,6 +59,7 @@ var AngularGen = angular.module('AngularGen', ['ngMessages','ngMaterial', 'ngAni
 
                 })
 
+
                 .state('comp-detail', {
                     url: '/graph/comp-detail',
                     templateUrl: 'graph/comp-detail/comp-detail.html',
@@ -64,6 +67,14 @@ var AngularGen = angular.module('AngularGen', ['ngMessages','ngMaterial', 'ngAni
 
                 })
 
+
+
+                .state('test_md', {
+                    url: '/test_md',
+                    templateUrl: 'test_md/test_md.html',
+                    controller: 'Test_mdController',
+
+                })
 
         }]);
     

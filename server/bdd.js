@@ -48,7 +48,11 @@ competenceSchema.add({
 //-------------------------------------------------------------------------------------------------------------------
 
 var db = mongoose.connection;
+<<<<<<< HEAD
 db.collection("competences").remove({});
+=======
+db.collection('competences').remove({});
+>>>>>>> fanny
 
 
 //------------------------------HASHAGE DU MOT DE PASSE AVANT ENREGISTREMENT-----------------------------------------
@@ -196,7 +200,7 @@ mongoose.assertConnexion= function(mail,mdp){
 
 
 
-
+//-------------------COMPETENCES-------------------------------------------------------------------------------------
 var Competences = mongoose.model('competences',competenceSchema);
 
 var racine = new Competences({
@@ -211,7 +215,7 @@ var robotique = new Competences({
     url_utile : "", 
     parent: racine,
 });
-robotique.save();
+
 
 var ros = new Competences({
     nom_comp : "ROS",
@@ -283,59 +287,19 @@ mongoose.getLeaf = function(leaf){
         })
     })
 };
-/*
-//console.log(db.collection('competences').findOne({}));
-mongoose.getSons = function(father){
-    db.collection('competences').find({"parent.nom_comp": father}).toArray(function(err,items){
-        if (err){
-            throw (err);
-        }
-        else{
-            //console.log(items);
-            var res = [];
-            for (var i=0; i< items.length; i++){
-                var comp = {name: items[i].nom_comp,leaf: items[i].is_leaf};
-                res.push(comp);
+
+
+mongoose.loadFromBDD = function(){
+    return new Promise(function(resolve,reject){ 
+        db.collection('competences').find({}).toArray(function(err,items){
+            if (err) {
+                return reject(err);
             }
-            return res;
-        }
+            return resolve(items); 
+        })
     })
 };
 
-//var test = mongoose.getSons("Racine");
-//console.log(test);
-
-var res = [];
-mongoose.fillTreeData = function(fils){
-        if (fils.leaf){
-            var son = {};
-            son.label = fils.name;
-            son.state = 'leaf';
-            son.children = [];
-            res.push(son);
-            return 0;
-        }
-        else{
-            var son = {};
-            son.label = fils.name;
-            son.state = 'expanded';
-            var childs = [];
-            var dependance = mongoose.getSon(fils.name);
-            console.log(dependance);
-            for(var i=0; i<dependance.length; i++){
-                childs.push(mongoose.fillTreeData(dependance[i].name));
-            };
-            son.children = childs;
-            res.push(son);
-        };
-};
-
-mongoose.treeData = function(racine){
-    return new Promise(function(resolve,reject){
-        var res = mongoose.fillTreeData(racine);
-        return resolve(res);
-    })
-};*/
 /*
 //---------------------------------------AJOUT COMPETENCE BDD-------------------------------------------------------------------
 mongoose.promiseAddCompetencesToBDD = function(data){

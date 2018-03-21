@@ -88,5 +88,20 @@ router.get('/getLeafInBDD/:id',function(req,res){
 
 //var t = test();
 
+//----------------------------------------------------
+router.get('/load',function(req,res){
+  var promise = bdd.loadFromBDD();
+  promise.then(function(result){
+    var response = [];
+    for (var i=0; i<result.length; i++){
+      response.push(result[i].nom_comp);
+    }
+    //console.log(response);
+    res.json(response);
+  });
+  
+})
+
+
 module.exports = router;
 

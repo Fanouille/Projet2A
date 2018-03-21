@@ -40,6 +40,10 @@ angular.module('AngularGen')
         $state.go('connexion')
     }
 
+    $scope.openTestMd = function(){
+        $state.go('test_md')
+    }
+
   	$scope.recherche=""
 
     $scope.objetRecherche=''
@@ -59,4 +63,18 @@ angular.module('AngularGen')
   	}
     
 
+  $scope.liste = [];
+  function remplirListe(){
+    return $http.get(
+        '/load'
+        ).then(function successCallBack(response){
+          //console.log(response)
+          $scope.liste = response.data;
+
+      },function errorCallBack(error){
+          console.log(error);
+      });
+  }
+
+  remplirListe();
 });
