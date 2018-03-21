@@ -94,7 +94,9 @@ router.get('/load',function(req,res){
   promise.then(function(result){
     var response = [];
     for (var i=0; i<result.length; i++){
-      response.push(result[i].nom_comp);
+      if (result[i].is_leaf){
+        response.push(result[i].nom_comp);
+      };
     }
     //console.log(response);
     res.json(response);

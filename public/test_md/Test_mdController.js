@@ -20,6 +20,7 @@ function Test_mdController ($q, $timeout, $http,$scope) {
   self.asyncContacts = [];
   self.filterSelected = true;
 
+
   self.querySearch = querySearch;
   self.delayedQuerySearch = delayedQuerySearch;
 
@@ -34,6 +35,7 @@ function Test_mdController ($q, $timeout, $http,$scope) {
       cancelSearch();
 
       return pendingSearch = $q(function(resolve, reject) {
+        console.log(self.asyncContacts);
         // Simulate async search... (after debouncing)
         cancelSearch = reject;
         $timeout(function() {
