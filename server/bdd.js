@@ -213,7 +213,7 @@ var robotique = new Competences({
     url_utile : "", 
     parent: racine,
 });
-
+robotique.save();
 
 var ros = new Competences({
     nom_comp : "ROS",
