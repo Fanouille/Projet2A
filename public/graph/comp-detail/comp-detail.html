@@ -1,3 +1,24 @@
-{{Leaf}}<br><br>
-{{info}}<br>
-<md-button ng-click='goBack()'>Return</md-button>
+<div ng-cloak="" class="navBardemoBasicUsage">
+  <md-content  md-theme="default" class="md-padding" >
+    <md-nav-bar md-theme = "theme" md-selected-nav-item="currentNavItem" nav-bar-aria-label="navigation links">
+      <md-button class="md-icon-button" aria-label="Close Side Panel" ng-click="goBack()">
+        <md-tooltip>Retour au graphe</md-tooltip>
+        <md-icon class="md-default-theme" class="material-icons">&#xE5C4;</md-icon>
+      </md-button>
+      <md-nav-item md-nav-click="goto('page1')" name="1">
+        {{Leaf}}
+      </md-nav-item>
+      <md-nav-item md-nav-click="goto('page2')" name="2">
+        Liens utiles
+      </md-nav-item>
+      <md-nav-item md-nav-click="goto('page3')" name="3">
+        Utilisateurs
+      </md-nav-item>
+    </md-nav-bar>
+    <div class="ext-content">
+      <span>{{info[currentNavItem]}}</span>
+    </div>
+
+  </md-content>
+
+</div>

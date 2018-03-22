@@ -1,5 +1,5 @@
 #blue {
- background-color: #03A9F4;
+ background-color: #1565C0;
 }
 #brown {
   background-color : tan;
@@ -24,6 +24,13 @@
   float : right;
 }
 
+body {
+    color: white;
+}
+
+i {
+  color : black;
+}
 
 /*----------------------------------------------------------------------*/
   @media only screen and (max-width: 736px) {
@@ -104,6 +111,57 @@ div.tree li i, div.tree li span {
 background: navy;
 }
 /*---------------
+
+/*--------------------- test-md ------------*/
+
+
+.chipsdemoContactChips md-content.autocomplete {
+  min-height: 250px; }
+  .chipsdemoContactChips md-content.autocomplete input {
+    min-width: 400px; }
+
+.chipsdemoContactChips .md-item-text.compact {
+  padding-top: 8px;
+  padding-bottom: 8px; }
+
+.chipsdemoContactChips .contact-item {
+  box-sizing: border-box; }
+  .chipsdemoContactChips .contact-item.selected {
+    opacity: 0.5; }
+    .chipsdemoContactChips .contact-item.selected h3 {
+      opacity: 0.5; }
+  .chipsdemoContactChips .contact-item .md-list-item-text {
+    padding: 14px 0;
+    max-width: 190px; }
+    .chipsdemoContactChips .contact-item .md-list-item-text h3 {
+      margin: 0 !important;
+      padding: 0;
+      line-height: 1.2em !important; }
+    .chipsdemoContactChips .contact-item .md-list-item-text h3, .chipsdemoContactChips .contact-item .md-list-item-text p {
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden; }
+  @media (min-width: 960px) {
+    .chipsdemoContactChips .contact-item {
+      float: left;
+      width: 33%; } }
+
+.chipsdemoContactChips md-contact-chips {
+  margin-bottom: 10px; }
+
+.chipsdemoContactChips .md-chips {
+  padding: 5px 0 8px; }
+
+.chipsdemoContactChips .fixedRows {
+  height: 250px;
+  overflow: hidden; }
+
+
+  /*----------------COMPETENCES----------------------------*/
+.navBardemoBasicUsage md-content .ext-content {
+  padding: 200px;
+  margin: 100px;
+  background-color: #DDEEFF; }
 
 
 /*-------------MENU DEROULANT-----------------------------------
@@ -464,47 +522,3 @@ body {
 }
 
 --------------------------------------------------------------*/
-
-/*--------------------- test-md ------------*/
-
-
-.chipsdemoContactChips md-content.autocomplete {
-  min-height: 250px; }
-  .chipsdemoContactChips md-content.autocomplete input {
-    min-width: 400px; }
-
-.chipsdemoContactChips .md-item-text.compact {
-  padding-top: 8px;
-  padding-bottom: 8px; }
-
-.chipsdemoContactChips .contact-item {
-  box-sizing: border-box; }
-  .chipsdemoContactChips .contact-item.selected {
-    opacity: 0.5; }
-    .chipsdemoContactChips .contact-item.selected h3 {
-      opacity: 0.5; }
-  .chipsdemoContactChips .contact-item .md-list-item-text {
-    padding: 14px 0;
-    max-width: 190px; }
-    .chipsdemoContactChips .contact-item .md-list-item-text h3 {
-      margin: 0 !important;
-      padding: 0;
-      line-height: 1.2em !important; }
-    .chipsdemoContactChips .contact-item .md-list-item-text h3, .chipsdemoContactChips .contact-item .md-list-item-text p {
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      overflow: hidden; }
-  @media (min-width: 960px) {
-    .chipsdemoContactChips .contact-item {
-      float: left;
-      width: 33%; } }
-
-.chipsdemoContactChips md-contact-chips {
-  margin-bottom: 10px; }
-
-.chipsdemoContactChips .md-chips {
-  padding: 5px 0 8px; }
-
-.chipsdemoContactChips .fixedRows {
-  height: 250px;
-  overflow: hidden; }

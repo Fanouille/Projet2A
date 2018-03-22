@@ -44,6 +44,10 @@ angular.module('AngularGen')
         $state.go('test_md')
     }
 
+    $scope.openComp = function(){
+        $state.go('comp-detail')
+    }
+
   	$scope.recherche=""
 
     $scope.objetRecherche=''

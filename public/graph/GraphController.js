@@ -27,12 +27,26 @@ angular.module('AngularGen')
         })     
     }
 
+     $scope.leafSkilledUsers = function(leaf){
+        $http.get(
+          '/getUserLeafInBDD/'+ leaf
+          ).then(function successCallBack(response){
+            //console.log(response)
+            $rootScope.Infos.push(response.data);
+            $state.go('comp-detail');
+
+        },function errorCallBack(error){
+            console.log(error);
+        })     
+    }   
+
     $scope.$on('nodeSelected', function(event, node, context) {
       if (context.selectedNode) {
         context.selectedNode.class = '';
         if (node.state === "leaf"){
           $rootScope.selectedLeaf = node.label;
           $scope.leafDetail($rootScope.selectedLeaf);
+          //$scope.leafSkilledUsers($rootScope.selectedLeaf);
           
         }
       }
