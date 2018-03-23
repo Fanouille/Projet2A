@@ -1,5 +1,5 @@
 <div ng-controller="GraphController" class="header" ng-app="AngularGen">
-  <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left">
+  <md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="left">
     <md-toolbar layout="row">
       <div class="md-toolbar-tools">
         <h2>
@@ -22,13 +22,14 @@
 
   <md-toolbar class="desktop">
     <div class="md-toolbar-tools">
-      <md-button class="md-icon-button" aria-label="Side Panel" ng-click="openSideNavPanel()">
-        <md-tooltip>Menu</md-tooltip>
-        <md-icon class="md-default-theme" class="material-icons">&#xE5D2;</md-icon>
-      </md-button>
       <h2>
       <span>Graphe des Compétences</span>
     </h2>
+    <md-button class="md-icon-button" aria-label="Side Panel" ng-click="openSideNavPanel()" style="position: absolute; right: 0;">
+        <md-tooltip>Arborescence</md-tooltip>
+        <md-icon class="md-default-theme" class="material-icons">&#xE241;</md-icon>
+      </md-button>
+      <span></span>
     </div>
   </md-toolbar>
 </div>

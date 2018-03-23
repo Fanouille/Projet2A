@@ -163,6 +163,28 @@ background: navy;
   margin: 100px;
   background-color: #DDEEFF; }
 
+  /*------------MENU INDEX-----------------*/
+.fabSpeedDialdemoBasicUsage .text-capitalize {
+  text-transform: capitalize; }
+
+.fabSpeedDialdemoBasicUsage .md-fab:hover, .fabSpeedDialdemoBasicUsage .md-fab {
+  background-color: #1565C0 !important; }
+
+.fabSpeedDialdemoBasicUsage .md-fab:hover, .fabSpeedDialdemoBasicUsage .md-fab.md-focused {
+  background-color: #DDEEFF !important; }
+
+.fabSpeedDialdemoBasicUsage p.note {
+  font-size: 1.2rem; }
+
+.fabSpeedDialdemoBasicUsage .lock-size {
+  min-width: auto;
+  min-height: auto;
+  width: auto;
+  height: auto;
+  margin-left: auto;
+  margin-right: auto; }
+
+
 
 /*-------------MENU DEROULANT-----------------------------------
 code inutile mais a garder pour le moment
