@@ -58,7 +58,7 @@ angular.module('AngularGen')
           '/researchBDD/'+$scope.recherche
           ).then(function successCallBack(response){
             //console.log(response)
-            $scope.liste = response;
+            $scope.liste = response.data;
             $state.go('advanced-search');
 
         },function errorCallBack(error){
