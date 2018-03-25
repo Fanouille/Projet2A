@@ -68,11 +68,121 @@
         });
       };
      //-------------------------------------------------------------------------------------------------
-    
 
 
     //------------------------GRAPHE COMPETENCES D3----------------------------------------------------
 
+    // size of the graph
+    var width = 600,
+      height = 500,
+      radius = Math.min(width, height) / 2;
+
+    // scales for node drawing. X determines size around
+    // circumference of circle, Y the distance from center
+    var x = d3.scale.linear().range([0, 2 * Math.PI]);
+    var y = d3.scale.sqrt().range([0, radius]);
+
+    // just uses one of the predefined D3 color scales
+    var color = d3.scale.category20c();
+
+    // add the SVG element to the HTML w/ size, add g container,
+    // and center the g within the SVG element
+     d3.select("#chart").selectAll("svg").remove();//clear page
+    var svg = d3.select("#chart").append("svg")
+      .attr("width", width)
+      .attr("height", height)
+      .append("g")
+      .attr("transform", "translate(" + width / 2 + "," + (height / 2) + ")");
+
+    // initialize the layout, don't need to do anything
+    // special because data is well formatted
+    var partition = d3.layout.partition();
+
+    // define the arc shape. Scary math!
+    var arc = d3.svg.arc()
+      .startAngle(function(d) {
+        return Math.max(0, Math.min(2 * Math.PI, x(d.x)));
+      })
+      .endAngle(function(d) {
+        return Math.max(0, Math.min(2 * Math.PI, x(d.x + d.dx)));
+      })
+      .innerRadius(function(d) {
+        return Math.max(0, y(d.y));
+      })
+      .outerRadius(function(d) {
+        return Math.max(0, y(d.y + d.dy));
+      });
+
+    // add tooltip div to the graph, make it always 
+    // display above graph layer but not visible by default
+    var tooltip = d3.select("#chart")
+      .append("div")
+      .attr("class", "tooltip")
+      .style("position", "absolute")
+      .style("z-index", "1")
+      .style("opacity", 0);
+
+    // request JSON data, populate partition
+    d3.json("graph/graphe.json", function(error, root) { //https://api.myjson.com/bins/25k9j
+      var path = svg.selectAll("path")
+        .data(partition.nodes(root))
+        .enter().append("path")
+        .attr("d", arc)
+        .style("fill", function(d) {
+          return color((d.children ? d : d.parent).name);
+        })
+      // zoom on click
+        .on("click", zoom)
+      // display name and value in tooltip
+        .on("mouseover", function(d) {
+          tooltip.html(function() {
+            var text = '<b>' + d.name + '</b><br>';
+            return text;
+          });
+          // make tooltip visible when mouse is on graph
+          return tooltip.transition()
+            .duration(50)
+            .style("opacity", 0.9);
+        })
+      // place tooltip based on where mouse is
+        .on("mousemove", function(d) {
+          return tooltip
+            .style("top", (d3.event.pageY - 10) + "px")
+            .style("left", (d3.event.pageX + 10) + "px");
+        })
+      // remove tooltip when mouse leaves graph
+        .on("mouseout", function() {
+          return tooltip.style("opacity", 0);
+        });
+
+      // zoom in when clicked
+      function zoom(d) {
+        path.transition()
+          .duration(750)
+          .attrTween("d", arcTween(d));
+        if(d.children == undefined){
+          $rootScope.selectedLeaf = d.name;
+          $scope.leafDetail(d.name);
+        }
+      }
+
+    });
+
+    // Interpolate the scales
+    function arcTween(d) {
+      var xd = d3.interpolate(x.domain(), [d.x, d.x + d.dx]),
+        yd = d3.interpolate(y.domain(), [d.y, 1]),
+        yr = d3.interpolate(y.range(), [d.y ? 20 : 0, radius]);
+      return function(d, i) {
+        return i ? function(t) {
+          return arc(d);
+        } : function(t) {
+          x.domain(xd(t));
+          y.domain(yd(t)).range(yr(t));
+          return arc(d);
+        };
+      };
+    }
     //-------------------------------------------------------------------------------------------------
   });
 
