@@ -32,6 +32,10 @@ i {
   color : black;
 }
 
+md-content {
+  background: transparent;
+}
+
 /*----------------------------------------------------------------------*/
   @media only screen and (max-width: 736px) {
     .mobile {
@@ -174,7 +178,8 @@ background: navy;
   background-color: #DDEEFF !important; }
 
 .fabSpeedDialdemoBasicUsage p.note {
-  font-size: 1.2rem; }
+  font-size: 1.2rem; 
+}
 
 .fabSpeedDialdemoBasicUsage .lock-size {
   min-width: auto;
@@ -182,7 +187,11 @@ background: navy;
   width: auto;
   height: auto;
   margin-left: auto;
-  margin-right: auto; }
+  margin-right: auto; 
+  background-color: transparent;
+}
+
+/*-------------GRAPHE COMPETENCES-----------------------------*/
 
 
 
