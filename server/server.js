@@ -43,7 +43,15 @@ router.get('/researchBDD/:id',function(req,res){
   var promise = bdd.searchInBDD(req.params.id);
   promise.then(function(result){
     //console.log(result);
-    res.json(result);
+    var response = [];
+    for (var i=0; i<result.length; i++){
+      var comp = {};
+      comp.nom = result[i].nom;
+      comp.prenom = result[i].prenom;
+      comp.competences = result[i].competence;
+      response.push(comp);
+    }
+    res.json(response);
   });
   
 })
