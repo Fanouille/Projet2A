@@ -80,8 +80,23 @@ router.get('/getCompSonInBDD/:id',function(req,res){
 router.get('/getLeafInBDD/:id',function(req,res){
   var promise = bdd.getLeaf(req.params.id);
   promise.then(function(result){
-    res.json(result);
+    var response = [];
+    response.push(result.nom_comp);
+    response.push(result.commentaire);
+    response.push(result.url_utile);
+    res.json(response);
   })
+})
+
+router.get('/getUserLeafInBDD/:id',function(req,res){
+  var promise = bdd.getUserLeaf(req.params.id);
+  promise.then(result);
+  var response = [];
+  for(var i=0;i<result.length;i++){
+    var user = {};
+    user.nom = result[i].nom;
+    user.prenom = result[i].prenom;
+  };
 })
 
 
@@ -94,7 +109,9 @@ router.get('/load',function(req,res){
   promise.then(function(result){
     var response = [];
     for (var i=0; i<result.length; i++){
-      response.push(result[i].nom_comp);
+      if (result[i].is_leaf){
+        response.push(result[i].nom_comp);
+      };
     }
     //console.log(response);
     res.json(response);

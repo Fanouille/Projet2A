@@ -33,10 +33,11 @@
 <div layout="row" style="height:100%;">
     <div layout="column" flex>
       
-      <div flex ="10" id="pink">
-        Accueil
+      <!--div flex ="10" id="pink">
         <div layout="row">
-            <div flex="70"></div>
+            Accueil
+            <div flex="70">
+            </div>
             <div flex="30">
                 <div flex="100" layout="row" layout-align="start center">
                     <md-input-container flex="20">
@@ -48,16 +49,69 @@
                             <i class="material-icons">search</i>
                         </md-button>
                     </md-input-container>
-                    <!--md-button ng-click="openAdvanced()">recherche avancée</md-button-->
+                    <md-button ng-click="openAdvanced()">recherche avancée</md-button>
                 </div>
             </div>
         </div>
-      </div>
-      <div flex="90"> 
-            <div layout ="row" style="height:100%;">
-                <div flex="10" id = "blue">
-                    Menu
-                    <br>
+      </div-->
+      <!--div flex="90"--> 
+              <md-toolbar class="desktop" id='pink'>
+                <div class="md-toolbar-tools">
+                    <h2>
+                      <span>Accueil</span>
+                    </h2>
+                    <span flex></span>
+                    <md-button class="md-icon-button" aria-label="Search"  ng-click="search()" >
+                        <md-tooltip>Rechercher</md-tooltip>
+                        <md-icon class="material-icons">&#xE8B6;</md-icon>
+                    </md-button>
+                    <md-input-container md-no-float class="md-accent" style="padding-bottom:0px; padding-top: 25px;">
+                        <input ng-model="recherche" placeholder="Recherche" style="color:wheat;">
+                    </md-input-container>
+                    <!--md-input-container  style="position: absolute; right: 0;">
+                        <label>Recherche</label>
+                        <input type="text" name="Recherche" ng-model="recherche" >
+                    </md-input-container-->
+                    
+                    <!--md-input-container  style="position: absolute; right: 0;">
+                        <md-button ng-click="search()">
+                            <i class="material-icons">search</i>
+                        </md-button>
+                    </md-input-container-->
+                   
+                </div>
+              </md-toolbar>
+            <div layout ="row" style="height:100%;" id="pink">
+                        <div layout="column" class="fabSpeedDialdemoBasicUsage">
+                          <md-content class="md-padding" >
+                            <div class="lock-size" layout="row" layout-align="left left">
+                              <md-fab-speed-dial md-open="isOpen" md-direction="{{selectedDirection}}" ng-class="selectedMode">
+                                <md-fab-trigger>
+                                  <md-button aria-label="menu" class="md-fab md-warn">
+                                    <md-icon class="md-default-theme" class="material-icons">&#xE5D2;</md-icon>
+                                    <md-tooltip md-direction="right">Menu</md-tooltip>
+                                  </md-button>
+                                </md-fab-trigger>
+
+                                <md-fab-actions>
+                                  <md-button aria-label="Graphe" class="md-fab md-raised md-mini" ng-click="openGraph()">
+                                    <md-icon class="md-default-theme" class="material-icons">&#xE80D;</md-icon>
+                                    <md-tooltip md-direction="right">Graphe des Compétences</md-tooltip>
+                                  </md-button>
+                                  <md-button aria-label="Formulaire" class="md-fab md-raised md-mini" ng-click="openFormulaire()">
+                                    <md-icon class="md-default-theme" class="material-icons">&#xE3C9;</md-icon>
+                                    <md-tooltip md-direction="right">Formulaire</md-tooltip>
+                                  </md-button>
+                                  <md-button aria-label="TestMd" class="md-fab md-raised md-mini" ng-click="openTestMd()">
+                                    <md-icon class="md-default-theme" class="material-icons">&#xE264;</md-icon>
+                                    <md-tooltip md-direction="right">TestMd</md-tooltip>
+                                  </md-button>
+                                </md-fab-actions>
+                              </md-fab-speed-dial>
+                            </div>
+                          </md-content>
+                        
+                    <!--br>
                     <md-button ng-click="openGraph()">
                     Graphe
                     </md-button>
@@ -70,14 +124,16 @@
                     <md-button ng-click="openTestMd()">
                     TestMd
                     </md-button>
-                    <br>
-
+                     <md-button ng-click="openComp()">
+                    Comp
+                    </md-button>
+                    <br-->
                 </div>
-                <div flex="90" id = "white">
+                <div flex="95" id = "white">
                     <div ui-view = ""></div>
-                </div>
+                <div>
           </div>
-    </div>
+    <!--/div-->
 </div>
 
 
@@ -98,7 +154,6 @@
 <!--Controllers-->
 <!--Add controllers files-->
 <script src="index/index.js" type="text/javascript"></script>
-<script src="index/index.ts" type="text/typescript"></script>
 <script src="test/TestController.js" type="text/javascript"></script>
 <script src="search/SearchController.js" type="text/javascript"></script>
 <script src="graph/GraphController.js" type="text/javascript"></script>

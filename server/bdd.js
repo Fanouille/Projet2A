@@ -215,11 +215,12 @@ var robotique = new Competences({
 });
 robotique.save();
 
+
 var ros = new Competences({
     nom_comp : "ROS",
     is_leaf: true,
-    commentaire : "",
-    url_utile : "",
+    commentaire : "description de la compétence ROS",
+    url_utile : "liens utiles ros",
     parent : robotique,
 });
 ros.save();
@@ -227,8 +228,8 @@ ros.save();
 var arduino = new Competences({
     nom_comp : "Arduino",
     is_leaf: true,
-    commentaire : "",
-    url_utile : "",
+    commentaire : "description de la compétence Arduino",
+    url_utile : "liens utiles arduino",
     parent : robotique,
 });
 arduino.save();
@@ -254,8 +255,8 @@ moteur_de_jeu.save();
 var unity = new Competences({
     nom_comp : "Unity",
     is_leaf: true,
-    commentaire : "",
-    url_utile : "",
+    commentaire : "description de la compétence Unity",
+    url_utile : "liens utiles unity",
     parent : moteur_de_jeu,
 }); 
 unity.save();
@@ -286,6 +287,19 @@ mongoose.getLeaf = function(leaf){
     })
 };
 
+mongoose.getUserLeaf = function(leaf){
+    return new Promise(function(resolve,reject){
+        db.collection('utilisateurs').find({"competence" : leaf}).toArray(function(err,users){
+            if (err){
+                return reject(err);
+            }
+            else{
+                //console.log(users);
+                return resolve(users);
+            }
+        })
+    })
+}
 
 mongoose.loadFromBDD = function(){
     return new Promise(function(resolve,reject){ 
@@ -297,6 +311,8 @@ mongoose.loadFromBDD = function(){
         })
     })
 };
+
+
 
 /*
 //---------------------------------------AJOUT COMPETENCE BDD-------------------------------------------------------------------

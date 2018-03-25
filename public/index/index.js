@@ -44,6 +44,10 @@ angular.module('AngularGen')
         $state.go('test_md')
     }
 
+    $scope.openComp = function(){
+        $state.go('comp-detail')
+    }
+
   	$scope.recherche=""
 
     $scope.objetRecherche=''
@@ -77,4 +81,9 @@ angular.module('AngularGen')
   }
 
   remplirListe();
+
+  //MENU INDEX
+  $scope.isOpen = false;
+  $scope.selectedMode = 'md-fling';
+  $scope.selectedDirection = 'down';
 });
