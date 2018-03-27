@@ -12,12 +12,12 @@
     background-color : yellow;
 }
 
-#pink{
-    background-color : #E91E63;
+#pink{ /*maintenant orange*/
+    background-color : #eb692e;
 }
 
 #white {
-    background-color : white;
+    background-color : #f7f6c8;
 }
 
 #right {
@@ -25,7 +25,7 @@
 }
 
 body {
-    color: white;
+    color: #f7f6c8;
 }
 
 i {
@@ -171,11 +171,11 @@ background: navy;
 .fabSpeedDialdemoBasicUsage .text-capitalize {
   text-transform: capitalize; }
 
-.fabSpeedDialdemoBasicUsage .md-fab:hover, .fabSpeedDialdemoBasicUsage .md-fab {
-  background-color: #1565C0 !important; }
+.fabSpeedDialdemoBasicUsage .md-fab:hover, .fabSpeedDialdemoBasicUsage .md-fab { /*coueur de base*/
+  background-color: #eca758 !important; }
 
-.fabSpeedDialdemoBasicUsage .md-fab:hover, .fabSpeedDialdemoBasicUsage .md-fab.md-focused {
-  background-color: #DDEEFF !important; }
+.fabSpeedDialdemoBasicUsage .md-fab:hover, .fabSpeedDialdemoBasicUsage .md-fab.md-focused { /*couleur quand passe dessus*/
+  background-color: #f7f6c8 !important; }
 
 .fabSpeedDialdemoBasicUsage p.note {
   font-size: 1.2rem; 

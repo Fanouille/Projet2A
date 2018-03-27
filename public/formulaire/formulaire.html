@@ -2,59 +2,77 @@
 <md-content style="padding: 15px">
     <!--Utilisez un peu plus l'espace sur la page, vous en avez !-->
     Bienvenue sur la page de formulaire !
-    <form layout="column" layout-align="space-around start">
-        <md-input-container flex="10">
-            <label>Nom</label>
-            <input type="text" name="nom" ng-model="nom">
-        </md-input-container>
-        <md-input-container flex="10">
-            <label>Prenom</label>
-            <input type="text" name="prenom" ng-model="prenom">
-        </md-input-container>
-        <!--Pour s'assurer que l'on aie bien un numero de téléphone, regarder du côté de ng-pattern-->
-        <md-input-container flex="10">
-            <label>Telephone</label>
-            <input type="text" name="telephone" ng-model="telephone">
-        </md-input-container>
-        <md-input-container flex="10">
-            <label>Adresse E-mail</label>
-            <input type="text" name="mail" ng-model="mail">
-        </md-input-container>
-        <md-input-container flex="10">
-            <label>Password</label>
-            <input type="text" name="password" ng-model="password">
-        </md-input-container>
+    <form layout="row" layout-align="space-around start">
+        <form layout="row" layout-align="space-around start">
+            <div flex="30" layout="row" layout-align="start center">
+                <md-input-container flex="50">
+                    <label>Nom</label>
+                    <input type="text" name="nom" ng-model="nom">
+                </md-input-container>
+                <md-input-container flex="50">
+                    <label>Prenom</label>
+                    <input type="text" name="prenom" ng-model="prenom">
+                </md-input-container>
+            </div>
+            
+            <div flex="30" layout="row" layout-align="start center">
+                <!--Pour s'assurer que l'on aie bien un numero de téléphone, regarder du côté de ng-pattern-->
+                <md-input-container flex="30">
+                    <label>Telephone</label>
+                    <input type="text" name="telephone" ng-model="telephone">
+                </md-input-container>
+                <md-input-container flex="70">
+                    <label>Adresse E-mail</label>
+                    <input type="text" name="mail" ng-model="mail">
+                </md-input-container>
+            </div>
+            
+            <md-input-container flex="20">
+                <label>Password</label>
+                <input type="text" name="password" ng-model="password">
+            </md-input-container>
+        </form>
+        
+        <form layout="row" layout-align="space-around start">
+            <md-input-container flex="20">
+                <label>Promo (N**)</label>
+                <input type="text" name="promo" ng-model="promo">
+            </md-input-container>
+
+            <div flex="70" layout="row" layout-align="start center">
+                <md-input-container flex="50">
+                    <label>Adresse</label>
+                    <input type="text" name="adresse.adresse" ng-model="adresse.adresse">
+                </md-input-container>
+                <md-input-container flex="40">
+                    <label>Ville</label>
+                    <input type="text" name="adresse.ville" ng-model="adresse.ville">
+                </md-input-container>
+            </div>
+        </form>
+        
         <!--Pays ?-->
-        <div flex="10" layout="row" layout-align="start center">
-            <md-input-container flex="20">
-                <label>Adresse</label>
-                <input type="text" name="adresse.adresse" ng-model="adresse.adresse">
-            </md-input-container>
-            <md-input-container flex="20">
-                <label>Ville</label>
-                <input type="text" name="adresse.ville" ng-model="adresse.ville">
-            </md-input-container>
-        </div>
-        <md-input-container flex="10">
-            <label>Promo (N**)</label>
-            <input type="text" name="promo" ng-model="promo">
-        </md-input-container>
-        <div flex="10" layout="row" layout-align="start center">
-            <md-input-container flex="20">
-                <label>Nom de l'entreprise</label>
-                <input type="text" name="entreprise.nom" ng-model="entreprise.nom">
-            </md-input-container>
-            <md-input-container flex="20">
-                <label>Adresse de l'entreprise</label>
-                <input type="text" name="entreprise.adresse" ng-model="entreprise.adresse">
-            </md-input-container>
-            <md-input-container flex="20">
-                <label>Ville de l'entreprise</label>
-                <input type="text" name="entreprise.ville" ng-model="entreprise.ville">
-            </md-input-container>
-        </div>
-        <!--Jeter un oeil du côté des md-chips : Permet de faire une liste potentiellement infini d'items-->
-        <div flex="10" layout="row" layout-align="start center">
+        <form layout="row" layout-align="space-around start">
+            <div flex="20" layout="row" layout-align="start center">
+                <md-input-container>
+                    <label>Nom de l'entreprise</label>
+                    <input type="text" name="entreprise.nom" ng-model="entreprise.nom">
+                </md-input-container>
+            </div>
+            <div flex="70" layout="row" layout-align="start center">
+                <md-input-container flex="50">
+                    <label>Adresse de l'entreprise</label>
+                    <input type="text" name="entreprise.adresse" ng-model="entreprise.adresse">
+                </md-input-container>
+                <md-input-container flex="40">
+                    <label>Ville de l'entreprise</label>
+                    <input type="text" name="entreprise.ville" ng-model="entreprise.ville">
+                </md-input-container>
+            </div>
+        </form>
+        
+        
+        <!--div flex="100" layout="row" layout-align="start center">
             <md-input-container flex="20">
                 <label>Langue</label>
                 <input type="text" name="langue.first" ng-model="langue.first">
@@ -67,27 +85,28 @@
                 <label>Langue</label>
                 <input type="text" name="langue.third" ng-model="langue.third">
             </md-input-container>
-        </div>
-        <!--Jeter un oeil du côté des md-chips : Permet de faire une liste potentiellement infini d'items-->
-        <div flex="10" layout="row" layout-align="start center">
-            <md-input-container flex="20">
-                <label>Compétences</label>
-                <input type="text" name="competences.first" ng-model="competences.first">
-            </md-input-container>
-            <md-input-container flex="20">
-                <label>Compétences</label>
-                <input type="text" name="competences.second" ng-model="competences.second">
-            </md-input-container>
-            <md-input-container flex="20">
-                <label>Compétences</label>
-                <input type="text" name="competences.third" ng-model="competences.third">
-            </md-input-container>
+        </div -->
 
-            <div id="addInput"></div>
-            <md-button ng-click="addInput()">
-                Add
-            </md-button>
-        </div>
+        <form layout="row" layout-align="space-around start">
+            <div flex="95" ng-controller="Test_mdController as ctrl" layout="column" ng-cloak>
+                <md-contact-chips
+                    ng-model="ctrl.asyncContacts"
+                    md-contacts="ctrl.delayedQuerySearch($query)"
+                    md-contact-name="name"
+                    md-contact-image="image"
+                    md-contact-email="email"
+                    md-require-match="true"
+                    md-highlight-flags="i"
+                    filter-selected="ctrl.filterSelected"
+                    placeholder="Compétences">
+                    <md-chips-template custom-chip></md-chips-template>
+                </md-contact-chips>
+              </md-content>
+            </div>
+        </form>
+
+
+        <br><br>
         <div flex="10" layout="row" layout-align="start center">
             <div flex="50">
                 <md-button ng-click="clear()">
