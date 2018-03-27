@@ -21,7 +21,7 @@ angular.module('AngularGen')
     $scope.info = {}
 
 //-----------------Fonction qui ajoute les données utilisateur à la bdd------------------------
-    $scope. add = function(){
+    $scope.add = function(){
 
         $http({
             method:'POST',
