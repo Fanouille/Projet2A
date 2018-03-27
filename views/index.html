@@ -82,8 +82,8 @@
                    
                 </div>
                 </md-toolbar>
-<md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="left">
-    <md-toolbar layout="row">
+<md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="left" id="white">
+    <md-toolbar layout="row" id="pink">
       <div class="md-toolbar-tools">
         <h2>
       <span>Menu</span>
@@ -95,7 +95,7 @@
         </md-button>
       </div>
     </md-toolbar>
-    <md-content layout-padding="">
+    <md-content layout-padding="" id="white">
      Arborescence
     <oci.treeview tree="treeData"  on-select-node="getMoreData">
       <span>{{tree.label}}</span>
@@ -103,7 +103,7 @@
     </md-content>
   </md-sidenav>
 
-  <md-toolbar class="desktop">
+  <md-toolbar class="desktop" id="pink">
     <div class="md-toolbar-tools">
         <div layout="column" class="fabSpeedDialdemoBasicUsage">
           <md-content class="md-padding" >
@@ -124,10 +124,6 @@
                   <md-button aria-label="Formulaire" class="md-fab md-raised md-mini" ng-click="openFormulaire()">
                     <md-icon class="md-default-theme" class="material-icons">&#xE3C9;</md-icon>
                     <md-tooltip md-direction="right">Formulaire</md-tooltip>
-                  </md-button>
-                  <md-button aria-label="TestMd" class="md-fab md-raised md-mini" ng-click="openTestMd()">
-                    <md-icon class="md-default-theme" class="material-icons">&#xE264;</md-icon>
-                    <md-tooltip md-direction="right">TestMd</md-tooltip>
                   </md-button>
                 </md-fab-actions>
               </md-fab-speed-dial>
@@ -174,7 +170,7 @@
 <script src="formulaireSummary/FormulaireSummaryController.js" type="text/javascript"></script>
 <script src="connexion/ConnexionController.js" type="text/javascript"></script>
 <script src="graph/comp-detail/Comp-detailController.js" type="text/javascript"></script>
-<script src="test_md/Test_mdController.js" type="text/javascript"></script>
+
 
 </html>
 

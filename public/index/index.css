@@ -16,7 +16,7 @@
     background-color : #eb692e;
 }
 
-#white {
+#white { /*creme*/
     background-color : #f7f6c8;
 }
 
@@ -29,8 +29,10 @@
 }
 
 
+
 body {
     color: black;
+    background-color: #f7f6c8;
 }
 
 i {
@@ -167,11 +169,11 @@ background: navy;
   overflow: hidden; }
 
 
-  /*----------------COMPETENCES----------------------------*/
+  /*----------------PAGE COMPETENCES----------------------------*/
 .navBardemoBasicUsage md-content .ext-content {
   padding: 200px;
   margin: 100px;
-  background-color: #DDEEFF; }
+  background-color: #f7f6c8; }
 
   /*------------MENU INDEX-----------------*/
 .fabSpeedDialdemoBasicUsage .text-capitalize {

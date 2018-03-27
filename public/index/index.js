@@ -43,11 +43,6 @@ angular.module('AngularGen')
         $state.go('connexion')
     }
 
-    $scope.openTestMd = function(){
-        $rootScope.currentPage = "MdTest"
-        $state.go('test_md')
-    }
-
     $scope.openComp = function(){
         $state.go('comp-detail')
     }

@@ -67,15 +67,6 @@ var AngularGen = angular.module('AngularGen', ['ngMessages','ngMaterial', 'ngAni
 
                 })
 
-
-
-                .state('test_md', {
-                    url: '/test_md',
-                    templateUrl: 'test_md/test_md.html',
-                    controller: 'Test_mdController',
-
-                })
-
         }]);
     
 })(AngularGen);
