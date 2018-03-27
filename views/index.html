@@ -21,7 +21,8 @@
     <script src="/scripts/angular-material/angular-material.min.js"></script>
     <script src="/scripts/angular-ui-router/release/angular-ui-router.min.js"></script>
     <script src="/scripts/angular-messages/angular-messages.min.js"></script>
-
+    <script src="https://d3js.org/d3.v3.min.js"></script>
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Slab' rel='stylesheet' type='text/css'>
 
 
 
@@ -80,60 +81,71 @@
                     </md-input-container-->
                    
                 </div>
-              </md-toolbar>
-            <div layout ="row" style="height:100%;" id="pink">
-                        <div layout="column" class="fabSpeedDialdemoBasicUsage">
-                          <md-content class="md-padding" >
-                            <div class="lock-size" layout="row" layout-align="left left">
-                              <md-fab-speed-dial md-open="isOpen" md-direction="{{selectedDirection}}" ng-class="selectedMode">
-                                <md-fab-trigger>
-                                  <md-button aria-label="menu" class="md-fab md-warn">
-                                    <md-icon class="md-default-theme" class="material-icons">&#xE5D2;</md-icon>
-                                    <md-tooltip md-direction="right">Menu</md-tooltip>
-                                  </md-button>
-                                </md-fab-trigger>
+                </md-toolbar>
+<md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="left">
+    <md-toolbar layout="row">
+      <div class="md-toolbar-tools">
+        <h2>
+      <span>Menu</span>
+    </h2>
+        <span flex></span>
+        <md-button class="md-icon-button" aria-label="Close Side Panel" ng-click="closeSideNavPanel()">
+          <md-tooltip>Fermer</md-tooltip>
+          <md-icon class="md-default-theme" class="material-icons">&#xE5CD;</md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-content layout-padding="">
+     Arborescence
+    <oci.treeview tree="treeData"  on-select-node="getMoreData">
+      <span>{{tree.label}}</span>
+    </oci.treeview>         
+    </md-content>
+  </md-sidenav>
 
-                                <md-fab-actions>
-                                  <md-button aria-label="Graphe" class="md-fab md-raised md-mini" ng-click="openGraph()">
-                                    <md-icon class="md-default-theme" class="material-icons">&#xE80D;</md-icon>
-                                    <md-tooltip md-direction="right">Graphe des Compétences</md-tooltip>
-                                  </md-button>
-                                  <md-button aria-label="Formulaire" class="md-fab md-raised md-mini" ng-click="openFormulaire()">
-                                    <md-icon class="md-default-theme" class="material-icons">&#xE3C9;</md-icon>
-                                    <md-tooltip md-direction="right">Formulaire</md-tooltip>
-                                  </md-button>
-                                  <md-button aria-label="TestMd" class="md-fab md-raised md-mini" ng-click="openTestMd()">
-                                    <md-icon class="md-default-theme" class="material-icons">&#xE264;</md-icon>
-                                    <md-tooltip md-direction="right">TestMd</md-tooltip>
-                                  </md-button>
-                                </md-fab-actions>
-                              </md-fab-speed-dial>
-                            </div>
-                          </md-content>
-                        
-                    <!--br>
-                    <md-button ng-click="openGraph()">
-                    Graphe
-                    </md-button>
-                    <md-button ng-click="openFormulaire()">
-                    Formulaire
-                    </md-button>
-                    <md-button ng-click="openConnexion()">
-                    Connexion
-                    </md-button>
-                    <md-button ng-click="openTestMd()">
-                    TestMd
-                    </md-button>
-                     <md-button ng-click="openComp()">
-                    Comp
-                    </md-button>
-                    <br-->
-                </div>
-                <div flex="95" id = "white">
-                    <div ui-view = ""></div>
-                <div>
-          </div>
-    <!--/div-->
+  <md-toolbar class="desktop">
+    <div class="md-toolbar-tools">
+        <div layout="column" class="fabSpeedDialdemoBasicUsage">
+          <md-content class="md-padding" >
+            <div class="lock-size" layout="row" layout-align="left left">
+              <md-fab-speed-dial md-open="isOpen" md-direction="{{selectedDirection}}" ng-class="selectedMode">
+                <md-fab-trigger>
+                  <md-button aria-label="menu" class="md-fab md-warn">
+                    <md-icon class="md-default-theme" class="material-icons">&#xE5D2;</md-icon>
+                    <md-tooltip md-direction="right">Menu</md-tooltip>
+                  </md-button>
+                </md-fab-trigger>
+
+                <md-fab-actions>
+                  <md-button aria-label="Graphe" class="md-fab md-raised md-mini" ng-click="openGraph()">
+                    <md-icon class="md-default-theme" class="material-icons">&#xE80D;</md-icon>
+                    <md-tooltip md-direction="right">Graphe des Compétences</md-tooltip>
+                  </md-button>
+                  <md-button aria-label="Formulaire" class="md-fab md-raised md-mini" ng-click="openFormulaire()">
+                    <md-icon class="md-default-theme" class="material-icons">&#xE3C9;</md-icon>
+                    <md-tooltip md-direction="right">Formulaire</md-tooltip>
+                  </md-button>
+                  <md-button aria-label="TestMd" class="md-fab md-raised md-mini" ng-click="openTestMd()">
+                    <md-icon class="md-default-theme" class="material-icons">&#xE264;</md-icon>
+                    <md-tooltip md-direction="right">TestMd</md-tooltip>
+                  </md-button>
+                </md-fab-actions>
+              </md-fab-speed-dial>
+            </div>
+          </md-content>
+            <md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="left">
+        </div>    
+        <h2>
+            <span >{{currentPage}}</span>
+        </h2>
+        <md-button class="md-icon-button" aria-label="Side Panel" ng-click="openSideNavPanel()" style="position: absolute; right: 0;">
+            <md-tooltip>Arborescence</md-tooltip>
+            <md-icon class="md-default-theme" class="material-icons">&#xE241;</md-icon>
+        </md-button>
+        <span></span>
+    </div>
+  </md-toolbar>
+    <div ui-view = ""></div>
 </div>
 
 

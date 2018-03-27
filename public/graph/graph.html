@@ -1,38 +1,7 @@
 <div ng-controller="GraphController" class="header" ng-app="AngularGen">
-  <md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="left">
-    <md-toolbar layout="row">
-      <div class="md-toolbar-tools">
-        <h2>
-      <span>Menu</span>
-    </h2>
-        <span flex></span>
-        <md-button class="md-icon-button" aria-label="Close Side Panel" ng-click="closeSideNavPanel()">
-          <md-tooltip>Fermer</md-tooltip>
-          <md-icon class="md-default-theme" class="material-icons">&#xE5CD;</md-icon>
-        </md-button>
-      </div>
-    </md-toolbar>
-    <md-content layout-padding="">
-     Arborescence
-    <oci.treeview tree="treeData"  on-select-node="getMoreData">
-      <span>{{tree.label}}</span>
-    </oci.treeview>         
-    </md-content>
-  </md-sidenav>
-
-  <md-toolbar class="desktop">
-    <div class="md-toolbar-tools">
-      <h2>
-      <span>Graphe des Compétences</span>
-    </h2>
-    <md-button class="md-icon-button" aria-label="Side Panel" ng-click="openSideNavPanel()" style="position: absolute; right: 0;">
-        <md-tooltip>Arborescence</md-tooltip>
-        <md-icon class="md-default-theme" class="material-icons">&#xE241;</md-icon>
-      </md-button>
-      <span></span>
-    </div>
-  </md-toolbar>
-
+ 
+  
+  <div id="chart"></div>
 
 </div>
 

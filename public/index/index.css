@@ -24,8 +24,13 @@
   float : right;
 }
 
+#black{
+    background-color : black;
+}
+
+
 body {
-    color: #f7f6c8;
+    color: black;
 }
 
 i {
@@ -35,6 +40,7 @@ i {
 md-content {
   background: transparent;
 }
+
 
 /*----------------------------------------------------------------------*/
   @media only screen and (max-width: 736px) {
@@ -114,7 +120,7 @@ div.tree li i, div.tree li span {
   color: white;
 background: navy;
 }
-/*---------------
+/*-----------------------------------------------------------------------*/
 
 /*--------------------- test-md ------------*/
 
@@ -192,6 +198,26 @@ background: navy;
 }
 
 /*-------------GRAPHE COMPETENCES-----------------------------*/
+
+#chart {
+  text-align: center;
+  width: auto;
+  margin-top: 100px;
+}
+path {
+  stroke: #fff;
+}
+
+h1, h4 {
+  font-family: 'Roboto Slab', serif;
+  text-align: center;
+}
+
+.tooltip {
+  font-size: 30px; /*taille du texte affiché*/
+  font-family: Artem; /*sans-serif; */
+  color: black; /*couleur du texte*/
+}
 
 
 
