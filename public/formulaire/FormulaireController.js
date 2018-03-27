@@ -1,5 +1,5 @@
 angular.module('AngularGen')
-    .controller('FormulaireController', function ($scope,$http,$state) {
+    .controller('FormulaireController', function ($scope,$http,$state,$q, $timeout) {
 
     $scope.nom=""
     $scope.prenom=""
@@ -91,19 +91,6 @@ angular.module('AngularGen')
         addInput.innerHTML = input + '<label>Mot-clef : </label><input type="text" name="fpsaisiedescripteurA" /><br/>\n';
     }
 */
-})
-.directive('custom-chip', function(){ /*pour changer couleur md-chips en theorie*/
-  return {
-    restrict: 'A',
-    link: function(scope, elem, attrs) {
-      var chipClass = 'back';
-      var mdChip = elem.parent().parent();
-      mdChip.addClass(chipClass);
-    }
-  }
-});
-
-
 // If we do not have CryptoJS defined; import it
 if (typeof CryptoJS == 'undefined') {
   var cryptoSrc = '//cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/md5.js';
@@ -113,7 +100,7 @@ if (typeof CryptoJS == 'undefined') {
 }
 
 
-function Test_mdController ($q, $timeout, $http,$scope) {
+
   var self = this;
   var pendingSearch, cancelSearch = angular.noop;
   var lastSearch;
@@ -181,7 +168,7 @@ function Test_mdController ($q, $timeout, $http,$scope) {
 
   function loadCompetences() {
     
-    //console.log($scope.liste);
+    console.log($scope.liste);
     var liste = $scope.liste;
 
     /*var contacts = [
@@ -210,4 +197,18 @@ function Test_mdController ($q, $timeout, $http,$scope) {
       return contact;
     });
   }
-}
+
+})
+.directive('custom-chip', function(){ /*pour changer couleur md-chips en theorie*/
+  return {
+    restrict: 'A',
+    link: function(scope, elem, attrs) {
+      var chipClass = 'back';
+      var mdChip = elem.parent().parent();
+      mdChip.addClass(chipClass);
+    }
+  }
+});
+
+
+

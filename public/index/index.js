@@ -50,14 +50,14 @@ angular.module('AngularGen')
   	$scope.recherche=""
 
     $scope.objetRecherche=''
-    $scope.liste=[]
+    $scope.rech=[]
 
   	$scope.search = function(){
         $http.get(
           '/researchBDD/'+$scope.recherche
           ).then(function successCallBack(response){
             //console.log(response)
-            $scope.liste = response.data;
+            $scope.rech = response.data;
             $state.go('advanced-search');
 
         },function errorCallBack(error){
