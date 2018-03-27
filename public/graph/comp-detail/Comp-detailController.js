@@ -5,11 +5,13 @@ angular.module('AngularGen')
 
 		$scope.currentNavItem = '1';
 
+
 	    $scope.goto = function(page) {
 	      $scope.status = "Goto " + page;
 	    }
 
 		$scope.goBack = function(){
+			$rootScope.currentPage = "Graphe des Compétences";
 			$state.go('graph');
 		}
 

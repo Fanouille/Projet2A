@@ -1,7 +1,7 @@
   angular.module('AngularGen')
   	.controller('GraphController', function ($scope,$http,$state,$mdSidenav,$rootScope) {
   	
-    	$scope.treeData = {
+    	/*$scope.treeData = {
     		label : '',
     		state : 'expanded',
     		children : [{
@@ -66,7 +66,7 @@
             var data = response.data;
             node.children = data;
         });
-      };
+      };*/
      //-------------------------------------------------------------------------------------------------
 
 
@@ -160,6 +160,7 @@
         path.transition()
           .duration(750)
           .attrTween("d", arcTween(d));
+
         if(d.children == undefined){
           $rootScope.selectedLeaf = d.name;
           $scope.leafDetail(d.name);
