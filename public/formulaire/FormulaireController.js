@@ -203,7 +203,7 @@ if (typeof CryptoJS == 'undefined') {
   return {
     restrict: 'A',
     link: function(scope, elem, attrs) {
-      var chipClass = 'back';
+      var chipClass = 'pink';
       var mdChip = elem.parent().parent();
       mdChip.addClass(chipClass);
     }

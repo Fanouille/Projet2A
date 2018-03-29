@@ -44,6 +44,19 @@ md-content {
 }
 
 
+
+/* When the input is not focused 
+md-input-container label {
+  color: red;
+}*/
+
+md-input-container:not(.md-input-invalid).md-input-focused .md-input {
+    border-color:  #eb692e;
+}
+
+md-input-container:not(.md-input-invalid).md-input-focused label {
+    color:  #eb692e;
+}
 /*----------------------------------------------------------------------*/
   @media only screen and (max-width: 736px) {
     .mobile {
@@ -128,7 +141,8 @@ background: navy;
 
 
 .chipsdemoContactChips md-content.autocomplete {
-  min-height: 250px; }
+  min-height: 250px; 
+  background-color : #eb692e;}
   .chipsdemoContactChips md-content.autocomplete input {
     min-width: 400px; }
 
@@ -170,9 +184,14 @@ background: navy;
 
 
   /*----------------PAGE COMPETENCES----------------------------*/
+.navBardemoBasicUsage md-content{
+  background: #f7f6c8;
+}
 .navBardemoBasicUsage md-content .ext-content {
-  padding: 200px;
-  margin: 100px;
+  padding: 250px;
+  margin: 50px;
+  outline-style: solid;
+  outline-color: #eb692e;
   background-color: #f7f6c8; }
 
   /*------------MENU INDEX-----------------*/

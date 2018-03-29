@@ -22,6 +22,7 @@
     <script src="/scripts/angular-ui-router/release/angular-ui-router.min.js"></script>
     <script src="/scripts/angular-messages/angular-messages.min.js"></script>
     <script src="https://d3js.org/d3.v3.min.js"></script>
+    <script src="//d3js.org/d3-scale-chromatic.v0.3.min.js"></script>
     <link href='https://fonts.googleapis.com/css?family=Roboto+Slab' rel='stylesheet' type='text/css'>
 
 
@@ -64,7 +65,7 @@
                     <span flex></span>
                     <md-button class="md-icon-button" aria-label="Search"  ng-click="search()" >
                         <md-tooltip>Rechercher</md-tooltip>
-                        <md-icon class="material-icons">&#xE8B6;</md-icon>
+                        <md-icon class="material-icons" style="color:white;">&#xE8B6;</md-icon>
                     </md-button>
                     <md-input-container md-no-float class="md-accent" style="padding-bottom:0px; padding-top: 25px;">
                         <input ng-model="recherche" placeholder="Recherche" style="color:wheat;">
@@ -81,7 +82,7 @@
                     </md-input-container-->
                    
                 </div>
-                </md-toolbar>
+              </md-toolbar>
 <md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="left" id="white">
     <md-toolbar layout="row" id="pink">
       <div class="md-toolbar-tools">
@@ -91,14 +92,14 @@
         <span flex></span>
         <md-button class="md-icon-button" aria-label="Close Side Panel" ng-click="closeSideNavPanel()">
           <md-tooltip>Fermer</md-tooltip>
-          <md-icon class="md-default-theme" class="material-icons">&#xE5CD;</md-icon>
+          <md-icon class="md-default-theme" class="material-icons" style="color:white;">&#xE5CD;</md-icon>
         </md-button>
       </div>
     </md-toolbar>
     <md-content layout-padding="" id="white">
      Arborescence
     <oci.treeview tree="treeData"  on-select-node="getMoreData">
-      <span>{{tree.label}}</span>
+      <span style="color:black;">{{tree.label}}</span>
     </oci.treeview>         
     </md-content>
   </md-sidenav>
@@ -106,42 +107,43 @@
   <md-toolbar class="desktop" id="pink">
     <div class="md-toolbar-tools">
         <div layout="column" class="fabSpeedDialdemoBasicUsage">
-          <md-content class="md-padding" >
+          <md-content class="md-padding">
             <div class="lock-size" layout="row" layout-align="left left">
-              <md-fab-speed-dial md-open="isOpen" md-direction="{{selectedDirection}}" ng-class="selectedMode">
+              <md-fab-speed-dial md-open="isOpen" md-direction="{{selectedDirection}}" ng-class="selectedMode" >
                 <md-fab-trigger>
-                  <md-button aria-label="menu" class="md-fab md-warn">
-                    <md-icon class="md-default-theme" class="material-icons">&#xE5D2;</md-icon>
+                  <md-button aria-label="menu" class="md-fab md-warn" >
+                    <md-icon class="md-default-theme" class="material-icons" style="color:white;">&#xE5D2;</md-icon>
                     <md-tooltip md-direction="right">Menu</md-tooltip>
                   </md-button>
                 </md-fab-trigger>
 
                 <md-fab-actions>
                   <md-button aria-label="Graphe" class="md-fab md-raised md-mini" ng-click="openGraph()">
-                    <md-icon class="md-default-theme" class="material-icons">&#xE80D;</md-icon>
+                    <md-icon class="md-default-theme" class="material-icons" style="color:white;">&#xE80D;</md-icon>
                     <md-tooltip md-direction="right">Graphe des Compétences</md-tooltip>
                   </md-button>
                   <md-button aria-label="Formulaire" class="md-fab md-raised md-mini" ng-click="openFormulaire()">
-                    <md-icon class="md-default-theme" class="material-icons">&#xE3C9;</md-icon>
+                    <md-icon class="md-default-theme" class="material-icons" style="color:white;">&#xE3C9;</md-icon>
                     <md-tooltip md-direction="right">Formulaire</md-tooltip>
                   </md-button>
                 </md-fab-actions>
               </md-fab-speed-dial>
             </div>
           </md-content>
-            <md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="left">
+            <md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="left"></md-sidenav>
         </div>    
         <h2>
-            <span >{{currentPage}}</span>
+            <span style="position: absolute; left : 700px; color: white">{{currentPage}}</span>
         </h2>
         <md-button class="md-icon-button" aria-label="Side Panel" ng-click="openSideNavPanel()" style="position: absolute; right: 0;">
             <md-tooltip>Arborescence</md-tooltip>
-            <md-icon class="md-default-theme" class="material-icons">&#xE241;</md-icon>
+            <md-icon class="md-default-theme" class="material-icons" style="color:white;">&#xE241;</md-icon>
         </md-button>
         <span></span>
     </div>
   </md-toolbar>
     <div ui-view = ""></div>
+</div>
 </div>
 
 

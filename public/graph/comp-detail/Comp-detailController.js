@@ -19,10 +19,10 @@ angular.module('AngularGen')
 	})
 	.config(function($mdThemingProvider) {
      $mdThemingProvider.theme('default')
-  		.primaryPalette('blue', {
+  		.primaryPalette('deep-orange', {
   			'default' : '800'
   		})
-  		.accentPalette('blue', {
+  		.accentPalette('deep-orange', {
   			'default' : '800'
   		});
     });

@@ -1,73 +1,5 @@
   angular.module('AngularGen')
   	.controller('GraphController', function ($scope,$http,$state,$mdSidenav,$rootScope) {
-  	
-    	/*$scope.treeData = {
-    		label : '',
-    		state : 'expanded',
-    		children : [{
-          label: 'Racine',
-          state: 'collapsed',
-          children: [],
-        }],
-      };
-
-      $rootScope.selectedLeaf = ''
-      $scope.leafDetail = function(leaf){
-          $http.get(
-            '/getLeafInBDD/'+ leaf
-            ).then(function successCallBack(response){
-              //console.log(response)
-              $rootScope.Infos = response.data;
-              $state.go('comp-detail');
-
-          },function errorCallBack(error){
-              console.log(error);
-          })     
-      }
-
-       $scope.leafSkilledUsers = function(leaf){
-          $http.get(
-            '/getUserLeafInBDD/'+ leaf
-            ).then(function successCallBack(response){
-              //console.log(response)
-              $rootScope.Infos.push(response.data);
-              $state.go('comp-detail');
-
-          },function errorCallBack(error){
-              console.log(error);
-          })     
-      }   
-
-      $scope.$on('nodeSelected', function(event, node, context) {
-        if (context.selectedNode) {
-          context.selectedNode.class = '';
-          if (node.state === "leaf"){
-            $rootScope.selectedLeaf = node.label;
-            $scope.leafDetail($rootScope.selectedLeaf);
-            //$scope.leafSkilledUsers($rootScope.selectedLeaf);
-            
-          }
-        }
-
-        node.class = 'selectedNode';
-        context.selectedNode = node;
-      });
-
-      $scope.showMobileMainHeader = true;
-      $scope.openSideNavPanel = function() {
-        $mdSidenav('left').open();
-      };
-      $scope.closeSideNavPanel = function() {
-        $mdSidenav('left').close();
-      };
-      
-      $scope.getMoreData = function (node) {
-        return $http.get('/getCompSonInBDD/' + node.label).then(function successCallBack(response) {
-            var data = response.data;
-            node.children = data;
-        });
-      };*/
-     //-------------------------------------------------------------------------------------------------
 
 
     //------------------------GRAPHE COMPETENCES D3----------------------------------------------------
@@ -83,8 +15,8 @@
     var y = d3.scale.sqrt().range([0, radius]);
 
     // just uses one of the predefined D3 color scales
-    var color = d3.scale.category20c();
-
+    //var color = d3.scale.category20c();
+    var color = d3.scale.ordinal().range(["#ff4d00","#ff7400","#ff9a00", "#ffc100"]); //define graph color palette
     // add the SVG element to the HTML w/ size, add g container,
     // and center the g within the SVG element
      d3.select("#chart").selectAll("svg").remove();//clear page
@@ -121,6 +53,7 @@
       .style("position", "absolute")
       .style("z-index", "1")
       .style("opacity", 0);
+    
 
     // request JSON data, populate partition
     d3.json("graph/graphe.json", function(error, root) { //https://api.myjson.com/bins/25k9j
