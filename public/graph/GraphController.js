@@ -19,7 +19,7 @@
     var color = d3.scale.ordinal().range(["#ff4d00","#ff7400","#ff9a00", "#ffc100"]); //define graph color palette
     // add the SVG element to the HTML w/ size, add g container,
     // and center the g within the SVG element
-     d3.select("#chart").selectAll("svg").remove();//clear page
+    d3.select("#chart").selectAll("svg").remove();//clear page
     var svg = d3.select("#chart").append("svg")
       .attr("width", width)
       .attr("height", height)
@@ -57,15 +57,17 @@
 
     // request JSON data, populate partition
     d3.json("graph/graphe.json", function(error, root) { //https://api.myjson.com/bins/25k9j
-      var path = svg.selectAll("path")
+      var g = svg.selectAll("g")
         .data(partition.nodes(root))
-        .enter().append("path")
+        .enter().append("g");
+
+      var path = g.append("path")
         .attr("d", arc)
         .style("fill", function(d) {
           return color((d.children ? d : d.parent).name);
         })
       // zoom on click
-        .on("click", zoom)
+        .on("click", click)
       // display name and value in tooltip
         .on("mouseover", function(d) {
           tooltip.html(function() {
@@ -88,8 +90,16 @@
           return tooltip.style("opacity", 0);
         });
 
+      var text = g.append("text")
+        .attr("transform", function(d) { return "rotate(" + computeTextRotation(d) + ")"; })
+
+        .attr("x", function(d) { return y(d.y); })
+        .attr("dx", "6") // margin
+        .attr("dy", ".35em") // vertical-align
+        .text(function(d) { return d.name; });
+
       // zoom in when clicked
-      function zoom(d) {
+      /*function zoom(d) {
         path.transition()
           .duration(750)
           .attrTween("d", arcTween(d));
@@ -98,8 +108,31 @@
           $rootScope.selectedLeaf = d.name;
           $scope.leafDetail(d.name);
         }
-      }
+      }*/
+      function click(d) {
+        if(d.children == undefined){
+          $rootScope.selectedLeaf = d.name;
+          $scope.leafDetail(d.name);
+        };
+        // fade out all text elements
+        text.transition().attr("opacity", 0);
 
+        path.transition()
+          .duration(750)
+          .attrTween("d", arcTween(d))
+          .each("end", function(e, i) {
+              // check if the animated element's data e lies within the visible angle span given in d
+              if (e.x >= d.x && e.x < (d.x + d.dx)) {
+                // get a selection of the associated text element
+                var arcText = d3.select(this.parentNode).select("text");
+                // fade in the text element and recalculate positions
+                arcText.transition().duration(750)
+                  .attr("opacity", 1)
+                  .attr("transform", function() { return "rotate(" + computeTextRotation(e) + ")" })
+                  .attr("x", function(d) { return y(d.y); });
+              }
+          });
+      }
     });
 
     // Interpolate the scales
@@ -116,6 +149,11 @@
           return arc(d);
         };
       };
+    }
+
+   function computeTextRotation(d) {
+      return (x(d.x + d.dx / 2) - Math.PI / 2) / Math.PI * 180;
+
     }
     //-------------------------------------------------------------------------------------------------
   });

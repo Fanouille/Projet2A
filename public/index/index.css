@@ -240,7 +240,13 @@ h1, h4 {
   color: black; /*couleur du texte*/
 }
 
+.back {
+  background: #eca758;
+}
 
+md-chips md-chip {
+  color: black;
+}
 
 /*-------------MENU DEROULANT-----------------------------------
 code inutile mais a garder pour le moment

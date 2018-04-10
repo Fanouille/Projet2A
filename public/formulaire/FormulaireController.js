@@ -72,6 +72,7 @@ angular.module('AngularGen')
         $scope.entreprise.ad_ville=""
         $scope.langue={}
         $scope.competences={}
+
     }
 //---------------------------------------------------------------------------------------------
 

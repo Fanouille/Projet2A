@@ -2,7 +2,7 @@
 <md-content style="padding: 15px">
     <!--Utilisez un peu plus l'espace sur la page, vous en avez !-->
     Bienvenue sur la page de formulaire !
-    <form layout="row" layout-align="space-around start">
+    <form layout="row" layout-align="space-around start" name = "form">
         <form layout="row" layout-align="space-around start">
             <div flex="30" layout="row" layout-align="start center">
                 <md-input-container flex="50">
@@ -21,15 +21,29 @@
                     <label>Telephone</label>
                     <input type="text" name="telephone" ng-model="telephone">
                 </md-input-container>
-                <md-input-container flex="70">
+                <!--md-input-container flex="70">
                     <label>Adresse E-mail</label>
                     <input type="text" name="mail" ng-model="mail">
+                </md-input-container-->
+                <md-input-container class="md-block" flex="70">
+                    <label>Adresse E-mail</label>
+                    <input required="" type="email" name="mail" ng-model="mail" minlength="10" maxlength="100" ng-pattern="/^.+@.+\..+$/">
+                    <div ng-messages="form.mail.$error" role="alert">
+                      <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                        Your email must be between 10 and 100 characters long and look like an e-mail address.
+                      </div>
+                    </div>
                 </md-input-container>
             </div>
-            
-            <md-input-container flex="20">
+            <br>
+            <md-input-container class="md-block" flex="20">
                 <label>Password</label>
-                <input type="text" name="password" ng-model="password">
+                <input required="" type ="text" name="password" ng-model="password"  minlength="6">
+                <div ng-messages="form.password.$error" role="alert">
+                    <div ng-message-exp="['required', 'minlength', 'pattern']">
+                        Your password must have 6 characters minimum.
+                    </div>
+                </div>
             </md-input-container>
         </form>
         
