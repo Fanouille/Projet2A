@@ -1,6 +1,7 @@
   angular.module('AngularGen')
   	.controller('GraphController', function ($scope,$http,$state,$mdSidenav,$rootScope) {
 
+      
 
     //------------------------GRAPHE COMPETENCES D3----------------------------------------------------
 
@@ -68,8 +69,19 @@
         })
       // zoom on click
         .on("click", click)
+        .on('mouseover', function(d) {
+          if (d.depth > 0) {
+            var names = getNameArray(d);
+            fade(path, 0.1, names, 'name'); 
+            update_crumbs(d);
+          }
+        })
+        .on('mouseout', function(d) {
+          fade(path, 1);
+          remove_crumbs();
+        });
       // display name and value in tooltip
-        .on("mouseover", function(d) {
+        /*.on("mouseover", function(d) {
           tooltip.html(function() {
             var text = '<b>' + d.name + '</b><br>';
             return text;
@@ -88,15 +100,15 @@
       // remove tooltip when mouse leaves graph
         .on("mouseout", function() {
           return tooltip.style("opacity", 0);
-        });
+        });*/
 
-      var text = g.append("text")
+      /*var text = g.append("text")
         .attr("transform", function(d) { return "rotate(" + computeTextRotation(d) + ")"; })
 
         .attr("x", function(d) { return y(d.y); })
         .attr("dx", "6") // margin
         .attr("dy", ".35em") // vertical-align
-        .text(function(d) { return d.name; });
+        .text(function(d) { return d.name; });*/
 
       // zoom in when clicked
       /*function zoom(d) {
@@ -114,8 +126,6 @@
           $rootScope.selectedLeaf = d.name;
           $scope.leafDetail(d.name);
         };
-        // fade out all text elements
-        text.transition().attr("opacity", 0);
 
         path.transition()
           .duration(750)
@@ -128,7 +138,6 @@
                 // fade in the text element and recalculate positions
                 arcText.transition().duration(750)
                   .attr("opacity", 1)
-                  .attr("transform", function() { return "rotate(" + computeTextRotation(e) + ")" })
                   .attr("x", function(d) { return y(d.y); });
               }
           });
@@ -155,6 +164,63 @@
       return (x(d.x + d.dx / 2) - Math.PI / 2) / Math.PI * 180;
 
     }
+
+    // Updates breadcrumbs
+    function update_crumbs(d) {
+      var crumb_container = d3.select('.crumbs'),
+          sections = getNameArray(d);
+      
+      // Remove existing crumbs
+      remove_crumbs();
+      
+      // Append new crumbs
+      sections.reverse().forEach(function(name) {
+        crumb_container.append('span')
+          .classed('crumb', true)
+          .text(name);
+      });
+    };
+
+    // Removes all crumb spans
+    function remove_crumbs() {
+      d3.select('.crumbs').selectAll('.crumb').remove();
+    };
+
+    // Retrieve arc name and parent names
+    function getNameArray(d, array) {
+      array = array || [];
+
+      // Push the current objects name to the array
+      array.push(d.name);
+
+      // Recurse to retrieve parent names
+      if (d.parent) getNameArray(d.parent, array);
+
+      return array;
+    };
+
+
+    // Fade a selection filtering out the comparator(s)
+    function fade(selection, opacity, comparators, comparatee) {
+      var type = typeof comparators,
+          key = comparatee ? comparatee : 'value';
+
+      selection.filter(function(d, i) {
+                    // Remove elements based on a string or number
+                    if (type === "string" || type === "number") {
+                      return d[key] !== comparators;
+
+                    // Remove elements based on an array
+                    } else if (type === 'object' && typeof comparators.slice === 'function') {
+                      return comparators.indexOf(d[key]) === -1;
+
+                    // If there is no comparator keep everything 
+                    } else return true;
+                })
+                .transition('fade')
+                .duration(250)
+                .style('opacity', opacity);
+    };   
     //-------------------------------------------------------------------------------------------------
   });
 
