@@ -57,7 +57,7 @@
       </div-->
       <!--div flex="90"--> 
 
-            <div layout = "row" height = "75" style="background-color : #eb692e">
+            <!--div layout = "row" height = "75" style="background-color : #eb692e">
                 <h2 style="color: #ECA758; font-family: 'calibri'; font-size: 150%; font-weight: bold">
                   <span>Accueil</span>
                 </h2>
@@ -74,21 +74,21 @@
                 <md-input-container md-no-float class="md-accent" style="padding-bottom:0px; padding-top: 25px;">
                     <input ng-model="recherche" placeholder="Recherche" style="color:wheat;">
                 </md-input-container>
-            </div>        
+            </div-->        
             
 
-            <!--mat-toolbar class="desktop" id='pink'>
+            <mat-toolbar class="desktop" id='pink'>
                 <div class="md-toolbar-tools">
                     <h2 style="color: #ECA758; font-family: 'calibri'; font-size: 150%; font-weight: bold">
                       <span>Accueil</span>
                     </h2>
 
-                   <img class = "centre" src="../test/depinfo.svg" width="150" height="75" alt="logo depinfo">
+                    <img class = "centre" src="../test/depinfo.svg" width="150" height="75" alt="logo depinfo"-->
 
-                      <div class="dialog-demo-content" layout="row" layout-wrap layout-margin layout-align="center">
-                       <md-button  ng-click = "showConDialog($event)">Connexion</md-button></div>
-                       <div class="dialog-demo-content" layout="row" layout-wrap layout-margin layout-align="center">
-                       <md-button  ng-click = "showInsDialog($event)">Inscription</md-button></div>
+                    <div class="dialog-demo-content" layout="row" layout-wrap layout-margin layout-align="center">
+                    <md-button  ng-click = "showConDialog($event)">Connexion</md-button></div>
+                    <div class="dialog-demo-content" layout="row" layout-wrap layout-margin layout-align="center">
+                    <md-button  ng-click = "showInsDialog($event)">Inscription</md-button></div>
 
                     <span flex></span>
                     <md-button class="md-icon-button" aria-label="Search"  ng-click="search()" >
@@ -99,7 +99,7 @@
                         <input ng-model="recherche" placeholder="Recherche" style="color:wheat;">
                     </md-input-container>
 
-                    <md-input-container  style="position: absolute; right: 0;">
+                    <!--md-input-container  style="position: absolute; right: 0;">
                         <label>Recherche</label>
                         <input type="text" name="Recherche" ng-model="recherche" >
                     </md-input-container>
@@ -108,11 +108,11 @@
                         <md-button ng-click="search()">
                             <i class="material-icons">search</i>
                         </md-button>
-                    </md-input-container> 
+                    </md-input-container--> 
                 </div>
-            </mat-toolbar-->
-        </div>
-    </div>
+            </mat-toolbar>
+        
+    
 
 
 
