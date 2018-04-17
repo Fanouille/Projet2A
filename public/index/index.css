@@ -28,6 +28,10 @@
     background-color : black;
 }
 
+.centre{
+  text-align: center;
+  flex: 1 1 auto;
+}
 
 
 body {
@@ -137,7 +141,7 @@ background: navy;
 }
 /*-----------------------------------------------------------------------*/
 
-/*--------------------- test-md ------------*/
+/*--------------------- formulaire ------------*/
 
 
 .chipsdemoContactChips md-content.autocomplete {
