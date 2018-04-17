@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('AngularGen')
-.controller('IndexController', function ($scope,$state,$http,$mdPanel,$mdSidenav,$rootScope){
+.controller('IndexController', function ($scope,$state,$http,$mdPanel,$mdSidenav,$rootScope,$mdDialog){
 
 
     	/*$scope.varGlobal = ''
@@ -159,4 +159,36 @@ angular.module('AngularGen')
             node.children = data;
         });
       };
+
+      //-----------------------------------------------POPUP----------------------------------------------
+      $scope.showConDialog = function(ev) {
+      $mdDialog.show({
+        controller: "ConnexionController",
+        templateUrl: 'connexion/connexion.html',
+        parent: angular.element(document.body),
+        targetEvent: ev,
+        clickOutsideToClose:true
+      })
+          .then(function(answer) {
+            $scope.status = 'You said the information was "' + answer + '".';
+          }, function() {
+            $scope.status = 'You cancelled the dialog.';
+          });
+    };
+
+      /*$scope.showInsDialog = function(ev) {
+      $mdDialog.show({
+        controller: "FormulaireController",
+        templateUrl: 'formulaire/formulaire.html',
+        parent: angular.element(document.body),
+        targetEvent: ev,
+        clickOutsideToClose:true
+      })
+          .then(function(answer) {
+            $scope.status = 'You said the information was "' + answer + '".';
+          }, function() {
+            $scope.status = 'You cancelled the dialog.';
+          });
+    };*/
+    //--------------------------------------------------------------------------------------------------
 });
