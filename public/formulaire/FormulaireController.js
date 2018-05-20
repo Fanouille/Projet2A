@@ -15,13 +15,14 @@ angular.module('AngularGen')
     $scope.entreprise.ad_rue=""
     $scope.entreprise.ad_ville=""
     $scope.langue={}
-    $scope.competences={}
+    $scope.competences=[]
     $scope.id = []
     $scope.statutAjout = "pas encore ajouté"
     $scope.info = {}
 
 //-----------------Fonction qui ajoute les données utilisateur à la bdd------------------------
     $scope.add = function(){
+        //console.log();
 
         $http({
             method:'POST',
@@ -126,7 +127,7 @@ if (typeof CryptoJS == 'undefined') {
       cancelSearch();
 
       return pendingSearch = $q(function(resolve, reject) {
-        console.log(self.asyncContacts);
+        //console.log(self.asyncContacts);
         // Simulate async search... (after debouncing)
         cancelSearch = reject;
         $timeout(function() {
@@ -169,7 +170,6 @@ if (typeof CryptoJS == 'undefined') {
 
   function loadCompetences() {
     
-    console.log($scope.liste);
     var liste = $scope.liste;
 
     /*var contacts = [

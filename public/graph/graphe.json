@@ -1,4 +1,4 @@
-{"name" : "Racine",
+{"name" : "",
 	"children" : [
 		{"name" : "Robotique", "children" : [
 			{"name" : "ROS", "value" : 1},

@@ -80,6 +80,9 @@
           fade(path, 1);
           remove_crumbs();
         });
+
+
+
       // display name and value in tooltip
         /*.on("mouseover", function(d) {
           tooltip.html(function() {
@@ -102,13 +105,12 @@
           return tooltip.style("opacity", 0);
         });*/
 
-      /*var text = g.append("text")
+      var text = g.append("text")
         .attr("transform", function(d) { return "rotate(" + computeTextRotation(d) + ")"; })
-
         .attr("x", function(d) { return y(d.y); })
         .attr("dx", "6") // margin
         .attr("dy", ".35em") // vertical-align
-        .text(function(d) { return d.name; });*/
+        .text(function(d) { return d.name; });
 
       // zoom in when clicked
       /*function zoom(d) {
@@ -126,7 +128,9 @@
           $rootScope.selectedLeaf = d.name;
           $scope.leafDetail(d.name);
         };
-
+         // fade out all text elements
+        text.transition().attr("opacity", 0);
+        
         path.transition()
           .duration(750)
           .attrTween("d", arcTween(d))
@@ -138,8 +142,11 @@
                 // fade in the text element and recalculate positions
                 arcText.transition().duration(750)
                   .attr("opacity", 1)
-                  .attr("x", function(d) { return y(d.y); });
+                  .attr("x", function(d) { return y(d.y); })
+                  .attr("transform", function(d) { return "rotate(" + computeTextRotation(d) + ")"; })
+                  .text(function(d) { return d.name; });
               }
+        
           });
       }
     });
