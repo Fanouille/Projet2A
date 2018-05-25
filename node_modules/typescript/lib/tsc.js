@@ -170,7 +170,7 @@ var ts;
 var ts;
 (function (ts) {
     ts.versionMajorMinor = "2.8";
-    ts.version = ts.versionMajorMinor + ".1";
+    ts.version = ts.versionMajorMinor + ".3";
 })(ts || (ts = {}));
 (function (ts) {
     function isExternalModuleNameRelative(moduleName) {
@@ -2920,10 +2920,13 @@ var ts;
         }
         function watchChildDirectories(parentDir, existingChildWatches, callback) {
             var newChildWatches;
-            ts.enumerateInsertsAndDeletes(host.directoryExists(parentDir) ? host.getAccessileSortedChildDirectories(parentDir) : ts.emptyArray, existingChildWatches, function (child, childWatcher) { return host.filePathComparer(ts.getNormalizedAbsolutePath(child, parentDir), childWatcher.dirName); }, createAndAddChildDirectoryWatcher, ts.closeFileWatcher, addChildDirectoryWatcher);
+            ts.enumerateInsertsAndDeletes(host.directoryExists(parentDir) ? ts.mapDefined(host.getAccessibleSortedChildDirectories(parentDir), function (child) {
+                var childFullName = ts.getNormalizedAbsolutePath(child, parentDir);
+                return host.filePathComparer(childFullName, host.realpath(childFullName)) === 0 ? childFullName : undefined;
+            }) : ts.emptyArray, existingChildWatches, function (child, childWatcher) { return host.filePathComparer(child, childWatcher.dirName); }, createAndAddChildDirectoryWatcher, ts.closeFileWatcher, addChildDirectoryWatcher);
             return newChildWatches || ts.emptyArray;
             function createAndAddChildDirectoryWatcher(childName) {
-                var result = createDirectoryWatcher(ts.getNormalizedAbsolutePath(childName, parentDir), callback);
+                var result = createDirectoryWatcher(childName, callback);
                 addChildDirectoryWatcher(result);
             }
             function addChildDirectoryWatcher(childWatcher) {
@@ -3019,14 +3022,7 @@ var ts;
                 exit: function (exitCode) {
                     process.exit(exitCode);
                 },
-                realpath: function (path) {
-                    try {
-                        return _fs.realpathSync(path);
-                    }
-                    catch (_a) {
-                        return path;
-                    }
-                },
+                realpath: realpath,
                 debugMode: ts.some(process.execArgv, function (arg) { return /^--(inspect|debug)(-brk)?(=\d+)?$/i.test(arg); }),
                 tryEnableSourceMapsForHost: function () {
                     try {
@@ -3090,8 +3086,9 @@ var ts;
                 var watchDirectoryRecursively = createRecursiveDirectoryWatcher({
                     filePathComparer: useCaseSensitiveFileNames ? ts.compareStringsCaseSensitive : ts.compareStringsCaseInsensitive,
                     directoryExists: directoryExists,
-                    getAccessileSortedChildDirectories: function (path) { return getAccessibleFileSystemEntries(path).directories; },
-                    watchDirectory: watchDirectory
+                    getAccessibleSortedChildDirectories: function (path) { return getAccessibleFileSystemEntries(path).directories; },
+                    watchDirectory: watchDirectory,
+                    realpath: realpath
                 });
                 return function (directoryName, callback, recursive) {
                     if (recursive) {
@@ -3342,6 +3339,14 @@ var ts;
             }
             function getDirectories(path) {
                 return ts.filter(_fs.readdirSync(path), function (dir) { return fileSystemEntryExists(ts.combinePaths(path, dir), 1); });
+            }
+            function realpath(path) {
+                try {
+                    return _fs.realpathSync(path);
+                }
+                catch (_a) {
+                    return path;
+                }
             }
             function getModifiedTime(path) {
                 try {
@@ -10529,6 +10534,10 @@ var ts;
             || kind === 251;
     }
     ts.isTypeElement = isTypeElement;
+    function isClassOrTypeElement(node) {
+        return isTypeElement(node) || isClassElement(node);
+    }
+    ts.isClassOrTypeElement = isClassOrTypeElement;
     function isObjectLiteralElementLike(node) {
         var kind = node.kind;
         return kind === 268
@@ -16106,7 +16115,7 @@ var ts;
                 if (ts.hasJSDocNodes(node)) {
                     for (var _i = 0, _a = node.jsDoc; _i < _a.length; _i++) {
                         var jsDocComment = _a[_i];
-                        forEachChild(jsDocComment, visitNode, visitArray);
+                        visitNode(jsDocComment);
                     }
                 }
                 checkNodePositions(node, aggressiveChecks);
@@ -16150,10 +16159,17 @@ var ts;
         function checkNodePositions(node, aggressiveChecks) {
             if (aggressiveChecks) {
                 var pos_2 = node.pos;
-                forEachChild(node, function (child) {
+                var visitNode_1 = function (child) {
                     ts.Debug.assert(child.pos >= pos_2);
                     pos_2 = child.end;
-                });
+                };
+                if (ts.hasJSDocNodes(node)) {
+                    for (var _i = 0, _a = node.jsDoc; _i < _a.length; _i++) {
+                        var jsDocComment = _a[_i];
+                        visitNode_1(jsDocComment);
+                    }
+                }
+                forEachChild(node, visitNode_1);
                 ts.Debug.assert(pos_2 <= node.end);
             }
         }
@@ -16172,6 +16188,12 @@ var ts;
                     child._children = undefined;
                     adjustIntersectingElement(child, changeStart, changeRangeOldEnd, changeRangeNewEnd, delta);
                     forEachChild(child, visitNode, visitArray);
+                    if (ts.hasJSDocNodes(child)) {
+                        for (var _i = 0, _a = child.jsDoc; _i < _a.length; _i++) {
+                            var jsDocComment = _a[_i];
+                            visitNode(jsDocComment);
+                        }
+                    }
                     checkNodePositions(child, aggressiveChecks);
                     return;
                 }
@@ -21478,7 +21500,7 @@ var ts;
                         checkResolvedBlockScopedVariable(exportOrLocalSymbol, errorLocation);
                     }
                 }
-                if (result && isInExternalModule && (meaning & 67216319) === 67216319) {
+                if (result && isInExternalModule && (meaning & 67216319) === 67216319 && !(originalLocation.flags & 1048576)) {
                     var decls = result.declarations;
                     if (decls && decls.length === 1 && decls[0].kind === 240) {
                         error(errorLocation, ts.Diagnostics._0_refers_to_a_UMD_global_but_the_current_file_is_a_module_Consider_adding_an_import_instead, ts.unescapeLeadingUnderscores(name));
@@ -21809,7 +21831,9 @@ var ts;
         }
         function isNonLocalAlias(symbol, excludes) {
             if (excludes === void 0) { excludes = 67216319 | 67901928 | 1920; }
-            return symbol && (symbol.flags & (2097152 | excludes)) === 2097152;
+            if (!symbol)
+                return false;
+            return (symbol.flags & (2097152 | excludes)) === 2097152 || (symbol.flags & 2097152 && symbol.flags & 67108864);
         }
         function resolveSymbol(symbol, dontResolveAlias) {
             var shouldResolve = !dontResolveAlias && isNonLocalAlias(symbol);
@@ -21905,6 +21929,9 @@ var ts;
                     var initializer = ts.getDeclaredJavascriptInitializer(namespace.valueDeclaration) || ts.getAssignedJavascriptInitializer(namespace.valueDeclaration);
                     if (initializer) {
                         namespace = getSymbolOfNode(initializer);
+                    }
+                    if (!namespace) {
+                        return undefined;
                     }
                     if (namespace.valueDeclaration &&
                         ts.isVariableDeclaration(namespace.valueDeclaration) &&
@@ -23560,8 +23587,7 @@ var ts;
                     if (strictNullChecks && declaration.flags & 2097152 && ts.isParameterDeclaration(declaration)) {
                         parentType = getNonNullableType(parentType);
                     }
-                    var propType = getTypeOfPropertyOfType(parentType, text);
-                    var declaredType = propType && getConstraintForLocation(propType, declaration.name);
+                    var declaredType = getConstraintForLocation(getTypeOfPropertyOfType(parentType, text), declaration.name);
                     type = declaredType && getFlowTypeOfReference(declaration, declaredType) ||
                         isNumericLiteralName(text) && getIndexTypeOfType(parentType, 1) ||
                         getIndexTypeOfType(parentType, 0);
@@ -25248,14 +25274,22 @@ var ts;
             return baseObjectType || baseIndexType ? getIndexedAccessType(baseObjectType || type.objectType, baseIndexType || type.indexType) : undefined;
         }
         function getDefaultConstraintOfConditionalType(type) {
-            return getUnionType([getTrueTypeFromConditionalType(type), getFalseTypeFromConditionalType(type)]);
+            if (!type.resolvedDefaultConstraint) {
+                var rootTrueType = type.root.trueType;
+                var rootTrueConstraint = rootTrueType.flags & 4194304 ? rootTrueType.substitute : rootTrueType;
+                type.resolvedDefaultConstraint = getUnionType([instantiateType(rootTrueConstraint, type.combinedMapper || type.mapper), getFalseTypeFromConditionalType(type)]);
+            }
+            return type.resolvedDefaultConstraint;
         }
         function getConstraintOfDistributiveConditionalType(type) {
             if (type.root.isDistributive) {
                 var constraint = getConstraintOfType(type.checkType);
                 if (constraint) {
                     var mapper = createTypeMapper([type.root.checkType], [constraint]);
-                    return getConditionalTypeInstantiation(type, combineTypeMappers(mapper, type.mapper));
+                    var instantiated = getConditionalTypeInstantiation(type, combineTypeMappers(mapper, type.mapper));
+                    if (!(instantiated.flags & 16384)) {
+                        return instantiated;
+                    }
                 }
             }
             return undefined;
@@ -26188,7 +26222,7 @@ var ts;
         }
         function getConstrainedTypeVariable(typeVariable, node) {
             var constraints;
-            while (ts.isPartOfTypeNode(node)) {
+            while (node && !ts.isStatement(node)) {
                 var parent = node.parent;
                 if (parent.kind === 170 && node === parent.trueType) {
                     var constraint = getImpliedConstraint(typeVariable, parent.checkType, parent.extendsType);
@@ -26738,18 +26772,21 @@ var ts;
             }
             return links.resolvedType;
         }
-        function getIndexTypeForGenericType(type) {
-            if (!type.resolvedIndexType) {
-                type.resolvedIndexType = createType(524288);
-                type.resolvedIndexType.type = type;
+        function getIndexTypeForGenericType(type, includeDeclaredTypes) {
+            var cacheLocation = includeDeclaredTypes ? "resolvedDeclaredIndexType" : "resolvedIndexType";
+            if (!type[cacheLocation]) {
+                type[cacheLocation] = createType(524288);
+                type[cacheLocation].type = type;
+                if (includeDeclaredTypes) {
+                    type[cacheLocation].isDeclaredType = true;
+                }
             }
-            return type.resolvedIndexType;
+            return type[cacheLocation];
         }
         function getLiteralTypeFromPropertyName(prop) {
             var links = getSymbolLinks(getLateBoundSymbol(prop));
             if (!links.nameType) {
-                if (links.target && links.target !== unknownSymbol && links.target !== resolvingSymbol) {
-                    ts.Debug.assert(links.target.escapedName === prop.escapedName || links.target.escapedName === "__computed", "Target symbol and symbol do not have the same name");
+                if (links.target && links.target !== unknownSymbol && links.target !== resolvingSymbol && links.target.escapedName === prop.escapedName) {
                     links.nameType = getLiteralTypeFromPropertyName(links.target);
                 }
                 else {
@@ -26760,16 +26797,20 @@ var ts;
             }
             return links.nameType;
         }
-        function getLiteralTypeFromPropertyNames(type) {
-            return getUnionType(ts.map(getPropertiesOfType(type), getLiteralTypeFromPropertyName));
+        function isTypeString(type) {
+            return isTypeAssignableToKind(type, 524322);
         }
-        function getIndexType(type) {
-            return type.flags & 262144 ? getUnionType(ts.map(type.types, function (t) { return getIndexType(t); })) :
-                maybeTypeOfKind(type, 7372800) ? getIndexTypeForGenericType(type) :
+        function getLiteralTypeFromPropertyNames(type, includeDeclaredTypes) {
+            var originalKeys = ts.map(getPropertiesOfType(type), getLiteralTypeFromPropertyName);
+            return getUnionType(includeDeclaredTypes ? originalKeys : ts.filter(originalKeys, isTypeString));
+        }
+        function getIndexType(type, includeDeclaredTypes) {
+            return type.flags & 262144 ? getUnionType(ts.map(type.types, function (t) { return getIndexType(t, includeDeclaredTypes); })) :
+                maybeTypeOfKind(type, 7372800) ? getIndexTypeForGenericType(type, includeDeclaredTypes) :
                     ts.getObjectFlags(type) & 32 ? getConstraintTypeFromMappedType(type) :
                         type === wildcardType ? wildcardType :
                             type.flags & 1 || getIndexInfoOfType(type, 0) ? stringType :
-                                getLiteralTypeFromPropertyNames(type);
+                                getLiteralTypeFromPropertyNames(type, includeDeclaredTypes);
         }
         function getIndexTypeOrString(type) {
             var indexType = getIndexType(type);
@@ -26982,13 +27023,16 @@ var ts;
             if (checkType === wildcardType || extendsType === wildcardType) {
                 return wildcardType;
             }
-            if (!root.isDistributive || !maybeTypeOfKind(checkType, 7897088)) {
-                var combinedMapper = void 0;
-                if (root.inferTypeParameters) {
-                    var context = createInferenceContext(root.inferTypeParameters, undefined, 0);
+            var isDeferred = root.isDistributive && maybeTypeOfKind(checkType, 7897088);
+            var combinedMapper;
+            if (root.inferTypeParameters) {
+                var context = createInferenceContext(root.inferTypeParameters, undefined, 0);
+                if (!isDeferred) {
                     inferTypes(context.inferences, checkType, extendsType, 32 | 64);
-                    combinedMapper = combineTypeMappers(mapper, context);
                 }
+                combinedMapper = combineTypeMappers(mapper, context);
+            }
+            if (!isDeferred) {
                 if (checkType.flags & 1) {
                     return getUnionType([instantiateType(root.trueType, combinedMapper || mapper), instantiateType(root.falseType, mapper)]);
                 }
@@ -27006,6 +27050,7 @@ var ts;
             result.checkType = erasedCheckType;
             result.extendsType = extendsType;
             result.mapper = mapper;
+            result.combinedMapper = combinedMapper;
             result.aliasSymbol = root.aliasSymbol;
             result.aliasTypeArguments = instantiateTypes(root.aliasTypeArguments, mapper);
             return result;
@@ -27027,13 +27072,27 @@ var ts;
             }
             return result;
         }
+        function isPossiblyReferencedInConditionalType(tp, node) {
+            if (isTypeParameterPossiblyReferenced(tp, node)) {
+                return true;
+            }
+            while (node) {
+                if (node.kind === 170) {
+                    if (isTypeParameterPossiblyReferenced(tp, node.extendsType)) {
+                        return true;
+                    }
+                }
+                node = node.parent;
+            }
+            return false;
+        }
         function getTypeFromConditionalTypeNode(node) {
             var links = getNodeLinks(node);
             if (!links.resolvedType) {
                 var checkType = getTypeFromTypeNode(node.checkType);
                 var aliasTypeArguments = getAliasTypeArgumentsForTypeNode(node);
                 var allOuterTypeParameters = getOuterTypeParameters(node, true);
-                var outerTypeParameters = aliasTypeArguments ? allOuterTypeParameters : ts.filter(allOuterTypeParameters, function (tp) { return isTypeParameterPossiblyReferenced(tp, node); });
+                var outerTypeParameters = aliasTypeArguments ? allOuterTypeParameters : ts.filter(allOuterTypeParameters, function (tp) { return isPossiblyReferencedInConditionalType(tp, node); });
                 var root = {
                     node: node,
                     checkType: checkType,
@@ -27489,6 +27548,10 @@ var ts;
             }
             return type;
         }
+        function maybeTypeParameterReference(node) {
+            return !(node.kind === 145 ||
+                node.parent.kind === 161 && node.parent.typeArguments && node === node.parent.typeName);
+        }
         function isTypeParameterPossiblyReferenced(tp, node) {
             if (tp.symbol && tp.symbol.declarations && tp.symbol.declarations.length === 1) {
                 var container_2 = tp.symbol.declarations[0].parent;
@@ -27502,7 +27565,8 @@ var ts;
                     case 173:
                         return tp.isThisType;
                     case 71:
-                        return !tp.isThisType && ts.isPartOfTypeNode(node) && getTypeFromTypeNode(node) === tp;
+                        return !tp.isThisType && ts.isPartOfTypeNode(node) && maybeTypeParameterReference(node) &&
+                            getTypeFromTypeNode(node) === tp;
                     case 164:
                         return true;
                 }
@@ -28463,7 +28527,7 @@ var ts;
                     }
                     var constraint = getConstraintForRelation(target.type);
                     if (constraint) {
-                        if (result = isRelatedTo(source, getIndexType(constraint), reportErrors)) {
+                        if (result = isRelatedTo(source, getIndexType(constraint, target.isDeclaredType), reportErrors)) {
                             return result;
                         }
                     }
@@ -28528,8 +28592,8 @@ var ts;
                 }
                 else if (source.flags & 2097152) {
                     if (target.flags & 2097152) {
-                        if (isTypeIdenticalTo(source.checkType, target.checkType) &&
-                            isTypeIdenticalTo(source.extendsType, target.extendsType)) {
+                        if (isTypeIdenticalTo(source.extendsType, target.extendsType) &&
+                            (isRelatedTo(source.checkType, target.checkType) || isRelatedTo(target.checkType, source.checkType))) {
                             if (result = isRelatedTo(getTrueTypeFromConditionalType(source), getTrueTypeFromConditionalType(target), reportErrors)) {
                                 result &= isRelatedTo(getFalseTypeFromConditionalType(source), getFalseTypeFromConditionalType(target), reportErrors);
                             }
@@ -30306,7 +30370,7 @@ var ts;
         }
         function getTypeOfDestructuredProperty(type, name) {
             var text = ts.getTextOfPropertyName(name);
-            return getTypeOfPropertyOfType(type, text) ||
+            return getConstraintForLocation(getTypeOfPropertyOfType(type, text), name) ||
                 isNumericLiteralName(text) && getIndexTypeOfType(type, 1) ||
                 getIndexTypeOfType(type, 0) ||
                 unknownType;
@@ -31219,7 +31283,7 @@ var ts;
             return type.flags & 7372800 && maybeTypeOfKind(getBaseConstraintOfType(type) || emptyObjectType, 12288);
         }
         function getConstraintForLocation(type, node) {
-            if (isConstraintPosition(node) && forEachType(type, typeHasNullableConstraint)) {
+            if (type && isConstraintPosition(node) && forEachType(type, typeHasNullableConstraint)) {
                 return mapType(getWidenedType(type), getBaseConstraintOrType);
             }
             return type;
@@ -32086,7 +32150,7 @@ var ts;
             }
             return propsType;
         }
-        function getJsxPropsTypeFromClassType(hostClassType, isJs, context) {
+        function getJsxPropsTypeFromClassType(hostClassType, isJs, context, reportErrors) {
             if (isTypeAny(hostClassType)) {
                 return hostClassType;
             }
@@ -32100,6 +32164,9 @@ var ts;
             else {
                 var attributesType = getTypeOfPropertyOfType(hostClassType, propsName);
                 if (!attributesType) {
+                    if (reportErrors && !!ts.length(context.attributes.properties)) {
+                        error(context, ts.Diagnostics.JSX_element_class_does_not_support_attributes_because_it_does_not_have_a_0_property, ts.unescapeLeadingUnderscores(propsName));
+                    }
                     return emptyObjectType;
                 }
                 else if (isTypeAny(attributesType)) {
@@ -32125,7 +32192,7 @@ var ts;
         function getJsxPropsTypeFromConstructSignature(sig, isJs, context) {
             var hostClassType = getReturnTypeOfSignature(sig);
             if (hostClassType) {
-                return getJsxPropsTypeFromClassType(hostClassType, isJs, context);
+                return getJsxPropsTypeFromClassType(hostClassType, isJs, context, false);
             }
             return getJsxPropsTypeFromCallSignature(sig, context);
         }
@@ -32836,7 +32903,7 @@ var ts;
             if (elementClassType) {
                 checkTypeRelatedTo(elemInstanceType, elementClassType, assignableRelation, openingLikeElement, ts.Diagnostics.JSX_element_type_0_is_not_a_constructor_function_for_JSX_elements);
             }
-            return getJsxPropsTypeFromClassType(elemInstanceType, ts.isInJavaScriptFile(openingLikeElement), openingLikeElement);
+            return getJsxPropsTypeFromClassType(elemInstanceType, ts.isInJavaScriptFile(openingLikeElement), openingLikeElement, true);
         }
         function getIntrinsicAttributesTypeFromJsxOpeningLikeElement(node) {
             ts.Debug.assert(isJsxIntrinsicIdentifier(node.tagName));
@@ -32956,23 +33023,18 @@ var ts;
                 getIntrinsicAttributesTypeFromJsxOpeningLikeElement(openingLikeElement) :
                 getCustomJsxElementAttributesType(openingLikeElement, false);
             var sourceAttributesType = createJsxAttributesTypeFromAttributesProperty(openingLikeElement, checkMode);
-            if (targetAttributesType === emptyObjectType && (isTypeAny(sourceAttributesType) || getPropertiesOfType(sourceAttributesType).length > 0)) {
-                error(openingLikeElement, ts.Diagnostics.JSX_element_class_does_not_support_attributes_because_it_does_not_have_a_0_property, ts.unescapeLeadingUnderscores(getJsxElementPropertiesName(getJsxNamespaceAt(openingLikeElement))));
-            }
-            else {
-                var isSourceAttributeTypeAssignableToTarget = checkTypeAssignableTo(sourceAttributesType, targetAttributesType, openingLikeElement.attributes.properties.length > 0 ? openingLikeElement.attributes : openingLikeElement);
-                if (isSourceAttributeTypeAssignableToTarget && !isTypeAny(sourceAttributesType) && !isTypeAny(targetAttributesType)) {
-                    for (var _i = 0, _a = openingLikeElement.attributes.properties; _i < _a.length; _i++) {
-                        var attribute = _a[_i];
-                        if (!ts.isJsxAttribute(attribute)) {
-                            continue;
-                        }
-                        var attrName = attribute.name;
-                        var isNotIgnoredJsxProperty = (isUnhyphenatedJsxName(ts.idText(attrName)) || !!(getPropertyOfType(targetAttributesType, attrName.escapedText)));
-                        if (isNotIgnoredJsxProperty && !isKnownProperty(targetAttributesType, attrName.escapedText, true)) {
-                            error(attribute, ts.Diagnostics.Property_0_does_not_exist_on_type_1, ts.idText(attrName), typeToString(targetAttributesType));
-                            break;
-                        }
+            var isSourceAttributeTypeAssignableToTarget = checkTypeAssignableTo(sourceAttributesType, targetAttributesType, openingLikeElement.attributes.properties.length > 0 ? openingLikeElement.attributes : openingLikeElement);
+            if (isSourceAttributeTypeAssignableToTarget && !isTypeAny(sourceAttributesType) && !isTypeAny(targetAttributesType)) {
+                for (var _i = 0, _a = openingLikeElement.attributes.properties; _i < _a.length; _i++) {
+                    var attribute = _a[_i];
+                    if (!ts.isJsxAttribute(attribute)) {
+                        continue;
+                    }
+                    var attrName = attribute.name;
+                    var isNotIgnoredJsxProperty = (isUnhyphenatedJsxName(ts.idText(attrName)) || !!(getPropertyOfType(targetAttributesType, attrName.escapedText)));
+                    if (isNotIgnoredJsxProperty && !isKnownProperty(targetAttributesType, attrName.escapedText, true)) {
+                        error(attribute, ts.Diagnostics.Property_0_does_not_exist_on_type_1, ts.idText(attrName), typeToString(targetAttributesType));
+                        break;
                     }
                 }
             }
@@ -33186,11 +33248,11 @@ var ts;
             }
             var classType = getTypeOfSymbol(prop.parent);
             while (true) {
-                classType = getSuperClass(classType);
+                classType = classType.symbol && getSuperClass(classType);
                 if (!classType) {
                     return false;
                 }
-                var superProperty = getPropertyOfObjectType(classType, prop.escapedName);
+                var superProperty = getPropertyOfType(classType, prop.escapedName);
                 if (superProperty && superProperty.valueDeclaration) {
                     return true;
                 }
@@ -33201,8 +33263,7 @@ var ts;
             if (x.length === 0) {
                 return undefined;
             }
-            ts.Debug.assert(x.length === 1);
-            return x[0];
+            return getIntersectionType(x);
         }
         function reportNonexistentProperty(propNode, containingType) {
             var errorInfo;
@@ -36360,7 +36421,7 @@ var ts;
             }
             var objectType = type.objectType;
             var indexType = type.indexType;
-            if (isTypeAssignableTo(indexType, getIndexType(objectType))) {
+            if (isTypeAssignableTo(indexType, getIndexType(objectType, true))) {
                 if (accessNode.kind === 184 && ts.isAssignmentTarget(accessNode) &&
                     ts.getObjectFlags(objectType) & 32 && getMappedTypeModifiers(objectType) & 1) {
                     error(accessNode, ts.Diagnostics.Index_signature_in_type_0_only_permits_reading, typeToString(objectType));
@@ -41608,13 +41669,13 @@ var ts;
     }
     ts.updateNode = updateNode;
     function createNodeArray(elements, hasTrailingComma) {
-        if (elements) {
+        if (!elements || elements === ts.emptyArray) {
+            elements = [];
+        }
+        else {
             if (ts.isNodeArray(elements)) {
                 return elements;
             }
-        }
-        else {
-            elements = [];
         }
         var array = elements;
         array.pos = -1;
@@ -46095,7 +46156,7 @@ var ts;
             switch (node.kind) {
                 case 242:
                     externalImports.push(node);
-                    hasImportStarOrImportDefault = getImportNeedsImportStarHelper(node) || getImportNeedsImportDefaultHelper(node);
+                    hasImportStarOrImportDefault = hasImportStarOrImportDefault || getImportNeedsImportStarHelper(node) || getImportNeedsImportDefaultHelper(node);
                     break;
                 case 241:
                     if (node.moduleReference.kind === 252) {
@@ -48862,6 +48923,11 @@ var ts;
                     ts.addRange(statements, node.statement.statements);
                     bodyLocation = node.statement;
                     statementsLocation = node.statement.statements;
+                }
+                else if (node.statement) {
+                    ts.append(statements, node.statement);
+                    bodyLocation = node.statement;
+                    statementsLocation = node.statement;
                 }
                 return ts.updateForOf(node, node.awaitModifier, ts.setTextRange(ts.createVariableDeclarationList([
                     ts.setTextRange(ts.createVariableDeclaration(temp), node.initializer)
@@ -58985,13 +59051,13 @@ var ts;
             writeSemicolon();
         }
         function emitTokenWithComment(token, pos, writer, contextNode, indentLeading) {
-            var node = contextNode && ts.getParseTreeNode(contextNode);
+            var node = ts.getParseTreeNode(contextNode);
             var isSimilarNode = node && node.kind === contextNode.kind;
             var startPos = pos;
             if (isSimilarNode) {
                 pos = ts.skipTrivia(currentSourceFile.text, pos);
             }
-            if (emitLeadingCommentsOfPosition && isSimilarNode) {
+            if (emitLeadingCommentsOfPosition && isSimilarNode && contextNode.pos !== startPos) {
                 var needsIndent = indentLeading && !ts.positionsAreOnSameLine(startPos, pos, currentSourceFile);
                 if (needsIndent) {
                     increaseIndent();
@@ -59002,7 +59068,7 @@ var ts;
                 }
             }
             pos = writeTokenText(token, writer, pos);
-            if (emitTrailingCommentsOfPosition && isSimilarNode) {
+            if (emitTrailingCommentsOfPosition && isSimilarNode && contextNode.end !== pos) {
                 emitTrailingCommentsOfPosition(pos, true);
             }
             return pos;
