@@ -104,7 +104,7 @@
         <form layout="row" layout-align="space-around start">
             <div flex="95" ng-controller="FormulaireController as ctrl" layout="column" ng-cloak>
                 <md-contact-chips
-                    ng-model="ctrl.asyncContacts"
+                    ng-model="asyncContacts"
                     md-contacts="ctrl.delayedQuerySearch($query)"
                     md-contact-name="name"
                     md-contact-image="image"
@@ -113,7 +113,7 @@
                     md-highlight-flags="i"
                     filter-selected="ctrl.filterSelected"
                     placeholder="Compétences">
-                    <md-chips-template custom-chip></md-chips-template>
+                    <md-chips-template custom-chip md-on-select="ctrl.addChip($chip)" md-on-remove="ctrl.removeChip($chip)"></md-chips-template>
                 </md-contact-chips>
             </div>
             

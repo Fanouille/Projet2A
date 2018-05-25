@@ -93,13 +93,13 @@ angular.module('AngularGen')
         addInput.innerHTML = input + '<label>Mot-clef : </label><input type="text" name="fpsaisiedescripteurA" /><br/>\n';
     }
 */
-// If we do not have CryptoJS defined; import it
-if (typeof CryptoJS == 'undefined') {
-  var cryptoSrc = '//cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/md5.js';
-  var scriptTag = document.createElement('script');
-  scriptTag.setAttribute('src', cryptoSrc);
-  document.body.appendChild(scriptTag);
-}
+  // If we do not have CryptoJS defined; import it
+  if (typeof CryptoJS == 'undefined') {
+    var cryptoSrc = '//cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/md5.js';
+    var scriptTag = document.createElement('script');
+    scriptTag.setAttribute('src', cryptoSrc);
+    document.body.appendChild(scriptTag);
+  }
 
 
 
@@ -117,8 +117,19 @@ if (typeof CryptoJS == 'undefined') {
   self.delayedQuerySearch = delayedQuerySearch;
 
 
+
   function querySearch (criteria) {
     return criteria ? self.allCompetences.filter(createFilterFor(criteria)) : [];
+  }
+
+  function addChip(chip) {
+    $scope.competences.push(chip);
+    console.log($scope.competences);
+  }
+
+  function removeChip(chip) {
+    $scope.competences.pop(chip);
+    console.log($scope.competences);
   }
 
 
@@ -138,7 +149,6 @@ if (typeof CryptoJS == 'undefined') {
         }, Math.random() * 500, true);
       });
     }
-
     return pendingSearch;
   }
 

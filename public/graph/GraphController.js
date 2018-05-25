@@ -108,7 +108,8 @@
       var text = g.append("text")
         .attr("transform", function(d) { return "rotate(" + computeTextRotation(d) + ")"; })
         .attr("x", function(d) { return y(d.y); })
-        .attr("dx", "6") // margin
+        .attr("text-anchor", "middle")
+        .attr("dx", "0") // margin
         .attr("dy", ".35em") // vertical-align
         .text(function(d) { return d.name; });
 
@@ -130,7 +131,6 @@
         };
          // fade out all text elements
         text.transition().attr("opacity", 0);
-        
         path.transition()
           .duration(750)
           .attrTween("d", arcTween(d))
