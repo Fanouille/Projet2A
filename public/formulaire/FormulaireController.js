@@ -1,3 +1,13 @@
+// If we do not have CryptoJS defined; import it
+if (typeof CryptoJS == 'undefined') {
+  var cryptoSrc = '//cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/md5.js';
+  var scriptTag = document.createElement('script');
+  scriptTag.setAttribute('src', cryptoSrc);
+  document.body.appendChild(scriptTag);
+}
+  
+angular.lowercase = text => text.toLowerCase()
+
 angular.module('AngularGen')
     .controller('FormulaireController', function ($scope,$http,$state,$q, $timeout) {
 
@@ -28,7 +38,7 @@ angular.module('AngularGen')
             method:'POST',
             url:'/addUserToBDD',
             //params:{n : name ,p : prenom }
-            data : [$scope.nom, $scope.prenom,$scope.adresse.rue, $scope.adresse.ville, $scope.promo,$scope.mail, $scope.telephone, $scope.entreprise.name, $scope.entreprise.ad_rue ,$scope.entreprise.ad_ville, $scope.langue, $scope.competences,$scope.password],
+            data : [$scope.nom, $scope.prenom,$scope.adresse.rue, $scope.adresse.ville, $scope.promo,$scope.mail, $scope.telephone, $scope.entreprise.name, $scope.entreprise.ad_rue ,$scope.entreprise.ad_ville, $scope.langue, self.asyncContacts,$scope.password],
         }).then(function successCallBack(response){
             $scope.statutAjout = "user added to BDD";
             $scope.id = [$scope.nom, $scope.prenom,$scope.adresse.rue, $scope.adresse.ville, $scope.promo,$scope.mail, $scope.telephone, $scope.entreprise.name, $scope.entreprise.ad_rue ,$scope.entreprise.ad_ville, $scope.langue, $scope.competences];
@@ -93,13 +103,6 @@ angular.module('AngularGen')
         addInput.innerHTML = input + '<label>Mot-clef : </label><input type="text" name="fpsaisiedescripteurA" /><br/>\n';
     }
 */
-  // If we do not have CryptoJS defined; import it
-  if (typeof CryptoJS == 'undefined') {
-    var cryptoSrc = '//cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/md5.js';
-    var scriptTag = document.createElement('script');
-    scriptTag.setAttribute('src', cryptoSrc);
-    document.body.appendChild(scriptTag);
-  }
 
 
 
@@ -108,7 +111,7 @@ angular.module('AngularGen')
   var lastSearch;
 
   self.allCompetences = loadCompetences();
-  self.contacts = [self.allCompetences[0]];
+  self.contacts = [];//[self.allCompetences[0]];
   self.asyncContacts = [];
   self.filterSelected = true;
 
