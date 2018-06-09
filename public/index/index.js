@@ -81,6 +81,17 @@ angular.module('AngularGen')
 
   remplirListe();
 
+  function testWriteJson(){
+    return $http.get(
+        '/write'
+        ).then(function successCallBack(response){
+          //console.log(response)
+      },function errorCallBack(error){
+          console.log(error);
+      });
+  } 
+
+  testWriteJson();
 
   //MENU INDEX
   $scope.isOpen = false;

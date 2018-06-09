@@ -127,7 +127,23 @@ router.get('/load',function(req,res){
   
 })
 
+router.get('/write', function(req,res){
+  var promise = bdd.loadFromBDD();
+  promise.then(function(result){
+    fs.readFile("public/graph/testWrite.json", (err, data) => {  // READ
+      if (err) {
+          return console.error(err);
+      };
 
+      data= result;
+      var writeData = fs.writeFile("public/graph/testWrite.json", JSON.stringify(data), err => {
+        if (err) return console.error('File write error:', err)
+        });
+    });
+        
+
+  });
+})
 
 module.exports = router;
 
