@@ -130,12 +130,16 @@ router.get('/load',function(req,res){
 router.get('/write', function(req,res){
   var promise = bdd.loadFromBDD();
   promise.then(function(result){
+    var nomsDesComp = [];
+    for (var i=0; i<result.length; i++){
+      nomsDesComp.push(result[i].nom_comp);
+    }
     fs.readFile("public/graph/testWrite.json", (err, data) => {  // READ
       if (err) {
           return console.error(err);
       };
 
-      data= result;
+      data= nomsDesComp;
       var writeData = fs.writeFile("public/graph/testWrite.json", JSON.stringify(data), err => {
         if (err) return console.error('File write error:', err)
         });
