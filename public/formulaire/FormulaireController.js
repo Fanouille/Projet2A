@@ -1,14 +1,5 @@
 // If we do not have CryptoJS defined; import it
-<<<<<<< HEAD
-if (typeof CryptoJS == 'undefined') {
-  var cryptoSrc = '//cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/md5.js';
-  var scriptTag = document.createElement('script');
-  scriptTag.setAttribute('src', cryptoSrc);
-  document.body.appendChild(scriptTag);
-}
-  
-angular.lowercase = text => text.toLowerCase()
-=======
+
   if (typeof CryptoJS == 'undefined') {
     var cryptoSrc = 'https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/md5.js';
     var scriptTag = document.createElement('script');
@@ -17,7 +8,7 @@ angular.lowercase = text => text.toLowerCase()
   };
 
 angular.lowercase = text => text.toLowerCase();
->>>>>>> master
+
 
 angular.module('AngularGen')
     .controller('FormulaireController', function ($scope,$http,$state,$q, $timeout) {

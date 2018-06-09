@@ -16,7 +16,8 @@
       </md-nav-item>
     </md-nav-bar>
     <div class="ext-content">
-      <span>{{info[currentNavItem]}}</span>
+      <span ng-if = "currentNavItem != 2">{{info[currentNavItem]}}</span>
+      <a ng-if = "currentNavItem == 2" ng-href="{{lien}}" target="_blank">{{info[currentNavItem]}}</a>
     </div>
 
   </md-content>

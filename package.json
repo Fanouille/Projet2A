@@ -25,11 +25,7 @@
     "mongoose": "^4.13.13",
     "ng-scrollbars": "~0.0.11",
     "serve-favicon": "~2.4.2",
-<<<<<<< HEAD
-    "socket.io": "~1.2.1",
-=======
     "socket.io": "^2.1.1",
->>>>>>> master
     "typescript": "^2.8.3"
   }
 }

@@ -261,6 +261,124 @@ var unity = new Competences({
 }); 
 unity.save();
 
+var web = new Competences({
+    nom_comp : "Web",
+    is_leaf: false,
+    commentaire : "",
+    url_utile : "",
+    parent : racine,
+}); 
+web.save();
+
+var client = new Competences({
+    nom_comp : "Client",
+    is_leaf: true,
+    commentaire : "",
+    url_utile : "",
+    parent : web,
+}); 
+client.save();
+
+var best_practices = new Competences({
+    nom_comp : "Best Practices",
+    is_leaf: true,
+    commentaire : "",
+    url_utile : "",
+    parent : web,
+}); 
+best_practices.save();
+
+var serveur = new Competences({
+    nom_comp : "Serveur",
+    is_leaf: true,
+    commentaire : "",
+    url_utile : "",
+    parent : web,
+}); 
+serveur.save();
+
+var bdd = new Competences({
+    nom_comp : "Base de données",
+    is_leaf: false,
+    commentaire : "",
+    url_utile : "",
+    parent : racine,
+}); 
+bdd.save();
+
+var elasticsearch = new Competences({
+    nom_comp : "ElasticSearch",
+    is_leaf: true,
+    commentaire : "Elasticsearch est un serveur utilisant Lucene pour l'indexation et la recherche des données. Il fournit un moteur de recherche distribué et multi-entité à travers une interface REST.",
+    url_utile : "https://www.elastic.co/fr/products/elasticsearch",
+    parent : bdd,
+}); 
+elasticsearch.save();
+
+var no_sql = new Competences({
+    nom_comp : "No-Sql",
+    is_leaf: false,
+    commentaire : "",
+    url_utile : "",
+    parent : bdd,
+}); 
+no_sql.save();
+
+var sql = new Competences({
+    nom_comp : "SQL",
+    is_leaf: false,
+    commentaire : "",
+    url_utile : "",
+    parent : bdd,
+}); 
+sql.save();
+
+var oracle = new Competences({
+    nom_comp : "Oracle",
+    is_leaf: true,
+    commentaire : "description de la compétence Oracle",
+    url_utile : "liens utiles oracle",
+    parent : sql,
+}); 
+oracle.save();
+
+var mysql = new Competences({
+    nom_comp : "MySql",
+    is_leaf: true,
+    commentaire : "description de la compétence MySQL",
+    url_utile : "liens utiles MySQL",
+    parent : sql,
+}); 
+mysql.save();
+
+var postgresql = new Competences({
+    nom_comp : "PostgreSql",
+    is_leaf: true,
+    commentaire : "description de la compétence PostgreSQL",
+    url_utile : "liens utiles PostgreSQL",
+    parent : sql,
+}); 
+postgresql.save();
+
+
+var mongodb = new Competences({
+    nom_comp : "MongoDB",
+    is_leaf: true,
+    commentaire : "description de la compétence MongoDB",
+    url_utile : "liens utiles MongoDB",
+    parent : no_sql,
+}); 
+mongodb.save();
+
+var couchdb = new Competences({
+    nom_comp : "CouchDB",
+    is_leaf: true,
+    commentaire : "description de la compétence CouchDB",
+    url_utile : "liens utiles CouchDB",
+    parent : no_sql,
+}); 
+couchdb.save();
+
 mongoose.getSon = function(father){
     return new Promise(function(resolve,reject){
         db.collection('competences').find({"parent.nom_comp": father}).toArray(function(err,items){
