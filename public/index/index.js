@@ -81,6 +81,7 @@ angular.module('AngularGen')
 
   remplirListe();
 
+
   //MENU INDEX
   $scope.isOpen = false;
   $scope.selectedMode = 'md-fling';
