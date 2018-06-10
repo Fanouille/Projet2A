@@ -3,7 +3,7 @@
 
       
 
-    //------------------------GRAPHE COMPETENCES D3----------------------------------------------------
+    //-----------------------------------GRAPHE COMPETENCES D3--------------------------------------------------------
 
     // size of the graph
     var width = 600,
@@ -15,9 +15,9 @@
     var x = d3.scale.linear().range([0, 2 * Math.PI]);
     var y = d3.scale.sqrt().range([0, radius]);
 
-    // just uses one of the predefined D3 color scales
-    //var color = d3.scale.category20c();
-    var color = d3.scale.ordinal().range(["#ff4d00","#ff7400","#ff9a00", "#ffc100"]); //define graph color palette
+    //define graph color palette
+    var color = d3.scale.ordinal().range(["#ff4d00","#ff7400","#ff9a00", "#ffc100"]); //You can also uses one of the predefined D3 color scales like var color = d3.scale.category20c();
+
     // add the SVG element to the HTML w/ size, add g container,
     // and center the g within the SVG element
     d3.select("#chart").selectAll("svg").remove();//clear page
@@ -57,72 +57,39 @@
     
 
     // request JSON data, populate partition
-    d3.json("graph/graphe.json", function(error, root) { //https://api.myjson.com/bins/25k9j
-      var g = svg.selectAll("g")
+    d3.json("graph/graphe.json", function(error, root) { //load data from graph.json file
+      var g = svg.selectAll("g") //g element to make it focusable for labels
         .data(partition.nodes(root))
         .enter().append("g");
 
-      var path = g.append("path")
+      var path = g.append("path") //define path to track all the arcs
         .attr("d", arc)
         .style("fill", function(d) {
           return color((d.children ? d : d.parent).name);
         })
-      // zoom on click
-        .on("click", click)
-        .on('mouseover', function(d) {
+        .on("click", click) // zoom on click
+        .on('mouseover', function(d) { //executed when mouse on an arc
           if (d.depth > 0) {
             var names = getNameArray(d);
             fade(path, 0.1, names, 'name'); 
             update_crumbs(d);
           }
         })
-        .on('mouseout', function(d) {
+        .on('mouseout', function(d) { //executed when mouse leave an arc
           fade(path, 1);
           remove_crumbs();
         });
 
 
 
-      // display name and value in tooltip
-        /*.on("mouseover", function(d) {
-          tooltip.html(function() {
-            var text = '<b>' + d.name + '</b><br>';
-            return text;
-          });
-          // make tooltip visible when mouse is on graph
-          return tooltip.transition()
-            .duration(50)
-            .style("opacity", 0.9);
-        })
-      // place tooltip based on where mouse is
-        .on("mousemove", function(d) {
-          return tooltip
-            .style("top", (d3.event.pageY - 10) + "px")
-            .style("left", (d3.event.pageX + 10) + "px");
-        })
-      // remove tooltip when mouse leaves graph
-        .on("mouseout", function() {
-          return tooltip.style("opacity", 0);
-        });*/
-
-      var text = g.append("text")
-        .attr("transform", function(d) { return "rotate(" + computeTextRotation(d) + ")"; })
+      var text = g.append("text") //append label
+        .attr("transform", function(d) { return "rotate(" + computeTextRotation(d) + ")"; }) //rotate label
         .attr("x", function(d) { return y(d.y); })
         .attr("dx", "5") // margin
         .attr("dy", ".70em") // vertical-align
         .text(function(d) { return d.name; });
 
-      // zoom in when clicked
-      /*function zoom(d) {
-        path.transition()
-          .duration(750)
-          .attrTween("d", arcTween(d));
-
-        if(d.children == undefined){
-          $rootScope.selectedLeaf = d.name;
-          $scope.leafDetail(d.name);
-        }
-      }*/
+      //function for zoom  
       function click(d) {
         if(d.children == undefined){
           $rootScope.selectedLeaf = d.name;
@@ -149,9 +116,8 @@
           });
       }
     });
-
-    // Interpolate the scales
-    function arcTween(d) {
+    
+    function arcTween(d) {// Interpolate the scales
       var xd = d3.interpolate(x.domain(), [d.x, d.x + d.dx]),
         yd = d3.interpolate(y.domain(), [d.y, 1]),
         yr = d3.interpolate(y.range(), [d.y ? 20 : 0, radius]);
@@ -166,13 +132,16 @@
       };
     }
 
-   function computeTextRotation(d) {
+   function computeTextRotation(d) {//Rotate labels
       return (x(d.x + d.dx / 2) - Math.PI / 2) / Math.PI * 180;
 
     }
+    //--------------------------------------------------------------------------------------------------------
 
-    // Updates breadcrumbs
-    function update_crumbs(d) {
+
+    //--------------------------------------------AFFICHAGE DE NAVIGATION DYNAMIQUE---------------------------
+    
+    function update_crumbs(d) {// Updates breadcrumbs
       var crumb_container = d3.select('.crumbs'),
           sections = getNameArray(d);
       
@@ -187,13 +156,11 @@
       });
     };
 
-    // Removes all crumb spans
-    function remove_crumbs() {
+    function remove_crumbs() {// Removes all crumb spans
       d3.select('.crumbs').selectAll('.crumb').remove();
     };
 
-    // Retrieve arc name and parent names
-    function getNameArray(d, array) {
+    function getNameArray(d, array) {// Retrieve arc name and parent names
       array = array || [];
 
       // Push the current objects name to the array
@@ -204,10 +171,12 @@
 
       return array;
     };
+    //--------------------------------------------------------------------------------------------------------
 
 
-    // Fade a selection filtering out the comparator(s)
-    function fade(selection, opacity, comparators, comparatee) {
+    //--------------------------------------METTRE EN TRANSPARENCE LE GRAPHE----------------------------------
+    
+    function fade(selection, opacity, comparators, comparatee) {// Fade a selection filtering out the comparator(s)
       var type = typeof comparators,
           key = comparatee ? comparatee : 'value';
 
@@ -227,62 +196,6 @@
                 .duration(300)
                 .style('opacity', opacity);
     };   
-    //-------------------------------------------------------------------------------------------------
-
-
-
+    //------------------------------------------------------------------------------------------------------
   });
 
-
-
-
-
-
-  /*code inutile mais a garder pour le moment
-
-  	//----------------------------GESTION DU MENU DEROULANT----------------------------------------
-  	var dropdown = document.querySelectorAll('.dropdown');
-  	var dropdownArray = Array.prototype.slice.call(dropdown,0);
-  	dropdownArray.forEach(function(el){
-  		var button = el.querySelector('a[data-toggle="dropdown"]'),
-  			menu = el.querySelector('.dropdown-menu'),
-  			arrow = button.querySelector('i.icon-arrow');
-
-  		button.onclick = function(event) {
-  			if(!menu.hasClass('show')) {
-  				menu.classList.add('show');
-  				menu.classList.remove('hide');
-  				arrow.classList.add('open');
-  				arrow.classList.remove('close');
-  				event.preventDefault();
-  			}
-  			else {
-  				menu.classList.remove('show');
-  				menu.classList.add('hide');
-  				arrow.classList.remove('open');
-  				arrow.classList.add('close');
-  				event.preventDefault();
-  			}
-  		};
-  	})
-
-  	Element.prototype.hasClass = function(className) {
-  	return this.className && new RegExp("(^|\\s)" + className + "(\\s|$)").test(this.className);
-  	}
-  	//---------------------------------------------------------------------------------------------
-  		//---------------------------------------------------------------------------------------------
-  	
-  	$scope.leaf = function(Feuille){
-  		return ('<li><a href="#">'+Feuille+'</a></li>');
-  	}
-
-  	$scope.fatherBegin = function(Pere){
-  		return ('<li class="dropdown"><a href="#" data-toggle="dropdown">'+Pere +'<i class="icon-arrow"></i></a><ul class="dropdown-menu">');
-  	}
-
-  	$scope.fatherEnd = function(){
-  		return ('</ul></li>');
-  	}
-
-  	$scope.test = $scope.fatherBegin("Test")+$scope.leaf("Feuille")+$scope.fatherEnd();
-  	*/

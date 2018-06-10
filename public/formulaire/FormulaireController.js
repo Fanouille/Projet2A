@@ -1,13 +1,12 @@
 // If we do not have CryptoJS defined; import it
+if (typeof CryptoJS == 'undefined') {
+  var cryptoSrc = 'https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/md5.js';
+  var scriptTag = document.createElement('script');
+  scriptTag.setAttribute('src', cryptoSrc);
+  document.body.appendChild(scriptTag);
+};
 
-  if (typeof CryptoJS == 'undefined') {
-    var cryptoSrc = 'https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/md5.js';
-    var scriptTag = document.createElement('script');
-    scriptTag.setAttribute('src', cryptoSrc);
-    document.body.appendChild(scriptTag);
-  };
-
-angular.lowercase = text => text.toLowerCase();
+angular.lowercase = text => text.toLowerCase(); //override lowercase function to prevent errors with some angular versions
 
 
 angular.module('AngularGen')
@@ -32,44 +31,28 @@ angular.module('AngularGen')
     $scope.statutAjout = "pas encore ajouté"
     $scope.info = {}
 
-//-----------------Fonction qui ajoute les données utilisateur à la bdd------------------------
+//-----------------ADD USER TO BDD WITH POST METHOD-------------------------------------------------------
     $scope.add = function(){
         //console.log();
 
         $http({
             method:'POST',
             url:'/addUserToBDD',
-            //params:{n : name ,p : prenom }
             data : [$scope.nom, $scope.prenom,$scope.adresse.rue, $scope.adresse.ville, $scope.promo,$scope.mail, $scope.telephone, $scope.entreprise.name, $scope.entreprise.ad_rue ,$scope.entreprise.ad_ville, $scope.langue, self.asyncContacts,$scope.password],
-        }).then(function successCallBack(response){
+        }).then(function successCallBack(response){//in case of success
             $scope.statutAjout = "user added to BDD";
             $scope.id = [$scope.nom, $scope.prenom,$scope.adresse.rue, $scope.adresse.ville, $scope.promo,$scope.mail, $scope.telephone, $scope.entreprise.name, $scope.entreprise.ad_rue ,$scope.entreprise.ad_ville, $scope.langue, $scope.competences];
             $state.go('formulaireSummary');
-        },function errorCallBack(error){
+        },function errorCallBack(error){//in case of error
             console.log(error);
             $scope.statutAjout = "error happenned";
 
         })     
     }
-//---------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------
 
 
-//---------------TODO--MODIFIER DONNEE UTILISATEUR---------------------------------------------
-    $scope.update = function(){
-        $http({
-            method: 'POST',
-            url: '/updateUserInBDD',
-            data: [$scope.id,$scope.info],
-        }).then(function successCallBack(response){
-            console.log(response);
-        },function errorCallBack(error){
-            console.log(error);
-        })
-    }
-//---------------------------------------------------------------------------------------------
-
-
-//----------------------Fonction qui reset le formulaire---------------------------------------
+//---------------------------CLEAR DATAS ENTERED IN THE PAGE------------------------------------------------
     $scope.clear = function(){
         $scope.nom=""
         $scope.prenom=""
@@ -85,29 +68,11 @@ angular.module('AngularGen')
         $scope.entreprise.ad_ville=""
         $scope.langue={}
         $scope.competences={}
-
     }
-//---------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------------
 
 
-
-//--------------------Ajouter un champ de compétence-------------------------------------------
-    $scope.addInput = function(){
-        var input = addInput.innerHTML
-        addInput.innerHTML = input + '<md-input-container flex="20"> <label>Compétences</label> <input type="text" name="competences" ng-model="competences.third"> </md-input-container>'
-    }
-
-
-/*---------------------------------------------------------------------------------------------
-
-    $scope.addd = function(){
-        var input = addInput.innerHTML
-        addInput.innerHTML = input + '<label>Mot-clef : </label><input type="text" name="fpsaisiedescripteurA" /><br/>\n';
-    }
-*/
-
-
-
+//-----------------------------------------------AUTOCOMPLETION AND MD-CHIPS------------------------------
   var self = this;
   var pendingSearch, cancelSearch = angular.noop;
   var lastSearch;
@@ -143,7 +108,6 @@ angular.module('AngularGen')
       cancelSearch();
 
       return pendingSearch = $q(function(resolve, reject) {
-        //console.log(self.asyncContacts);
         // Simulate async search... (after debouncing)
         cancelSearch = reject;
         $timeout(function() {
@@ -187,44 +151,18 @@ angular.module('AngularGen')
     
     var liste = $scope.liste;
 
-    /*var contacts = [
-      'Marina Augustine',
-      'Oddr Sarno',
-      'Nick Giannopoulos',
-      'Narayana Garner',
-      'Anita Gros',
-      'Megan Smith',
-      'Tsvetko Metzger',
-      'Hector Simek',
-      'Some-guy withalongalastaname'
-    ];*/
-
     return liste.map(function (c, index) {
       var cParts = c.split(' ');
-      //var email = cParts[0][0].toLowerCase() + '.' + cParts[1].toLowerCase() + '@example.com';
-      //var hash = CryptoJS.MD5(email);
-
-      var contact = {
-        name: c,
-        //email: email,
-        //image: '//www.gravatar.com/avatar/' + hash + '?s=50&d=retro'
-      };
-      contact._lowername = contact.name.toLowerCase();
-      return contact;
+      var comp = {
+        name: c,      };
+      comp._lowername = comp.name.toLowerCase();
+      return comp;
     });
   }
+//--------------------------------------------------------------------------------------------------
 
-})
-.directive('custom-chip', function(){ /*pour changer couleur md-chips en theorie*/
-  return {
-    restrict: 'A',
-    link: function(scope, elem, attrs) {
-      var chipClass = 'pink';
-      var mdChip = elem.parent().parent();
-      mdChip.addClass(chipClass);
-    }
-  }
 });
+
 
 
 
