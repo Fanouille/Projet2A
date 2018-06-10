@@ -32,41 +32,18 @@
 <body ng-controller="IndexController" ng-app="AngularGen" ng-cloak>
 <!--Left Toolbar-->
 <div layout="row" style="height:100%;">
-    <div layout="column" flex>
-      
-      <!--div flex ="10" id="orange">
-        <div layout="row">
-            Accueil
-            <div flex="70">
-            </div>
-            <div flex="30">
-                <div flex="100" layout="row" layout-align="start center">
-                    <md-input-container flex="20">
-                        <label>Recherche</label>
-                        <input type="text" name="Recherche" ng-model="recherche">
-                    </md-input-container>
-                    <md-input-container flex="20">
-                        <md-button ng-click="search()">
-                            <i class="material-icons">search</i>
-                        </md-button>
-                    </md-input-container>
-                    <md-button ng-click="openAdvanced()">recherche avancée</md-button>
-                </div>
-            </div>
-        </div>
-      </div-->
-      <!--div flex="90"--> 
+    <div layout="column" flex>     
+            
 
-            <!--div layout = "row" height = "75" style="background-color : #eb692e">
-                <h2 style="color: #ECA758; font-family: 'calibri'; font-size: 150%; font-weight: bold">
-                  <span>Accueil</span>
-                </h2>
+        <mat-toolbar class="desktop" id='orange'>
+            <div class="md-toolbar-tools">
+                
 
-                <div class="centre">
-                    <img src="../test/depinfo.svg" width="150" height="75" alt="logo depinfo"> 
-                </div>
+                <a ng-click = "openGraph()" flex><img src="../test/depinfo.svg" width="150" height="75" alt="logo depinfo" ></a>
 
-                <span flex></span>
+                <div class="dialog-demo-content" layout="row" layout-wrap layout-margin layout-align="center">
+                <md-button  ng-click = "showConDialog($event)" style="color:white;">Connexion</md-button></div>
+
                 <md-button class="md-icon-button" aria-label="Search"  ng-click="search()" >
                     <md-tooltip>Rechercher</md-tooltip>
                     <md-icon class="material-icons" style="color:white;">&#xE8B6;</md-icon>
@@ -74,119 +51,76 @@
                 <md-input-container md-no-float class="md-accent" style="padding-bottom:0px; padding-top: 25px;">
                     <input ng-model="recherche" placeholder="Recherche" style="color:wheat;">
                 </md-input-container>
-            </div-->        
-            
-
-            <mat-toolbar class="desktop" id='orange'>
-                <div class="md-toolbar-tools">
-                    <h2 style="color: #ECA758; font-family: 'calibri'; font-size: 150%; font-weight: bold">
-                      <span>Accueil</span>
-                    </h2>
-                       <!--div class="dialog-demo-content" layout="row" layout-wrap layout-margin layout-align="center">
-                       <md-button  ng-click = "showInsDialog($event)">Inscription</md-button></div-->
-
-                    
-
-                    <!--div class="dialog-demo-content" layout="row" layout-wrap layout-margin layout-align="center">
-                    <md-button  ng-click = "showConDialog($event)">Connexion</md-button></div>
-                    <div class="dialog-demo-content" layout="row" layout-wrap layout-margin layout-align="center">
-                    <md-button  ng-click = "showInsDialog($event)">Inscription</md-button></div-->
-                    <img class = "centre" src="../test/depinfo.svg" width="150" height="75" alt="logo depinfo" ng-click = "openGraph()">
-
-                    <md-button class="md-icon-button" aria-label="Search"  ng-click="search()" >
-                        <md-tooltip>Rechercher</md-tooltip>
-                        <md-icon class="material-icons" style="color:white;">&#xE8B6;</md-icon>
-                    </md-button>
-                    <md-input-container md-no-float class="md-accent" style="padding-bottom:0px; padding-top: 25px;">
-                        <input ng-model="recherche" placeholder="Recherche" style="color:wheat;">
-                    </md-input-container>
-
-                    <!--md-input-container  style="position: absolute; right: 0;">
-                        <label>Recherche</label>
-                        <input type="text" name="Recherche" ng-model="recherche" >
-                    </md-input-container>
-                    
-                    <md-input-container  style="position: absolute; right: 0;">
-                        <md-button ng-click="search()">
-                            <i class="material-icons">search</i>
-                        </md-button>
-
-                    </md-input-container-->
-                    
-                </div>
-            </mat-toolbar>
-        
-    
-
-
-
-
-<md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="left" id="white">
-    <md-toolbar layout="row" id="orange">
-      <div class="md-toolbar-tools">
-        <h2>
-      <span>Menu</span>
-    </h2>
-        <span flex></span>
-        <md-button class="md-icon-button" aria-label="Close Side Panel" ng-click="closeSideNavPanel()">
-          <md-tooltip>Fermer</md-tooltip>
-          <md-icon class="md-default-theme" class="material-icons" style="color:white;">&#xE5CD;</md-icon>
-        </md-button>
-      </div>
-    </md-toolbar>
-    <md-content layout-padding="" id="white">
-     Arborescence
-    <oci.treeview tree="treeData"  on-select-node="getMoreData">
-      <span style="color:black;">{{tree.label}}</span>
-    </oci.treeview>         
-    </md-content>
-  </md-sidenav>
-
-  <md-toolbar class="desktop" id="orange">
-    <div class="md-toolbar-tools">
-
-        <div layout="column" class="fabSpeedDialdemoBasicUsage">
-          <md-content class="md-padding">
-            <div class="lock-size" layout="row" layout-align="left left">
-              <md-fab-speed-dial md-open="isOpen" md-direction="{{selectedDirection}}" ng-class="selectedMode" >
-                <md-fab-trigger>
-                  <md-button aria-label="menu" class="md-fab md-warn" >
-                    <md-icon class="md-default-theme" class="material-icons" style="color:white;">&#xE5D2;</md-icon>
-                    <md-tooltip md-direction="down">Menu</md-tooltip>
-                  </md-button>
-                </md-fab-trigger>
-                <md-fab-actions>
-                  <md-button aria-label="Graphe" class="md-fab md-raised md-mini" ng-click="openGraph()">
-                    <md-icon class="md-default-theme" class="material-icons" style="color:white;">&#xE80D;</md-icon>
-                    <md-tooltip md-direction="down">Graphe des Compétences</md-tooltip>
-                  </md-button>
-                  <md-button aria-label="Formulaire" class="md-fab md-raised md-mini" ng-click="openFormulaire()">
-                    <md-icon class="md-default-theme" class="material-icons" style="color:white;">&#xE3C9;</md-icon>
-                    <md-tooltip md-direction="down">Formulaire</md-tooltip>
-                  </md-button>
-                </md-fab-actions>
-              </md-fab-speed-dial>
+                
             </div>
-          </md-content>
-            <md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="left"></md-sidenav>
-        </div> 
-
-        <div class="md-title text-center">
-            <h2>
-                <span style="color: #ECA758; font-family: 'calibri'; font-size: 200%; font-weight: bold">{{currentPage}}</span>
-                <!-- style="position: absolute; left : 700px; color: white" --> 
-            </h2>
-        </div>
+        </mat-toolbar>
         
 
-        <md-button class="md-icon-button" aria-label="Side Panel" ng-click="openSideNavPanel()" style="position: absolute; right: 0;">
-            <md-tooltip>Arborescence</md-tooltip>
-            <md-icon class="md-default-theme" class="material-icons" style="color:white;">&#xE241;</md-icon>
-        </md-button>
-        <span></span>
+        <md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="left" id="white">
+            <md-toolbar layout="row" id="orange">
+              <div class="md-toolbar-tools">
+                <h2>
+              <span>Menu</span>
+            </h2>
+                <span flex></span>
+                <md-button class="md-icon-button" aria-label="Close Side Panel" ng-click="closeSideNavPanel()">
+                  <md-tooltip>Fermer</md-tooltip>
+                  <md-icon class="md-default-theme" class="material-icons" style="color:white;">&#xE5CD;</md-icon>
+                </md-button>
+              </div>
+            </md-toolbar>
+            <md-content layout-padding="" id="white">
+             Arborescence
+            <oci.treeview tree="treeData"  on-select-node="getMoreData">
+              <span style="color:black;">{{tree.label}}</span>
+            </oci.treeview>         
+            </md-content>
+          </md-sidenav>
 
-    </div>
-  </md-toolbar>
+          <md-toolbar class="desktop" id="orange">
+            <div class="md-toolbar-tools">
+
+                <div layout="column" class="fabSpeedDialdemoBasicUsage" flex>
+                  <md-content class="md-padding">
+                    <div class="lock-size" layout="row" layout-align="left left">
+                      <md-fab-speed-dial md-open="isOpen" md-direction="{{selectedDirection}}" ng-class="selectedMode" >
+                        <md-fab-trigger>
+                          <md-button aria-label="menu" class="md-fab md-warn" >
+                            <md-icon class="md-default-theme" class="material-icons" style="color:white;">&#xE5D2;</md-icon>
+                            <md-tooltip md-direction="down">Menu</md-tooltip>
+                          </md-button>
+                        </md-fab-trigger>
+                        <md-fab-actions>
+                          <md-button aria-label="Graphe" class="md-fab md-raised md-mini" ng-click="openGraph()">
+                            <md-icon class="md-default-theme" class="material-icons" style="color:white;">&#xE80D;</md-icon>
+                            <md-tooltip md-direction="down">Graphe des Compétences</md-tooltip>
+                          </md-button>
+                          <md-button aria-label="Formulaire" class="md-fab md-raised md-mini" ng-click="openFormulaire()">
+                            <md-icon class="md-default-theme" class="material-icons" style="color:white;">&#xE3C9;</md-icon>
+                            <md-tooltip md-direction="down">Formulaire</md-tooltip>
+                          </md-button>
+                        </md-fab-actions>
+                      </md-fab-speed-dial>
+                    </div>
+                  </md-content>
+                    <md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="left"></md-sidenav>
+                </div> 
+
+                <div flex = '60'>
+                    <h2>
+                        <span style="color: #ECA758; font-family: 'calibri'; font-size: 200%; font-weight: bold">{{currentPage}}</span>
+                    </h2>
+                </div>
+                
+
+                <md-button class="md-icon-button" aria-label="Side Panel" ng-click="openSideNavPanel()" style="position: absolute; right: 0;">
+                    <md-tooltip>Arborescence</md-tooltip>
+                    <md-icon class="md-default-theme" class="material-icons" style="color:white;">&#xE241;</md-icon>
+                </md-button>
+                <span></span>
+
+            </div>
+          </md-toolbar>
 
     <div ui-view = ""></div>
 </div>

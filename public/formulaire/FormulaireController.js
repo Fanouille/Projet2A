@@ -154,7 +154,7 @@ angular.module('AngularGen')
     return liste.map(function (c, index) {
       var cParts = c.split(' ');
       var comp = {
-        name: c,      };
+        name: c,};
       comp._lowername = comp.name.toLowerCase();
       return comp;
     });
