@@ -3,7 +3,7 @@
 angular.module('AngularGen')
 .controller('IndexController', function ($scope,$state,$http,$mdPanel,$mdSidenav,$rootScope,$mdDialog){
 
-
+    //name of the current page
     $rootScope.currentPage = "Graphe des Compétences"
     
   	$scope.openTest = function(){
@@ -32,6 +32,7 @@ angular.module('AngularGen')
         $state.go('comp-detail')
     }
 
+//-----------------------------------------SEARCH----------------------------------------
   	$scope.recherche=""
 
     $scope.objetRecherche=''
@@ -49,9 +50,12 @@ angular.module('AngularGen')
             console.log(error);
         })     
   	}
-    
+//----------------------------------------------------------------------------------------------
 
+
+//-------------------------------------LIST OF LEAFS OF THE GRAPH-------------------------------
   $scope.liste = [];
+
   function remplirListe(){
     return $http.get(
         '/load'
@@ -65,7 +69,10 @@ angular.module('AngularGen')
   }
 
   remplirListe();
+//-------------------------------------------------------------------------------------------------
 
+
+//---------------------------------------WRITE INTO JSON FILE--------------------------------------
   function testWriteJson(){
     return $http.get(
         '/write'
@@ -77,14 +84,18 @@ angular.module('AngularGen')
   } 
 
   testWriteJson();
+//-------------------------------------------------------------------------------------------------
 
-//--------------------------MENU INDEX-----------------------------------
+
+//-----------------------------------MENU INDEX----------------------------------------------------
   $scope.isOpen = false;
   $scope.selectedMode = 'md-fling';
   $scope.selectedDirection = 'right';
-//----------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------
 
-  $scope.treeData = {
+
+//-----------------------------------TREE MENU AND SIDE NAV PANEL----------------------------------
+  $scope.treeData = {//tree model
   label : '',
   state : 'expanded',
   children : [{
@@ -94,65 +105,74 @@ angular.module('AngularGen')
     }],
   };
 
-    $rootScope.selectedLeaf = ''
-    $scope.leafDetail = function(leaf){
-        $rootScope.currentPage = "Compétence";
-        $http.get(
-          '/getLeafInBDD/'+ leaf
-          ).then(function successCallBack(response){
-            //console.log(response)
-            $rootScope.Infos = response.data;
-            $scope.closeSideNavPanel();
-            $state.go('comp-detail',{}, {reload: true});
+  $rootScope.selectedLeaf = ''
 
-        },function errorCallBack(error){
-            console.log(error);
-        })     
+  //find leaf in bdd when a leaf is clicked and root to leaf page
+  $scope.leafDetail = function(leaf){
+      $rootScope.currentPage = "Compétence";
+      $http.get(
+        '/getLeafInBDD/'+ leaf
+        ).then(function successCallBack(response){
+          //console.log(response)
+          $rootScope.Infos = response.data;
+          $scope.closeSideNavPanel();
+          $state.go('comp-detail',{}, {reload: true});
+
+      },function errorCallBack(error){
+          console.log(error);
+      })     
+  }
+
+//TODO, find users with leaf in their skills and root to leaf page
+  /*$scope.leafSkilledUsers = function(leaf){
+      $http.get(
+        '/getUserLeafInBDD/'+ leaf
+        ).then(function successCallBack(response){
+          //console.log(response)
+
+          $rootScope.Infos.push(response.data);
+          $state.go('comp-detail');
+
+
+      },function errorCallBack(error){
+          console.log(error);
+      })     
+  }*/   
+
+  //reaction to click on a competence
+  $scope.$on('nodeSelected', function(event, node, context) {
+    if (context.selectedNode) {
+      context.selectedNode.class = '';
+      if (node.state === "leaf"){
+        $rootScope.selectedLeaf = node.label;
+        $scope.leafDetail($rootScope.selectedLeaf);
+        //$scope.leafSkilledUsers($rootScope.selectedLeaf);
+      }
     }
 
-     $scope.leafSkilledUsers = function(leaf){
-        $http.get(
-          '/getUserLeafInBDD/'+ leaf
-          ).then(function successCallBack(response){
-            //console.log(response)
+    node.class = 'selectedNode';
+    context.selectedNode = node;
+  });
 
-            $rootScope.Infos.push(response.data);
-            $state.go('comp-detail');
-
-
-        },function errorCallBack(error){
-            console.log(error);
-        })     
-    }   
-
-    $scope.$on('nodeSelected', function(event, node, context) {
-      if (context.selectedNode) {
-        context.selectedNode.class = '';
-        if (node.state === "leaf"){
-          $rootScope.selectedLeaf = node.label;
-          $scope.leafDetail($rootScope.selectedLeaf);
-          //$scope.leafSkilledUsers($rootScope.selectedLeaf);
-        }
-      }
-
-      node.class = 'selectedNode';
-      context.selectedNode = node;
+  //get childrens of a node
+  $scope.getMoreData = function (node) {
+    return $http.get('/getCompSonInBDD/' + node.label).then(function successCallBack(response) {
+        var data = response.data;
+        node.children = data;
     });
+  };
 
-    $scope.showMobileMainHeader = true;
-    $scope.openSideNavPanel = function() {
-      $mdSidenav('left').open();
-    };
-    $scope.closeSideNavPanel = function() {
-      $mdSidenav('left').close();
-    };
-    
-    $scope.getMoreData = function (node) {
-      return $http.get('/getCompSonInBDD/' + node.label).then(function successCallBack(response) {
-          var data = response.data;
-          node.children = data;
-      });
-    };
+  $scope.showMobileMainHeader = true;
+
+  $scope.openSideNavPanel = function() {
+    $mdSidenav('left').open();
+  };
+  $scope.closeSideNavPanel = function() {
+    $mdSidenav('left').close();
+  };
+  
+//--------------------------------------------------------------------------------------------------
+
 
 //-----------------------------------------------POPUP----------------------------------------------
     $scope.showConDialog = function(ev) {
@@ -169,11 +189,12 @@ angular.module('AngularGen')
           $scope.status = 'You cancelled the dialog.';
         });
   };
-
 //--------------------------------------------------------------------------------------------------
+
 });
 
-//directives du menu déroulant
+
+//directives for the tree menu
 ! function() {
   "use strict";
   var a = angular.module("oci.treeview", []);

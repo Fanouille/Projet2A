@@ -143,9 +143,7 @@ router.get('/write', function(req,res){
       var writeData = fs.writeFile("public/graph/testWrite.json", JSON.stringify(data), err => {
         if (err) return console.error('File write error:', err)
         });
-    });
-        
-
+    });    
   });
 })
 

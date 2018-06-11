@@ -33,8 +33,6 @@ angular.module('AngularGen')
 
 //-----------------ADD USER TO BDD WITH POST METHOD-------------------------------------------------------
     $scope.add = function(){
-        //console.log();
-
         $http({
             method:'POST',
             url:'/addUserToBDD',
@@ -46,7 +44,6 @@ angular.module('AngularGen')
         },function errorCallBack(error){//in case of error
             console.log(error);
             $scope.statutAjout = "error happenned";
-
         })     
     }
 //----------------------------------------------------------------------------------------------------------
@@ -78,7 +75,7 @@ angular.module('AngularGen')
   var lastSearch;
 
   self.allCompetences = loadCompetences();
-  self.contacts = [];//[self.allCompetences[0]];
+  self.contacts = [];
   self.asyncContacts = [];
   self.filterSelected = true;
 
@@ -160,7 +157,6 @@ angular.module('AngularGen')
     });
   }
 //--------------------------------------------------------------------------------------------------
-
 });
 
 

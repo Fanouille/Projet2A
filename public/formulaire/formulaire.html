@@ -1,125 +1,117 @@
 <div ng-controller="FormulaireController" class="header" ng-app="AngularGen">
-<md-content style="padding: 15px">
-    <!--Utilisez un peu plus l'espace sur la page, vous en avez !-->
-    Bienvenue sur la page de formulaire !
-    <form layout="row" layout-align="space-around start" name = "form">
-        <form layout="row" layout-align="space-around start">
-            <div flex="30" layout="row" layout-align="start center">
-                <md-input-container flex="50">
-                    <label>Nom</label>
-                    <input type="text" name="nom" ng-model="nom">
-                </md-input-container>
-                <md-input-container flex="50">
-                    <label>Prenom</label>
-                    <input type="text" name="prenom" ng-model="prenom">
-                </md-input-container>
-            </div>
-            
-            <div flex="30" layout="row" layout-align="start center">
-                <!--Pour s'assurer que l'on aie bien un numero de téléphone, regarder du côté de ng-pattern-->
-                <md-input-container flex="30">
-                    <label>Telephone</label>
-                    <input type="text" name="telephone" ng-model="telephone">
-                </md-input-container>
-                <!--md-input-container flex="70">
-                    <label>Adresse E-mail</label>
-                    <input type="text" name="mail" ng-model="mail">
-                </md-input-container-->
-                <md-input-container class="md-block" flex="70">
-                    <label>Adresse E-mail</label>
-                    <input required="" type="email" name="mail" ng-model="mail" minlength="10" maxlength="100" ng-pattern="/^.+@.+\..+$/">
-                    <div ng-messages="form.mail.$error" role="alert">
-                      <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
-                        Your email must be between 10 and 100 characters long and look like an e-mail address.
-                      </div>
-                    </div>
-                </md-input-container>
-            </div>
-            <br>
-            <md-input-container class="md-block" flex="20">
-                <label>Password</label>
-                <input required="" type ="text" name="password" ng-model="password"  minlength="6">
-                <div ng-messages="form.password.$error" role="alert">
-                    <div ng-message-exp="['required', 'minlength', 'pattern']">
-                        Your password must have 6 characters minimum.
-                    </div>
+    <md-content style="padding: 15px">
+        <form layout="row" layout-align="space-around start" name = "form">
+            <form layout="row" layout-align="space-around start">
+                <div flex="30" layout="row" layout-align="start center">
+                    <md-input-container flex="50">
+                        <label>Nom</label>
+                        <input type="text" name="nom" ng-model="nom">
+                    </md-input-container>
+                    <md-input-container flex="50">
+                        <label>Prenom</label>
+                        <input type="text" name="prenom" ng-model="prenom">
+                    </md-input-container>
                 </div>
-            </md-input-container>
-        </form>
-        
-        <form layout="row" layout-align="space-around start">
-            <md-input-container flex="20">
-                <label>Promo (N**)</label>
-                <input type="text" name="promo" ng-model="promo">
-            </md-input-container>
-
-            <div flex="70" layout="row" layout-align="start center">
-                <md-input-container flex="50">
-                    <label>Adresse</label>
-                    <input type="text" name="adresse.adresse" ng-model="adresse.adresse">
+                
+                <div flex="30" layout="row" layout-align="start center">
+                    <md-input-container flex="30">
+                        <label>Telephone</label>
+                        <input type="text" name="telephone" ng-model="telephone">
+                    </md-input-container>
+                    <md-input-container class="md-block" flex="70">
+                        <label>Adresse E-mail</label>
+                        <input required="" type="email" name="mail" ng-model="mail" minlength="10" maxlength="100" ng-pattern="/^.+@.+\..+$/">
+                        <div ng-messages="form.mail.$error" role="alert">
+                          <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                            Your email must be between 10 and 100 characters long and look like an e-mail address.
+                          </div>
+                        </div>
+                    </md-input-container>
+                </div>
+                <br>
+                <md-input-container class="md-block" flex="20">
+                    <label>Password</label>
+                    <input required="" type ="text" name="password" ng-model="password"  minlength="6">
+                    <div ng-messages="form.password.$error" role="alert">
+                        <div ng-message-exp="['required', 'minlength', 'pattern']">
+                            Your password must have 6 characters minimum.
+                        </div>
+                    </div>
                 </md-input-container>
-                <md-input-container flex="40">
-                    <label>Ville</label>
-                    <input type="text" name="adresse.ville" ng-model="adresse.ville">
-                </md-input-container>
-            </div>
-        </form>
-        
-        <!--Pays ?-->
-        <form layout="row" layout-align="space-around start">
-            <div flex="20" layout="row" layout-align="start center">
-                <md-input-container>
-                    <label>Nom de l'entreprise</label>
-                    <input type="text" name="entreprise.nom" ng-model="entreprise.nom">
-                </md-input-container>
-            </div>
-            <div flex="70" layout="row" layout-align="start center">
-                <md-input-container flex="50">
-                    <label>Adresse de l'entreprise</label>
-                    <input type="text" name="entreprise.adresse" ng-model="entreprise.adresse">
-                </md-input-container>
-                <md-input-container flex="40">
-                    <label>Ville de l'entreprise</label>
-                    <input type="text" name="entreprise.ville" ng-model="entreprise.ville">
-                </md-input-container>
-            </div>
-        </form>
-
-
-        <form layout="row" layout-align="space-around start">
-            <div flex="95" ng-controller="FormulaireController as ctrl" layout="column" ng-cloak>
-                <md-contact-chips
-                    ng-model="ctrl.asyncContacts"
-                    md-contacts="ctrl.delayedQuerySearch($query)"
-                    md-contact-name="name"
-                    md-contact-image="image"
-                    md-contact-email="email"
-                    md-require-match="true"
-                    md-highlight-flags="i"
-                    filter-selected="ctrl.filterSelected"
-                    placeholder="Compétences">
-                </md-contact-chips>
-            </div>
+            </form>
             
+            <form layout="row" layout-align="space-around start">
+                <md-input-container flex="20">
+                    <label>Promo (N**)</label>
+                    <input type="text" name="promo" ng-model="promo">
+                </md-input-container>
+
+                <div flex="70" layout="row" layout-align="start center">
+                    <md-input-container flex="50">
+                        <label>Adresse</label>
+                        <input type="text" name="adresse.adresse" ng-model="adresse.adresse">
+                    </md-input-container>
+                    <md-input-container flex="40">
+                        <label>Ville</label>
+                        <input type="text" name="adresse.ville" ng-model="adresse.ville">
+                    </md-input-container>
+                </div>
+            </form>
+            
+            <!--Pays ?-->
+            <form layout="row" layout-align="space-around start">
+                <div flex="20" layout="row" layout-align="start center">
+                    <md-input-container>
+                        <label>Nom de l'entreprise</label>
+                        <input type="text" name="entreprise.nom" ng-model="entreprise.nom">
+                    </md-input-container>
+                </div>
+                <div flex="70" layout="row" layout-align="start center">
+                    <md-input-container flex="50">
+                        <label>Adresse de l'entreprise</label>
+                        <input type="text" name="entreprise.adresse" ng-model="entreprise.adresse">
+                    </md-input-container>
+                    <md-input-container flex="40">
+                        <label>Ville de l'entreprise</label>
+                        <input type="text" name="entreprise.ville" ng-model="entreprise.ville">
+                    </md-input-container>
+                </div>
+            </form>
+
+
+            <form layout="row" layout-align="space-around start">
+                <div flex="95" ng-controller="FormulaireController as ctrl" layout="column" ng-cloak>
+                    <md-contact-chips
+                        ng-model="ctrl.asyncContacts"
+                        md-contacts="ctrl.delayedQuerySearch($query)"
+                        md-contact-name="name"
+                        md-contact-image="image"
+                        md-contact-email="email"
+                        md-require-match="true"
+                        md-highlight-flags="i"
+                        filter-selected="ctrl.filterSelected"
+                        placeholder="Compétences">
+                    </md-contact-chips>
+                </div>
+                
+            </form>
+
+
+            <br><br>
+            <div flex="10" layout="row" layout-align="start center">
+                <div flex="50">
+                    <md-button ng-click="clear()">
+                        Clear
+                    </md-button>
+                </div>
+                <div flex="50">
+                    <md-button ng-click ='add()'>
+                    Valider
+                    </md-button>
+                </div>
+            </div>
         </form>
-
-
-        <br><br>
-        <div flex="10" layout="row" layout-align="start center">
-            <div flex="50">
-                <md-button ng-click="clear()">
-                    Clear
-                </md-button>
-            </div>
-            <div flex="50">
-                <md-button ng-click ='add()'>
-                Valider
-                </md-button>
-            </div>
-        </div>
-    </form>
-    <br>{{statutAjout}}
-</md-content>
+    </md-content>
 </div>
 
 
