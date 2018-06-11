@@ -10,12 +10,6 @@ var AngularGen = angular.module('AngularGen', ['ngMessages','ngMaterial', 'ngAni
             $urlRouterProvider.otherwise('/graph');
 
             $stateProvider			
-                .state('test', {
-                    url: '/test',
-                    templateUrl: 'test/test.html',
-                    controller: 'TestController',
-
-                })
 
                 .state('search', {
                     url: '/search',
